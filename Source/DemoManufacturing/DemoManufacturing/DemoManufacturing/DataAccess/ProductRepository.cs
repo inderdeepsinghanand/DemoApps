@@ -24,9 +24,9 @@ namespace DemoManufacturing.DataAccess
             //    catch (Exception ex)
             //    {
             //    }
+            //var connString = System.Configuration.Conn
 
-
-            using (var conn = new SqlConnection("DBConnectionString"))
+            using (var conn = new SqlConnection( "DBConnectionString"))
             {
                 using (var cmd = conn.CreateCommand())
                 {

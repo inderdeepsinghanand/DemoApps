@@ -1,1 +1,9 @@
 C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\bin\Debug\DemoManufacturing.exe.config
+C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\bin\Debug\DemoManufacturing.exe
+C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\bin\Debug\DemoManufacturing.pdb
+C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\obj\Debug\DemoManufacturing.csprojResolveAssemblyReference.cache
+C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\obj\Debug\DemoManufacturing.Form1.resources
+C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\obj\Debug\DemoManufacturing.Properties.Resources.resources
+C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\obj\Debug\DemoManufacturing.csproj.GenerateResource.Cache
+C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\obj\Debug\DemoManufacturing.exe
+C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\obj\Debug\DemoManufacturing.pdb
