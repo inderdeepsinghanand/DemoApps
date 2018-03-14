@@ -141,6 +141,48 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;btnClose.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="dgFrontBumpers.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 1</value>
+  </data>
+  <data name="dgFrontBumpers.Size" type="System.Drawing.Size, System.Drawing">
+    <value>500, 500</value>
+  </data>
+  <data name="dgFrontBumpers.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;dgFrontBumpers.Name" xml:space="preserve">
+    <value>dgFrontBumpers</value>
+  </data>
+  <data name="&gt;&gt;dgFrontBumpers.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;dgFrontBumpers.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;dgFrontBumpers.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="dgBackBumpers.Location" type="System.Drawing.Point, System.Drawing">
+    <value>781, 1</value>
+  </data>
+  <data name="dgBackBumpers.Size" type="System.Drawing.Size, System.Drawing">
+    <value>500, 500</value>
+  </data>
+  <data name="dgBackBumpers.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;dgBackBumpers.Name" xml:space="preserve">
+    <value>dgBackBumpers</value>
+  </data>
+  <data name="&gt;&gt;dgBackBumpers.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;dgBackBumpers.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;dgBackBumpers.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">

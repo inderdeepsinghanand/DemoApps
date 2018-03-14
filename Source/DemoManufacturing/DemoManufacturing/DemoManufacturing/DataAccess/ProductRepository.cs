@@ -35,27 +35,30 @@ namespace DemoManufacturing.DataAccess
 
             var connectionString = ConfigurationManager.ConnectionStrings["DBConnectionString"].ConnectionString;
 
-            using (var conn = new SqlConnection(connectionString))
+            for (int i = 0; i <= 30; i++)
             {
-                using (var cmd = conn.CreateCommand())
+                using (var conn = new SqlConnection(connectionString))
                 {
-                    cmd.CommandType = CommandType.Text;
-                    cmd.CommandText = @"INSERT INTO [EnterpriseApp].[dbo].[tbl_Products]
+                    using (var cmd = conn.CreateCommand())
+                    {
+                        var type = i % 2 == 0 ? 1 : 2;
+                        cmd.CommandType = CommandType.Text;
+                        cmd.CommandText = @"INSERT INTO [EnterpriseApp].[dbo].[tbl_Products]
                                        ([Name]
                                        ,[Variant]
-                                       ,[BarCode])
+                                       ,[BarCode],[Type])
                                  VALUES
                                        (
                                        'Front Wagon R Bumper'
                                        ,'LXI'
-                                       ,'0002223111010202020');";
-                    conn.Open();
-                    cmd.ExecuteNonQuery();
-                    conn.Close();
+                                       ,'0002223111010202020'," + type + " );";
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                        conn.Close();
 
+                    }
                 }
             }
-
         }
 
         }
