@@ -11,13 +11,21 @@ using DemoManufacturing.Entities;
 
 namespace DemoManufacturing
 {
-    public partial class Form1 : Form
+    public partial class frmCurrentOrder : Form
     {
-        public Form1()
+        public frmCurrentOrder()
         {
             InitializeComponent();
 
+            FormBorderStyle = FormBorderStyle.None;
+            WindowState = FormWindowState.Maximized;
+
             new ProductRepository().AddProduct(new Product() {ProductID = 1,ProductModel = 2,ProductVariant = 3});
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

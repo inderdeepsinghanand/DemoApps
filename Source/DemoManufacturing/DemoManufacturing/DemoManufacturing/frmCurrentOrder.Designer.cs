@@ -1,6 +1,6 @@
 ﻿namespace DemoManufacturing
 {
-    partial class Form1
+    partial class frmCurrentOrder
     {
         /// <summary>
         /// Required designer variable.
@@ -28,22 +28,31 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmCurrentOrder));
+            this.btnClose = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // Form1
+            // btnClose
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoSize = true;
+            resources.ApplyResources(this.btnClose, "btnClose");
+            this.btnClose.Name = "btnClose";
+            this.btnClose.UseVisualStyleBackColor = true;
+            this.btnClose.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // frmCurrentOrder
+            // 
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
             this.BackColor = System.Drawing.Color.LightCyan;
-            this.ClientSize = new System.Drawing.Size(1008, 730);
-            this.Name = "Form1";
-            this.Text = "Form1";
+            resources.ApplyResources(this, "$this");
+            this.Controls.Add(this.btnClose);
+            this.Name = "frmCurrentOrder";
             this.ResumeLayout(false);
 
         }
 
         #endregion
+
+        private System.Windows.Forms.Button btnClose;
     }
 }
 
