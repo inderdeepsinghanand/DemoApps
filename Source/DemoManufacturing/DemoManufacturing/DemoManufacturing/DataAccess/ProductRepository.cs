@@ -7,6 +7,12 @@ using System.Text;
 using System.Threading;
 using DemoManufacturing.Entities;
 
+
+using System.Configuration;
+
+using System.Windows.Forms;
+
+
 namespace DemoManufacturing.DataAccess
 {
     public class ProductRepository
@@ -24,14 +30,28 @@ namespace DemoManufacturing.DataAccess
             //    catch (Exception ex)
             //    {
             //    }
+            //var connString = System.Configuration.Conn
 
 
-            using (var conn = new SqlConnection("DBConnectionString"))
+            var connectionString = ConfigurationManager.ConnectionStrings["DBConnectionString"].ConnectionString;
+
+            using (var conn = new SqlConnection(connectionString))
             {
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandType = CommandType.Text;
-                    //cmd.CommandText = 
+                    cmd.CommandText = @"INSERT INTO [EnterpriseApp].[dbo].[tbl_Products]
+                                       ([Name]
+                                       ,[Variant]
+                                       ,[BarCode])
+                                 VALUES
+                                       (
+                                       'Front Wagon R Bumper'
+                                       ,'LXI'
+                                       ,'0002223111010202020');";
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                    conn.Close();
 
                 }
             }
