@@ -16,3 +16,4 @@ C:\Users\isingh\Documents\Personal\Demo apps\DemoApps\Source\DemoManufacturing\D
 C:\Users\isingh\Documents\Personal\Demo apps\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\obj\Debug\DemoManufacturing.frmCurrentOrder.resources
 C:\Users\isingh\Documents\Personal\Demo apps\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\obj\Debug\DemoManufacturing.Properties.Resources.resources
 C:\Users\isingh\Documents\Personal\Demo apps\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\obj\Debug\DemoManufacturing.csproj.GenerateResource.Cache
+C:\Users\isingh\Documents\Personal\Demo apps\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\obj\Debug\DemoManufacturing.frmMasterUpload.resources

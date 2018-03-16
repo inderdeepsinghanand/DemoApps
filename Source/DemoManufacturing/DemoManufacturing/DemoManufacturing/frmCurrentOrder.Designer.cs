@@ -65,7 +65,7 @@
             this.dgFrontBumpers.RowTemplate.DefaultCellStyle.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dgFrontBumpers.RowTemplate.Height = 50;
             this.dgFrontBumpers.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgFrontBumpers.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgFrontBumpers_CellContentClick);
+           // this.dgFrontBumpers.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgFrontBumpers_CellContentClick);
             // 
             // dgBackBumpers
             // 
@@ -85,7 +85,7 @@
             this.dgBackBumpers.RowTemplate.DefaultCellStyle.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dgBackBumpers.RowTemplate.Height = 50;
             this.dgBackBumpers.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgBackBumpers.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgBackBumpers_CellContentClick);
+           // this.dgBackBumpers.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgBackBumpers_CellContentClick);
             // 
             // frmCurrentOrder
             // 
