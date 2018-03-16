@@ -44,14 +44,14 @@ namespace DemoManufacturing.DataAccess
                         var type = i % 2 == 0 ? 1 : 2;
                         cmd.CommandType = CommandType.Text;
                         cmd.CommandText = @"INSERT INTO [EnterpriseApp].[dbo].[tbl_Products]
-                                       ([Name]
-                                       ,[Variant]
-                                       ,[BarCode],[Type])
+                                       ([Color]
+                                       ,[MajorVariant]
+                                       ,[BarCode],[Type],[CustomerCode])
                                  VALUES
                                        (
-                                       'Front Wagon R Bumper'
+                                       'White'
                                        ,'LXI'
-                                       ,'0002223111010202020'," + type + " );";
+                                       ,'0002223111010202020'," + type + ",'CUST0001' );";
                         conn.Open();
                         cmd.ExecuteNonQuery();
                         conn.Close();

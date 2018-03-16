@@ -15,7 +15,7 @@ namespace DemoManufacturing
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new frmMasterUpload());
+            Application.Run(new frmCurrentOrder());
         }
     }
 }

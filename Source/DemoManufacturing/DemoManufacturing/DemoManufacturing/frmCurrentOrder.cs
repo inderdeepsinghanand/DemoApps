@@ -26,7 +26,7 @@ namespace DemoManufacturing
         {
             InitializeComponent();
 
-            FormBorderStyle = FormBorderStyle.None;
+            FormBorderStyle = FormBorderStyle.Fixed3D;
             WindowState = FormWindowState.Maximized;
 
             new ProductRepository().AddProduct(new Product() {ProductID = 1,ProductModel = 2,ProductVariant = 3});
@@ -42,10 +42,18 @@ namespace DemoManufacturing
 
         private void frmCurrentOrder_Load(object sender, EventArgs e)
         {
+            pnlData.Width = this.Width -20;
+            pnlData.Height = this.Height - 50;
+            pnlData.Padding =pnlData.Margin = new Padding(0,50,0,0);
+            pnlData.Location = new Point(this.Location.X,this.Location.Y + 50);
+            dgFrontBumpers.Width = dgBackBumpers.Width = pnlData.Width / 2;
 
-            dgFrontBumpers.Width = dgBackBumpers.Width = this.Width / 2;
+            dgFrontBumpers.Height = dgBackBumpers.Height = pnlData.Height ;
 
-            dgFrontBumpers.Height = dgBackBumpers.Height = this.Height ;
+            dgFrontBumpers.Location = new Point(pnlData.Location.X, pnlData.Location.Y);
+
+            dgBackBumpers.Location = new Point(pnlData.Location.X + dgFrontBumpers.Width +10, pnlData.Location.Y);
+
 
             // Bind the DataGridView to the BindingSource
             // and load the data from the database.
@@ -95,6 +103,16 @@ namespace DemoManufacturing
       
 
         private void dgBackBumpers_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void btnMasterUpload_Click(object sender, EventArgs e)
+        {
+            new frmMasterUpload().Show();
+        }
+
+        private void dgFrontBumpers_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
         }
