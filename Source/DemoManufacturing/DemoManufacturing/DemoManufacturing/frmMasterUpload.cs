@@ -8,6 +8,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using DemoManufacturing.DataAccess;
+using DemoManufacturing.Entities;
 
 namespace DemoManufacturing
 {
@@ -32,7 +34,9 @@ namespace DemoManufacturing
                     try
                     {
                         DataTable dtExcel = new DataTable();
-                        dtExcel = ReadExcel(filePath, fileExt); //read excel file  
+                        dtExcel = ReadExcel(filePath, fileExt); //read excel file 
+
+                        SaveToDb(dtExcel);
                        // object dataGridView1;
                         dgMasterData.Visible = true;
                         dgMasterData.DataSource = dtExcel;
@@ -49,6 +53,32 @@ namespace DemoManufacturing
             }
         }
 
+        public void SaveToDb(DataTable dt)
+        {
+            IList<Product> products = new List<Product>();
+            int i = 0;
+            foreach (DataRow dr in dt.Rows) {
+                if (i == 0) { }
+                else
+                {
+                   
+                    Product prod = new Product();
+                    //Sr. No	Color	EmissionNorms	MajorVariant	Type	CustomerCode	BarCode
+
+                    prod.Color = dr["F2"].ToString();
+                    prod.EmissionNorms = dr["F3"].ToString();
+                    prod.MajorVariant = dr["F4"].ToString();
+                    prod.BumperType = dr["F5"].ToString();
+                    prod.CustomerCode = dr["F6"].ToString();
+                    prod.BarCode = dr["F7"].ToString();
+
+                    products.Add(prod);
+                }
+                i++;
+            }
+
+            new ProductRepository().AddProduct(products);
+        }
 
         public DataTable ReadExcel(string fileName, string fileExt)
         {

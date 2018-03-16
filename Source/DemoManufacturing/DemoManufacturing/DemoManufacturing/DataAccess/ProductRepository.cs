@@ -17,7 +17,7 @@ namespace DemoManufacturing.DataAccess
 {
     public class ProductRepository
     {
-        public void AddProduct(Product prod)
+        public void AddProduct(IList<Product> products)
         {
             //using (var ctx = new ProductContext())
             //{
@@ -35,23 +35,23 @@ namespace DemoManufacturing.DataAccess
 
             var connectionString = ConfigurationManager.ConnectionStrings["DBConnectionString"].ConnectionString;
 
-            for (int i = 0; i <= 30; i++)
-            {
+            foreach(var prod in products){
                 using (var conn = new SqlConnection(connectionString))
                 {
                     using (var cmd = conn.CreateCommand())
                     {
-                        var type = i % 2 == 0 ? 1 : 2;
+                       // var type = i % 2 == 0 ? 1 : 2;
                         cmd.CommandType = CommandType.Text;
                         cmd.CommandText = @"INSERT INTO [EnterpriseApp].[dbo].[tbl_Products]
-                                       ([Color]
+                                       ([Color], [EmissionNorms]
                                        ,[MajorVariant]
                                        ,[BarCode],[Type],[CustomerCode])
                                  VALUES
                                        (
-                                       'White'
-                                       ,'LXI'
-                                       ,'0002223111010202020'," + type + ",'CUST0001' );";
+                                       '" + prod.Color + "',' " + prod.EmissionNorms 
+                                          + "','" + prod.MajorVariant 
+                                          + "','" + prod.BarCode + "','" 
+                                          + prod.BumperType + "','" + prod.CustomerCode + "' );";
                         conn.Open();
                         cmd.ExecuteNonQuery();
                         conn.Close();

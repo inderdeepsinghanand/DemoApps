@@ -26,10 +26,10 @@ namespace DemoManufacturing
         {
             InitializeComponent();
 
-            FormBorderStyle = FormBorderStyle.Fixed3D;
+            FormBorderStyle = FormBorderStyle.None;//.Fixed3D;
             WindowState = FormWindowState.Maximized;
 
-            new ProductRepository().AddProduct(new Product() {ProductID = 1,ProductModel = 2,ProductVariant = 3});
+           // new ProductRepository().AddProduct(new Product() {ProductID = 1,ProductModel = 2,ProductVariant = 3});
 
 
 
@@ -55,14 +55,19 @@ namespace DemoManufacturing
             dgBackBumpers.Location = new Point(pnlData.Location.X + dgFrontBumpers.Width +10, pnlData.Location.Y);
 
 
+            LoadGridData();
+
+        }
+
+        private void LoadGridData()
+        {
             // Bind the DataGridView to the BindingSource
             // and load the data from the database.
             dgBackBumpers.DataSource = bSourceBack;
-            GetData("select * from tbl_Products where Type =2", bSourceBack);
+            GetData("select * from tbl_Products where Type ='Rear'", bSourceBack);
 
             dgFrontBumpers.DataSource = bSourceFront;
-            GetData("select * from tbl_Products where Type =1", bSourceFront);
-
+            GetData("select * from tbl_Products where Type ='Front'", bSourceFront);
         }
 
         private void GetData(string selectCommand,BindingSource bSource )
@@ -92,11 +97,9 @@ namespace DemoManufacturing
                 dataGridView1.AutoResizeColumns(
                     DataGridViewAutoSizeColumnsMode.AllCellsExceptHeader);
             }
-            catch (SqlException)
+            catch (SqlException ex)
             {
-                MessageBox.Show("To run this example, replace the value of the " +
-                                "connectionString variable with a connection string that is " +
-                                "valid for your system.");
+                MessageBox.Show("Exception Occured: " + ex.Message + "\n Trace:"+ ex.StackTrace );
             }
         }
 
@@ -115,6 +118,11 @@ namespace DemoManufacturing
         private void dgFrontBumpers_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
+        }
+
+        private void btnRefresh_Click(object sender, EventArgs e)
+        {
+            LoadGridData();
         }
     }
 }

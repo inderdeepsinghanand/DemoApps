@@ -145,13 +145,13 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;btnClose.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
   </data>
   <data name="dgFrontBumpers.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Left</value>
   </data>
   <data name="dgFrontBumpers.ColumnHeadersHeight" type="System.Int32, mscorlib">
-    <value>45</value>
+    <value>30</value>
   </data>
   <data name="dgFrontBumpers.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 3</value>
@@ -235,7 +235,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;pnlData.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="btnMasterUpload.Location" type="System.Drawing.Point, System.Drawing">
     <value>479, 12</value>
@@ -259,7 +259,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;btnMasterUpload.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="btnUploadOrder.Location" type="System.Drawing.Point, System.Drawing">
     <value>349, 13</value>
@@ -271,7 +271,7 @@
     <value>6</value>
   </data>
   <data name="btnUploadOrder.Text" xml:space="preserve">
-    <value>Select Master File</value>
+    <value>Select Order File</value>
   </data>
   <data name="&gt;&gt;btnUploadOrder.Name" xml:space="preserve">
     <value>btnUploadOrder</value>
@@ -283,7 +283,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;btnUploadOrder.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>1</value>
   </data>
   <data name="txtSelectedFile.Location" type="System.Drawing.Point, System.Drawing">
     <value>34, 15</value>
@@ -304,16 +304,40 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;txtSelectedFile.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <metadata name="fdOrderUpload.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
+  <data name="btnRefresh.Location" type="System.Drawing.Point, System.Drawing">
+    <value>627, 13</value>
+  </data>
+  <data name="btnRefresh.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="btnRefresh.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="btnRefresh.Text" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="&gt;&gt;btnRefresh.Name" xml:space="preserve">
+    <value>btnRefresh</value>
+  </data>
+  <data name="&gt;&gt;btnRefresh.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnRefresh.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;btnRefresh.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>1579, 730</value>
+    <value>1370, 730</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Form1</value>

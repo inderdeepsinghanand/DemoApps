@@ -43,6 +43,7 @@
             this.btnUploadOrder = new System.Windows.Forms.Button();
             this.txtSelectedFile = new System.Windows.Forms.TextBox();
             this.fdOrderUpload = new System.Windows.Forms.OpenFileDialog();
+            this.btnRefresh = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgFrontBumpers)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgBackBumpers)).BeginInit();
             this.pnlData.SuspendLayout();
@@ -141,11 +142,19 @@
             // 
             this.fdOrderUpload.FileName = "fdMasterUpload";
             // 
+            // btnRefresh
+            // 
+            resources.ApplyResources(this.btnRefresh, "btnRefresh");
+            this.btnRefresh.Name = "btnRefresh";
+            this.btnRefresh.UseVisualStyleBackColor = true;
+            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
+            // 
             // frmCurrentOrder
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
             this.BackColor = System.Drawing.Color.LightCyan;
             resources.ApplyResources(this, "$this");
+            this.Controls.Add(this.btnRefresh);
             this.Controls.Add(this.btnUploadOrder);
             this.Controls.Add(this.txtSelectedFile);
             this.Controls.Add(this.btnMasterUpload);
@@ -171,6 +180,7 @@
         private System.Windows.Forms.Button btnUploadOrder;
         private System.Windows.Forms.TextBox txtSelectedFile;
         private System.Windows.Forms.OpenFileDialog fdOrderUpload;
+        private System.Windows.Forms.Button btnRefresh;
     }
 }
 
