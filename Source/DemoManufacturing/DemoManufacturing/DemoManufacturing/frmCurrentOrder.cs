@@ -124,5 +124,10 @@ namespace DemoManufacturing
         {
             LoadGridData();
         }
+
+        private void btnClose1_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }

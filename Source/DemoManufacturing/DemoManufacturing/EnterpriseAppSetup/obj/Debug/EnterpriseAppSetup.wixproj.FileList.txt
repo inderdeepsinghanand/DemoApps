@@ -1,0 +1,7 @@
+C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\EnterpriseAppSetup\bin\Debug\cab1.cab
+C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\EnterpriseAppSetup\bin\Debug\EnterpriseAppSetup.msi
+C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\EnterpriseAppSetup\bin\Debug\EnterpriseAppSetup.wixpdb
+obj\Debug\Product.wixobj
+obj\Debug\EnterpriseAppSetup.wixproj.BindContentsFileListnull.txt
+obj\Debug\EnterpriseAppSetup.wixproj.BindOutputsFileListnull.txt
+obj\Debug\EnterpriseAppSetup.wixproj.BindBuiltOutputsFileListnull.txt
