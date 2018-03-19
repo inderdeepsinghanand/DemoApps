@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Data.OleDb;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -15,10 +17,58 @@ namespace DemoManufacturing
 {
     public partial class frmMasterUpload : Form
     {
+
+        private BindingSource bSourceFront = new BindingSource();
+        private SqlDataAdapter dataAdapter = new SqlDataAdapter();
+
         public frmMasterUpload()
         {
             InitializeComponent();
+
+            GetData("select [Color],[EmissionNorms],[MajorVariant] from tbl_Products where Type ='Rear'", bSourceFront);
+            dgMasterData.DataSource = bSourceFront;
+
         }
+
+
+        private void GetData(string selectCommand, BindingSource bSource)
+        {
+            try
+            {
+                DataTable tblResult = new DataTable();
+                // Specify a connection string. Replace the given value with a 
+                // valid connection string for a Northwind SQL Server sample
+                // database accessible to your system.
+                var connectionString = ConfigurationManager.ConnectionStrings["DBConnectionString"].ConnectionString;
+
+                // Create a new data adapter based on the specified query.
+                dataAdapter = new SqlDataAdapter(selectCommand, connectionString);
+
+                // Create a command builder to generate SQL update, insert, and
+                // delete commands based on selectCommand. These are used to
+                // update the database.
+                SqlCommandBuilder commandBuilder = new SqlCommandBuilder(dataAdapter);
+
+                // Populate a new data table and bind it to the BindingSource.
+                DataTable table = new DataTable();
+                table.Locale = System.Globalization.CultureInfo.InvariantCulture;
+                dataAdapter.Fill(table);
+                //foreach()
+
+
+
+                bSource.DataSource = table;
+
+                // Resize the DataGridView columns to fit the newly loaded content.
+                //dataGridView1.AutoResizeColumns(
+                //    DataGridViewAutoSizeColumnsMode.AllCellsExceptHeader);
+            }
+            catch (SqlException ex)
+            {
+                MessageBox.Show("Exception Occured: " + ex.Message + "\n Trace:" + ex.StackTrace);
+            }
+        }
+
 
         private void btnMasterUpload_Click(object sender, EventArgs e)
         {
@@ -119,6 +169,11 @@ namespace DemoManufacturing
 
             }
             return null;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

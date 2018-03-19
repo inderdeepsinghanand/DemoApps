@@ -118,5 +118,21 @@ namespace DemoManufacturing
             }
         }
 
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void btnMasterUpload_Click(object sender, EventArgs e)
+        {
+            frmMasterUpload upload = new frmMasterUpload();
+            upload.ShowDialog();
+        }
+
+        private void btnExit_Click_1(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
     }
 }
