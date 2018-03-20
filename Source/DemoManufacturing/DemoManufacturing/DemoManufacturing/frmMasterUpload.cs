@@ -25,9 +25,32 @@ namespace DemoManufacturing
         {
             InitializeComponent();
 
-            GetData("select [Color],[EmissionNorms],[MajorVariant] from tbl_Products where Type ='Rear'", bSourceFront);
-            dgMasterData.DataSource = bSourceFront;
+            GetData("select * from tbl_Products ", bSourceFront);
+            dataGridView1.DataSource = bSourceFront;
 
+            dataGridView1.Columns["ProductID"].Visible = false;
+
+            BindCombo("Select distinct Color as [Key] from tbl_Products", cmbColor);
+
+            BindCombo("Select distinct [EmissionNorms] as [Key] from tbl_Products", cmbEmissionNorms);
+
+            BindCombo("Select distinct [MajorVariant] as [Key] from tbl_Products", cmbMajorVariant);
+
+            BindCombo("Select distinct [Type] as [Key] from tbl_Products", cmbBumperType);
+            
+        }
+
+        public void BindCombo(string selectCommand, ComboBox cmb) {
+
+            var dt = FetchFromDb(selectCommand);
+            
+            cmb.ValueMember = "Key";
+            cmb.DisplayMember = "Key";
+            var row = dt.NewRow();
+            row[0] = "Please select";
+            dt.Rows.InsertAt(row, 0);
+            cmb.DataSource = dt;
+           // cmb.Items.Insert(0, new object[] { 0, "Please select" });  
         }
 
 
@@ -36,28 +59,10 @@ namespace DemoManufacturing
             try
             {
                 DataTable tblResult = new DataTable();
-                // Specify a connection string. Replace the given value with a 
-                // valid connection string for a Northwind SQL Server sample
-                // database accessible to your system.
-                var connectionString = ConfigurationManager.ConnectionStrings["DBConnectionString"].ConnectionString;
+                tblResult = FetchFromDb(selectCommand);
 
-                // Create a new data adapter based on the specified query.
-                dataAdapter = new SqlDataAdapter(selectCommand, connectionString);
-
-                // Create a command builder to generate SQL update, insert, and
-                // delete commands based on selectCommand. These are used to
-                // update the database.
-                SqlCommandBuilder commandBuilder = new SqlCommandBuilder(dataAdapter);
-
-                // Populate a new data table and bind it to the BindingSource.
-                DataTable table = new DataTable();
-                table.Locale = System.Globalization.CultureInfo.InvariantCulture;
-                dataAdapter.Fill(table);
-                //foreach()
-
-
-
-                bSource.DataSource = table;
+                tblResult.Rows.InsertAt(tblResult.NewRow() , 0);
+                bSource.DataSource = tblResult;
 
                 // Resize the DataGridView columns to fit the newly loaded content.
                 //dataGridView1.AutoResizeColumns(
@@ -67,6 +72,29 @@ namespace DemoManufacturing
             {
                 MessageBox.Show("Exception Occured: " + ex.Message + "\n Trace:" + ex.StackTrace);
             }
+        }
+
+        private DataTable FetchFromDb(string selectCommand)
+        {
+            // Specify a connection string. Replace the given value with a 
+            // valid connection string for a Northwind SQL Server sample
+            // database accessible to your system.
+            var connectionString = ConfigurationManager.ConnectionStrings["DBConnectionString"].ConnectionString;
+
+            // Create a new data adapter based on the specified query.
+            dataAdapter = new SqlDataAdapter(selectCommand, connectionString);
+
+            // Create a command builder to generate SQL update, insert, and
+            // delete commands based on selectCommand. These are used to
+            // update the database.
+            SqlCommandBuilder commandBuilder = new SqlCommandBuilder(dataAdapter);
+
+            // Populate a new data table and bind it to the BindingSource.
+            DataTable table = new DataTable();
+            table.Locale = System.Globalization.CultureInfo.InvariantCulture;
+            dataAdapter.Fill(table);
+            //foreach()
+            return table;
         }
 
 
@@ -88,8 +116,12 @@ namespace DemoManufacturing
 
                         SaveToDb(dtExcel);
                        // object dataGridView1;
-                        dgMasterData.Visible = true;
-                        dgMasterData.DataSource = dtExcel;
+                        //dataGridView1.Visible = true;
+                        //dataGridView1.DataSource = dtExcel;
+
+                        GetData("select * from tbl_Products ", bSourceFront);
+                        dataGridView1.DataSource = bSourceFront;
+
                     }
                     catch (Exception ex)
                     {
@@ -171,9 +203,38 @@ namespace DemoManufacturing
             return null;
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void button2_Click(object sender, EventArgs e)
         {
             this.Close();
         }
+
+        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblPrintBarCode_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+
+        }
+
+        private void dataGridView1_RowEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            var rowIndex = e.RowIndex;
+            var row = dataGridView1.Rows[rowIndex];
+
+            var barcode = row.Cells["BarCode"].Value.ToString();
+            if (!string.IsNullOrEmpty(barcode))
+            {
+                lblProductID.Text = row.Cells["ProductID"].Value.ToString();
+                cmbEmissionNorms.SelectedValue = row.Cells["EmissionNorms"].Value;
+                cmbColor.SelectedValue = row.Cells["Color"].Value;
+                cmbMajorVariant.SelectedValue = row.Cells["MajorVariant"].Value;
+                cmbBumperType.SelectedValue = row.Cells["Type"].Value;
+                txtCustomerCode.Text = row.Cells["CustomerCode"].Value.ToString();
+                txtBarCode.Text = row.Cells["BarCode"].Value.ToString();
+            }
+        }
+
     }
 }
