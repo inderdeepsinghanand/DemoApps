@@ -37,20 +37,21 @@ namespace DemoManufacturing
             BindCombo("Select distinct [MajorVariant] as [Key] from tbl_Products", cmbMajorVariant);
 
             BindCombo("Select distinct [Type] as [Key] from tbl_Products", cmbBumperType);
-            
+
         }
 
-        public void BindCombo(string selectCommand, ComboBox cmb) {
+        public void BindCombo(string selectCommand, ComboBox cmb)
+        {
 
             var dt = FetchFromDb(selectCommand);
-            
+
             cmb.ValueMember = "Key";
             cmb.DisplayMember = "Key";
             var row = dt.NewRow();
             row[0] = "Please select";
             dt.Rows.InsertAt(row, 0);
             cmb.DataSource = dt;
-           // cmb.Items.Insert(0, new object[] { 0, "Please select" });  
+            // cmb.Items.Insert(0, new object[] { 0, "Please select" });  
         }
 
 
@@ -61,7 +62,7 @@ namespace DemoManufacturing
                 DataTable tblResult = new DataTable();
                 tblResult = FetchFromDb(selectCommand);
 
-                tblResult.Rows.InsertAt(tblResult.NewRow() , 0);
+                tblResult.Rows.InsertAt(tblResult.NewRow(), 0);
                 bSource.DataSource = tblResult;
 
                 // Resize the DataGridView columns to fit the newly loaded content.
@@ -102,7 +103,7 @@ namespace DemoManufacturing
         {
             string filePath = string.Empty;
             string fileExt = string.Empty;
-           // OpenFileDialog file = new OpenFileDialog(); //open dialog to choose file  
+            // OpenFileDialog file = new OpenFileDialog(); //open dialog to choose file  
             if (fdMasterUpload.ShowDialog() == System.Windows.Forms.DialogResult.OK) //if there is a file choosen by the user  
             {
                 filePath = fdMasterUpload.FileName; //get the path of the file  
@@ -115,7 +116,7 @@ namespace DemoManufacturing
                         dtExcel = ReadExcel(filePath, fileExt); //read excel file 
 
                         SaveToDb(dtExcel);
-                       // object dataGridView1;
+                        // object dataGridView1;
                         //dataGridView1.Visible = true;
                         //dataGridView1.DataSource = dtExcel;
 
@@ -139,11 +140,12 @@ namespace DemoManufacturing
         {
             IList<Product> products = new List<Product>();
             int i = 0;
-            foreach (DataRow dr in dt.Rows) {
+            foreach (DataRow dr in dt.Rows)
+            {
                 if (i == 0) { }
                 else
                 {
-                   
+
                     Product prod = new Product();
                     //Sr. No	Color	EmissionNorms	MajorVariant	Type	CustomerCode	BarCode
 
@@ -181,7 +183,7 @@ namespace DemoManufacturing
             //}
             //return dtexcel;
 
-          //  var fileName = @"C:\ExcelFile.xlsx";
+            //  var fileName = @"C:\ExcelFile.xlsx";
             var connectionString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + fileName + ";Extended Properties=\"Excel 12.0;IMEX=1;HDR=NO;TypeGuessRows=0;ImportMixedTypes=Text\""; ;
             using (var conn = new OleDbConnection(connectionString))
             {
@@ -197,7 +199,7 @@ namespace DemoManufacturing
                     adapter.Fill(ds);
                     return ds.Tables[0];
                 }
-             
+
 
             }
             return null;
@@ -233,6 +235,53 @@ namespace DemoManufacturing
                 cmbBumperType.SelectedValue = row.Cells["Type"].Value;
                 txtCustomerCode.Text = row.Cells["CustomerCode"].Value.ToString();
                 txtBarCode.Text = row.Cells["BarCode"].Value.ToString();
+            }
+        }
+
+        private void lblProductID_TextChanged(object sender, EventArgs e)
+        {
+            var productId = Convert.ToInt64(lblProductID.Text);
+            if (productId > 0)
+            {
+                btnSave.Text = "Save";
+            }
+            else
+                btnSave.Text = "Add";
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+
+            // Specify a connection string. Replace the given value with a 
+            // valid connection string for a Northwind SQL Server sample
+            // database accessible to your system.
+            var connectionString = ConfigurationManager.ConnectionStrings["DBConnectionString"].ConnectionString;
+
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                using (SqlCommand command = new SqlCommand("[dbo].[usp_SaveProduct]", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+
+
+
+                    command.Parameters.Add(new SqlParameter("@ProductID", SqlDbType.BigInt) { Value = Convert.ToInt64(lblProductID.Text) });
+                    command.Parameters.Add(new SqlParameter("@Color", SqlDbType.NVarChar, 50) { Value = cmbColor.SelectedValue });
+                    command.Parameters.Add(new SqlParameter("@EmissionNorms", SqlDbType.NVarChar, 100) { Value = cmbEmissionNorms.SelectedValue });
+                    command.Parameters.Add(new SqlParameter("@MajorVariant", SqlDbType.NVarChar, 500) { Value = cmbMajorVariant.SelectedValue });
+                    command.Parameters.Add(new SqlParameter("@Type", SqlDbType.NVarChar, 20) { Value = cmbBumperType.SelectedValue });
+                    command.Parameters.Add(new SqlParameter("@CustomerCode", SqlDbType.NVarChar, 150) { Value = txtCustomerCode.Text });
+                    command.Parameters.Add(new SqlParameter("@BarCode", SqlDbType.NVarChar, 1000) { Value = txtBarCode.Text });
+
+
+                    connection.Open();
+                    int result = command.ExecuteNonQuery();
+
+                    // Check Error
+                    if (result < 0)
+                        Console.WriteLine("Error inserting data into Database!");
+                }
             }
         }
 
