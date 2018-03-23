@@ -15,42 +15,29 @@ using DemoManufacturing.Entities;
 
 namespace DemoManufacturing
 {
-    public partial class frmMasterUpload : Form
+    public partial class frmOrderUpload : Form
     {
 
         private BindingSource bSourceFront = new BindingSource();
         private SqlDataAdapter dataAdapter = new SqlDataAdapter();
 
-        public frmMasterUpload()
+        public frmOrderUpload()
         {
             InitializeComponent();
 
-            ReLoadGrid();
-
-            BindComboBoxes();
-        }
-
-        private void ReLoadGrid()
-        {
-            GetData("select * from tbl_Products ", bSourceFront);
+            GetData("select * from [tbl_CustomerOrdersMisMatch] ", bSourceFront);
             dataGridView1.DataSource = bSourceFront;
 
-            dataGridView1.Columns["ProductID"].Visible = false;
+            dataGridView1.Columns["OrderID"].Visible = false;
 
-           
-            BindComboBoxes();
+            //BindCombo("Select distinct Color as [Key] from tbl_Products", cmbColor);
 
-        }
+            //BindCombo("Select distinct [EmissionNorms] as [Key] from tbl_Products", cmbEmissionNorms);
 
-        private void BindComboBoxes()
-        {
-            BindCombo("Select distinct Color as [Key] from tbl_Products", cmbColor);
+            //BindCombo("Select distinct [MajorVariant] as [Key] from tbl_Products", cmbMajorVariant);
 
-            BindCombo("Select distinct [EmissionNorms] as [Key] from tbl_Products", cmbEmissionNorms);
+            //BindCombo("Select distinct [Type] as [Key] from tbl_Products", cmbBumperType);
 
-            BindCombo("Select distinct [MajorVariant] as [Key] from tbl_Products", cmbMajorVariant);
-
-            BindCombo("Select distinct [Type] as [Key] from tbl_Products", cmbBumperType);
         }
 
         public void BindCombo(string selectCommand, ComboBox cmb)
@@ -133,8 +120,8 @@ namespace DemoManufacturing
                         //dataGridView1.Visible = true;
                         //dataGridView1.DataSource = dtExcel;
 
-                        ReLoadGrid();
-                        
+                        GetData("select * from [tbl_CustomerOrdersMisMatch]", bSourceFront);
+                        dataGridView1.DataSource = bSourceFront;
 
                     }
                     catch (Exception ex)
@@ -151,7 +138,7 @@ namespace DemoManufacturing
 
         public void SaveToDb(DataTable dt)
         {
-            IList<Product> products = new List<Product>();
+            IList<CustomerOrder> orders = new List<CustomerOrder>();
             int i = 0;
             foreach (DataRow dr in dt.Rows)
             {
@@ -159,22 +146,22 @@ namespace DemoManufacturing
                 else
                 {
 
-                    Product prod = new Product();
+                    CustomerOrder order = new CustomerOrder();
                     //Sr. No	Color	EmissionNorms	MajorVariant	Type	CustomerCode	BarCode
 
-                    prod.Color = dr["F2"].ToString();
-                    prod.EmissionNorms = dr["F3"].ToString();
-                    prod.MajorVariant = dr["F4"].ToString();
-                    prod.BumperType = dr["F5"].ToString();
-                    prod.CustomerCode = dr["F6"].ToString();
-                    prod.BarCode = dr["F7"].ToString();
+                    order.Color = dr["F2"].ToString();
+                    order.EmissionNorms = dr["F3"].ToString();
+                    order.MajorVariant = dr["F4"].ToString();
+                    order.BumperType = dr["F5"].ToString();
+                    order.CustomerCode = dr["F6"].ToString();
+                    order.IsBarCodePrinted = false;
 
-                    products.Add(prod);
+                    orders.Add(order);
                 }
                 i++;
             }
 
-            new ProductRepository().AddProduct(products);
+            new CustomerOrderRepository().AddOrder(orders);
         }
 
         public DataTable ReadExcel(string fileName, string fileExt)
@@ -235,31 +222,31 @@ namespace DemoManufacturing
 
         private void dataGridView1_RowEnter(object sender, DataGridViewCellEventArgs e)
         {
-            var rowIndex = e.RowIndex;
-            var row = dataGridView1.Rows[rowIndex];
+            //var rowIndex = e.RowIndex;
+            //var row = dataGridView1.Rows[rowIndex];
 
-            var barcode = row.Cells["BarCode"].Value.ToString();
-            if (!string.IsNullOrEmpty(barcode))
-            {
-                lblProductID.Text = row.Cells["ProductID"].Value.ToString();
-                cmbEmissionNorms.SelectedValue = row.Cells["EmissionNorms"].Value;
-                cmbColor.SelectedValue = row.Cells["Color"].Value;
-                cmbMajorVariant.SelectedValue = row.Cells["MajorVariant"].Value;
-                cmbBumperType.SelectedValue = row.Cells["Type"].Value;
-                txtCustomerCode.Text = row.Cells["CustomerCode"].Value.ToString();
-                txtBarCode.Text = row.Cells["BarCode"].Value.ToString();
-            }
+            //var barcode = row.Cells["BarCode"].Value.ToString();
+            //if (!string.IsNullOrEmpty(barcode))
+            //{
+            //    lblProductID.Text = row.Cells["ProductID"].Value.ToString();
+            //    cmbEmissionNorms.SelectedValue = row.Cells["EmissionNorms"].Value;
+            //    cmbColor.SelectedValue = row.Cells["Color"].Value;
+            //    cmbMajorVariant.SelectedValue = row.Cells["MajorVariant"].Value;
+            //    cmbBumperType.SelectedValue = row.Cells["Type"].Value;
+            //    txtCustomerCode.Text = row.Cells["CustomerCode"].Value.ToString();
+            //    txtBarCode.Text = row.Cells["BarCode"].Value.ToString();
+            //}
         }
 
         private void lblProductID_TextChanged(object sender, EventArgs e)
         {
-            var productId = Convert.ToInt64(lblProductID.Text);
-            if (productId > 0)
-            {
-                btnSave.Text = "Save";
-            }
-            else
-                btnSave.Text = "Add";
+            //var productId = Convert.ToInt64(lblProductID.Text);
+            //if (productId > 0)
+            //{
+            //    btnSave.Text = "Save";
+            //}
+            //else
+            //    btnSave.Text = "Add";
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -296,13 +283,7 @@ namespace DemoManufacturing
                         Console.WriteLine("Error inserting data into Database!");
                 }
             }
-
-            ReLoadGrid();
         }
 
-        private void button3_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }

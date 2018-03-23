@@ -69,7 +69,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.VisualBasic" />
-    <Reference Include="Microsoft.VisualBasic.PowerPacks.Vs, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualBasic.PowerPacks.Vs, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.configuration" />
@@ -85,6 +87,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataAccess\ProductRepository.cs" />
+    <Compile Include="DataAccess\CustomerOrderRepository.cs" />
+    <Compile Include="Entities\CustomerOrder.cs" />
     <Compile Include="Entities\Product.cs" />
     <Compile Include="frmCurrentOrder.cs">
       <SubType>Form</SubType>
@@ -97,6 +101,12 @@
     </Compile>
     <Compile Include="frmDashboard.Designer.cs">
       <DependentUpon>frmDashboard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmOrderUpload.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmOrderUpload.Designer.cs">
+      <DependentUpon>frmOrderUpload.cs</DependentUpon>
     </Compile>
     <Compile Include="frmMasterUpload.cs">
       <SubType>Form</SubType>
@@ -111,6 +121,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmDashboard.resx">
       <DependentUpon>frmDashboard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmOrderUpload.resx">
+      <DependentUpon>frmOrderUpload.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmMasterUpload.resx">
       <DependentUpon>frmMasterUpload.cs</DependentUpon>

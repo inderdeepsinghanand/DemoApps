@@ -1,6 +1,6 @@
 ﻿namespace DemoManufacturing
 {
-    partial class frmMasterUpload
+    partial class frmOrderUpload
     {
         /// <summary>
         /// Required designer variable.
@@ -34,7 +34,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.lblProductID = new System.Windows.Forms.Label();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.button3 = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.lblPrintBarCode = new System.Windows.Forms.LinkLabel();
@@ -49,17 +49,17 @@
             this.label8 = new System.Windows.Forms.Label();
             this.cmbEmissionNorms = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.btnClose = new System.Windows.Forms.Button();
             this.cmbColor = new System.Windows.Forms.ComboBox();
+            this.lblProductID = new System.Windows.Forms.Label();
+            this.btnClose = new System.Windows.Forms.Button();
             this.grpFileUpload = new System.Windows.Forms.GroupBox();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
-            this.grpFileUpload.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            this.grpFileUpload.SuspendLayout();
             this.SuspendLayout();
             // 
             // fdMasterUpload
@@ -113,18 +113,14 @@
             // 
             // splitContainer1
             // 
-            this.splitContainer1.BackColor = System.Drawing.Color.White;
             this.splitContainer1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.IsSplitterFixed = true;
             this.splitContainer1.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer1.Margin = new System.Windows.Forms.Padding(10);
             this.splitContainer1.Name = "splitContainer1";
             this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.BackColor = System.Drawing.Color.White;
             this.splitContainer1.Panel1.Controls.Add(this.groupBox1);
             this.splitContainer1.Panel1.Controls.Add(this.lblProductID);
             this.splitContainer1.Panel1.Controls.Add(this.label1);
@@ -138,16 +134,29 @@
             this.splitContainer1.SplitterDistance = 323;
             this.splitContainer1.TabIndex = 6;
             // 
-            // lblProductID
+            // groupBox1
             // 
-            this.lblProductID.AutoSize = true;
-            this.lblProductID.Location = new System.Drawing.Point(62, 68);
-            this.lblProductID.Name = "lblProductID";
-            this.lblProductID.Size = new System.Drawing.Size(13, 13);
-            this.lblProductID.TabIndex = 22;
-            this.lblProductID.Text = "0";
-            this.lblProductID.Visible = false;
-            this.lblProductID.TextChanged += new System.EventHandler(this.lblProductID_TextChanged);
+            this.groupBox1.Controls.Add(this.button3);
+            this.groupBox1.Controls.Add(this.btnSave);
+            this.groupBox1.Controls.Add(this.lblPrintBarCode);
+            this.groupBox1.Controls.Add(this.txtBarCode);
+            this.groupBox1.Controls.Add(this.txtCustomerCode);
+            this.groupBox1.Controls.Add(this.label4);
+            this.groupBox1.Controls.Add(this.label3);
+            this.groupBox1.Controls.Add(this.label10);
+            this.groupBox1.Controls.Add(this.cmbBumperType);
+            this.groupBox1.Controls.Add(this.label9);
+            this.groupBox1.Controls.Add(this.cmbMajorVariant);
+            this.groupBox1.Controls.Add(this.label8);
+            this.groupBox1.Controls.Add(this.cmbEmissionNorms);
+            this.groupBox1.Controls.Add(this.label2);
+            this.groupBox1.Controls.Add(this.cmbColor);
+            this.groupBox1.Location = new System.Drawing.Point(23, 68);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(861, 237);
+            this.groupBox1.TabIndex = 24;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "groupBox1";
             // 
             // button3
             // 
@@ -160,7 +169,6 @@
             this.button3.TabIndex = 20;
             this.button3.Text = "Cancel";
             this.button3.UseVisualStyleBackColor = false;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // btnSave
             // 
@@ -293,6 +301,28 @@
             this.label2.TabIndex = 5;
             this.label2.Text = "Color";
             // 
+            // cmbColor
+            // 
+            this.cmbColor.BackColor = System.Drawing.Color.AliceBlue;
+            this.cmbColor.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cmbColor.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbColor.FormattingEnabled = true;
+            this.cmbColor.Location = new System.Drawing.Point(132, 22);
+            this.cmbColor.Name = "cmbColor";
+            this.cmbColor.Size = new System.Drawing.Size(268, 23);
+            this.cmbColor.TabIndex = 4;
+            // 
+            // lblProductID
+            // 
+            this.lblProductID.AutoSize = true;
+            this.lblProductID.Location = new System.Drawing.Point(62, 68);
+            this.lblProductID.Name = "lblProductID";
+            this.lblProductID.Size = new System.Drawing.Size(13, 13);
+            this.lblProductID.TabIndex = 22;
+            this.lblProductID.Text = "0";
+            this.lblProductID.Visible = false;
+            this.lblProductID.TextChanged += new System.EventHandler(this.lblProductID_TextChanged);
+            // 
             // btnClose
             // 
             this.btnClose.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(184)))), ((int)(((byte)(67)))), ((int)(((byte)(44)))));
@@ -307,17 +337,6 @@
             this.btnClose.UseVisualStyleBackColor = false;
             this.btnClose.Click += new System.EventHandler(this.button2_Click);
             // 
-            // cmbColor
-            // 
-            this.cmbColor.BackColor = System.Drawing.Color.AliceBlue;
-            this.cmbColor.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.cmbColor.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmbColor.FormattingEnabled = true;
-            this.cmbColor.Location = new System.Drawing.Point(132, 22);
-            this.cmbColor.Name = "cmbColor";
-            this.cmbColor.Size = new System.Drawing.Size(268, 23);
-            this.cmbColor.TabIndex = 4;
-            // 
             // grpFileUpload
             // 
             this.grpFileUpload.Controls.Add(this.txtSelectedFile);
@@ -330,39 +349,15 @@
             this.grpFileUpload.TabStop = false;
             this.grpFileUpload.Text = "Upload Master";
             // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.button3);
-            this.groupBox1.Controls.Add(this.btnSave);
-            this.groupBox1.Controls.Add(this.lblPrintBarCode);
-            this.groupBox1.Controls.Add(this.txtBarCode);
-            this.groupBox1.Controls.Add(this.txtCustomerCode);
-            this.groupBox1.Controls.Add(this.label4);
-            this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.label10);
-            this.groupBox1.Controls.Add(this.cmbBumperType);
-            this.groupBox1.Controls.Add(this.label9);
-            this.groupBox1.Controls.Add(this.cmbMajorVariant);
-            this.groupBox1.Controls.Add(this.label8);
-            this.groupBox1.Controls.Add(this.cmbEmissionNorms);
-            this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.cmbColor);
-            this.groupBox1.Location = new System.Drawing.Point(23, 68);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(861, 237);
-            this.groupBox1.TabIndex = 24;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "groupBox1";
-            // 
-            // frmMasterUpload
+            // frmOrderUpload
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.Gray;
+            this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(929, 711);
             this.Controls.Add(this.splitContainer1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "frmMasterUpload";
+            this.Name = "frmOrderUpload";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmMasterUpload";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
@@ -371,10 +366,10 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
-            this.grpFileUpload.ResumeLayout(false);
-            this.grpFileUpload.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.grpFileUpload.ResumeLayout(false);
+            this.grpFileUpload.PerformLayout();
             this.ResumeLayout(false);
 
         }

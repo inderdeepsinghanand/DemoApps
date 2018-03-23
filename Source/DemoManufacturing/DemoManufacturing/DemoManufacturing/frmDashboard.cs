@@ -134,5 +134,11 @@ namespace DemoManufacturing
             this.Close();
         }
 
+        private void btnUploadOrder_Click(object sender, EventArgs e)
+        {
+            frmOrderUpload orderUpload = new frmOrderUpload();
+            orderUpload.ShowDialog();
+
+        }
     }
 }
