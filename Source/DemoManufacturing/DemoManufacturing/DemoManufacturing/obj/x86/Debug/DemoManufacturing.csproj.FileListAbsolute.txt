@@ -1,14 +1,3 @@
-C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\obj\x86\Debug\DemoManufacturing.frmCurrentOrder.resources
-C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\obj\x86\Debug\DemoManufacturing.frmDashboard.resources
-C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\obj\x86\Debug\DemoManufacturing.frmMasterUpload.resources
-C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\obj\x86\Debug\DemoManufacturing.Properties.Resources.resources
-C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\obj\x86\Debug\DemoManufacturing.csproj.GenerateResource.Cache
-C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\bin\x86\Debug\DemoManufacturing.exe.config
-C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\bin\x86\Debug\DemoManufacturing.exe
-C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\bin\x86\Debug\DemoManufacturing.pdb
-C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\obj\x86\Debug\DemoManufacturing.exe
-C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\obj\x86\Debug\DemoManufacturing.pdb
-C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\obj\x86\Debug\DemoManufacturing.csprojResolveAssemblyReference.cache
 C:\Users\isingh\Documents\Personal\Demo apps\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\bin\x86\Debug\DemoManufacturing.exe.config
 C:\Users\isingh\Documents\Personal\Demo apps\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\obj\x86\Debug\DemoManufacturing.exe
 C:\Users\isingh\Documents\Personal\Demo apps\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\obj\x86\Debug\DemoManufacturing.pdb
@@ -21,3 +10,16 @@ C:\Users\isingh\Documents\Personal\Demo apps\DemoApps\Source\DemoManufacturing\D
 C:\Users\isingh\Documents\Personal\Demo apps\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\bin\x86\Debug\DemoManufacturing.exe
 C:\Users\isingh\Documents\Personal\Demo apps\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\bin\x86\Debug\DemoManufacturing.pdb
 C:\Users\isingh\Documents\Personal\Demo apps\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\obj\x86\Debug\DemoManufacturing.frmOrderUpload.resources
+C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\bin\x86\Debug\DemoManufacturing.exe.config
+C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\bin\x86\Debug\DemoManufacturing.exe
+C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\bin\x86\Debug\DemoManufacturing.pdb
+C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\bin\x86\Debug\Microsoft.VisualBasic.PowerPacks.Vs.dll
+C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\obj\x86\Debug\DemoManufacturing.frmCurrentOrder.resources
+C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\obj\x86\Debug\DemoManufacturing.frmDashboard.resources
+C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\obj\x86\Debug\DemoManufacturing.frmOrderUpload.resources
+C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\obj\x86\Debug\DemoManufacturing.frmMasterUpload.resources
+C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\obj\x86\Debug\DemoManufacturing.Properties.Resources.resources
+C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\obj\x86\Debug\DemoManufacturing.csproj.GenerateResource.Cache
+C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\obj\x86\Debug\DemoManufacturing.exe
+C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\obj\x86\Debug\DemoManufacturing.pdb
+C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\obj\x86\Debug\DemoManufacturing.csprojResolveAssemblyReference.cache

@@ -171,6 +171,8 @@
             // 
             // dgFrontBumpers
             // 
+            this.dgFrontBumpers.AllowUserToAddRows = false;
+            this.dgFrontBumpers.AllowUserToDeleteRows = false;
             this.dgFrontBumpers.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
@@ -193,6 +195,7 @@
             this.dgFrontBumpers.Location = new System.Drawing.Point(0, 26);
             this.dgFrontBumpers.Margin = new System.Windows.Forms.Padding(0);
             this.dgFrontBumpers.Name = "dgFrontBumpers";
+            this.dgFrontBumpers.ReadOnly = true;
             dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dgFrontBumpers.RowsDefaultCellStyle = dataGridViewCellStyle3;
             this.dgFrontBumpers.RowTemplate.DefaultCellStyle.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -200,6 +203,8 @@
             this.dgFrontBumpers.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.dgFrontBumpers.Size = new System.Drawing.Size(324, 549);
             this.dgFrontBumpers.TabIndex = 3;
+            this.dgFrontBumpers.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgFrontBumpers_CellContentClick);
+            this.dgFrontBumpers.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgFrontBumpers_CellFormatting);
             // 
             // dgBackBumpers
             // 
@@ -234,6 +239,8 @@
             this.dgBackBumpers.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.dgBackBumpers.Size = new System.Drawing.Size(325, 549);
             this.dgBackBumpers.TabIndex = 2;
+            this.dgBackBumpers.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgBackBumpers_CellContentClick);
+            this.dgBackBumpers.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgBackBumpers_CellFormatting);
             // 
             // panel4
             // 

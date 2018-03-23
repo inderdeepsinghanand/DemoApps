@@ -298,9 +298,16 @@ namespace DemoManufacturing
             }
 
             ReLoadGrid();
+
+            MessageBox.Show("Master record saved successfully");
         }
 
         private void button3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnSearch_Click(object sender, EventArgs e)
         {
 
         }

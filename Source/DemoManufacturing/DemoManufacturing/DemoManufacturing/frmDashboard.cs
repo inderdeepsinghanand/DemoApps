@@ -68,16 +68,58 @@ namespace DemoManufacturing
             // Bind the DataGridView to the BindingSource
             // and load the data from the database.
             dgFrontBumpers.DataSource = bSourceBack;
-            GetData("select [Color],[EmissionNorms],[MajorVariant] from tbl_Products where Type ='Front'", bSourceBack);
+            GetData("select OrderID, [Color],[EmissionNorms],[MajorVariant],[IsBarCodePrinted] from [tbl_CustomerOrders] where Type ='Front'", bSourceBack);
 
             dgFrontBumpers.Columns["EmissionNorms"].HeaderText = "Emission Norms";
             dgFrontBumpers.Columns["MajorVariant"].HeaderText = "Major Variant";
 
             dgBackBumpers.DataSource = bSourceFront;
-            GetData("select [Color],[EmissionNorms],[MajorVariant] from tbl_Products where Type ='Rear'", bSourceFront);
+            GetData("select OrderID, [Color],[EmissionNorms],[MajorVariant],[IsBarCodePrinted] from [tbl_CustomerOrders] where Type ='Rear'", bSourceFront);
 
             dgBackBumpers.Columns["EmissionNorms"].HeaderText = "Emission Norms";
             dgBackBumpers.Columns["MajorVariant"].HeaderText = "Major Variant";
+
+
+            dgFrontBumpers.Columns["OrderID"].Visible = false;
+            dgBackBumpers.Columns["OrderID"].Visible = false;
+
+            dgFrontBumpers.Columns["IsBarCodePrinted"].Visible = false;
+            dgBackBumpers.Columns["IsBarCodePrinted"].Visible = false;
+
+
+
+
+            var print = GetPrintButton();
+
+            var printBack = GetPrintButton();
+
+            this.dgFrontBumpers.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            print});
+
+            this.dgBackBumpers.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            printBack});
+
+            
+        }
+
+        private static DataGridViewLinkColumn GetPrintButton()
+        {
+            var print = new System.Windows.Forms.DataGridViewLinkColumn();
+            print.Text = "Print";
+            print.Name = "Print";
+
+            print.UseColumnTextForLinkValue = true;
+            print.LinkBehavior = LinkBehavior.SystemDefault;
+            print.HeaderText = "Print";
+            print.Name = "Print";
+            print.DefaultCellStyle.Font = new Font(FontFamily.GenericSansSerif, 8.00f); 
+            print.LinkColor = Color.Blue;
+            print.TrackVisitedState = true;
+            print.Text = "Print";
+            print.UseColumnTextForLinkValue = true;
+
+
+            return print;
         }
 
         private void GetData(string selectCommand, BindingSource bSource)
@@ -139,6 +181,62 @@ namespace DemoManufacturing
             frmOrderUpload orderUpload = new frmOrderUpload();
             orderUpload.ShowDialog();
 
+        }
+
+        private void dgFrontBumpers_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            DataGridViewRow row = dgFrontBumpers.Rows[e.RowIndex];// get you required index
+            // check the cell value under your specific column and then you can toggle your colors
+
+            if (((bool)row.Cells["IsBarCodePrinted"].Value))
+            {
+                row.DefaultCellStyle.BackColor = Color.FromArgb(185, 245, 191); 
+            }
+            else
+                row.DefaultCellStyle.BackColor = Color.FromArgb(248, 153, 109); 
+        }
+
+        private void dgFrontBumpers_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == this.dgFrontBumpers.Columns["Print"].Index)
+            {
+                if (e.RowIndex > 0)
+                {
+                    var row = dgFrontBumpers.Rows[e.RowIndex]; //dgFrontBumpers.se
+
+                    row.DefaultCellStyle.BackColor = Color.FromArgb(185, 245, 191);
+
+                    // MessageBox.Show(row.Cells["OrderID"].Value.ToString());
+                }
+            }
+        }
+
+        private void dgBackBumpers_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == this.dgBackBumpers.Columns["Print"].Index)
+            {
+                if (e.RowIndex > 0)
+                {
+                    var row = dgBackBumpers.Rows[e.RowIndex]; //dgFrontBumpers.se
+
+                    row.DefaultCellStyle.BackColor = Color.FromArgb(185, 245, 191);
+
+                    // MessageBox.Show(row.Cells["OrderID"].Value.ToString());
+                }
+            }
+        }
+
+        private void dgBackBumpers_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            DataGridViewRow row = dgBackBumpers.Rows[e.RowIndex];// get you required index
+            // check the cell value under your specific column and then you can toggle your colors
+
+            if (((bool)row.Cells["IsBarCodePrinted"].Value))
+            {
+                row.DefaultCellStyle.BackColor = Color.FromArgb(185, 245, 191);
+            }
+            else
+                row.DefaultCellStyle.BackColor = Color.FromArgb(248, 153, 109); 
         }
     }
 }
