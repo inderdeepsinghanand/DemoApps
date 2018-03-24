@@ -35,34 +35,82 @@ namespace DemoManufacturing.DataAccess
 
             var connectionString = ConfigurationManager.ConnectionStrings["DBConnectionString"].ConnectionString;
 
-            foreach(var order in orders){
+            foreach (var order in orders)
+            {
                 using (var conn = new SqlConnection(connectionString))
                 {
-                    using (var cmd = conn.CreateCommand())
-                    {
-                       // var type = i % 2 == 0 ? 1 : 2;
-                        cmd.CommandType = CommandType.Text;
-                        cmd.CommandText = @"INSERT INTO [dbo].[tbl_CustomerOrders]
-                                       ([Color], [EmissionNorms]
-                                       ,[MajorVariant]
-                                       ,[Type],[CustomerCode],[IsBarCodePrinted])
-                                 VALUES
-                                       (
-                                       '" + order.Color + "',' " + order.EmissionNorms 
-                                          + "','" + order.MajorVariant 
-                                          + "','" + order.BumperType + "','" + order.CustomerCode + "','"+ (order.IsBarCodePrinted?1:0).ToString() + "');";
-                        conn.Open();
-                        cmd.ExecuteNonQuery();
-                        conn.Close();
 
+
+                    using (SqlCommand command = new SqlCommand("[dbo].[usp_SaveOrder]", conn))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+                        //                            @OrderID BIGINT,
+                        //@Color nvarchar(50),
+                        //@EmissionNorms nvarchar(100)
+                        //,@MajorVariant nvarchar(500)
+                        //,@Type nvarchar(20)
+                        //,@CustomerCode nvarchar(150)
+                        //,@IsBarCodePrinted BIT
+
+
+                        command.Parameters.Add(new SqlParameter("@OrderID", SqlDbType.BigInt) { Value = order.OrderID });
+                        command.Parameters.Add(new SqlParameter("@Color", SqlDbType.NVarChar, 50) { Value = order.Color });
+                        command.Parameters.Add(new SqlParameter("@EmissionNorms", SqlDbType.NVarChar, 100) { Value = order.EmissionNorms });
+                        command.Parameters.Add(new SqlParameter("@MajorVariant", SqlDbType.NVarChar, 500) { Value = order.MajorVariant });
+                        command.Parameters.Add(new SqlParameter("@Type", SqlDbType.NVarChar, 20) { Value = order.BumperType });
+                        command.Parameters.Add(new SqlParameter("@CustomerCode", SqlDbType.NVarChar, 150) { Value = order.CustomerCode });
+                        command.Parameters.Add(new SqlParameter("@IsBarCodePrinted", SqlDbType.Bit, 1000) { Value = order.IsBarCodePrinted });
+
+
+                        conn.Open();
+                        int result = command.ExecuteNonQuery();
+
+                        // Check Error
+                        if (result < 0)
+                            Console.WriteLine("Error inserting data into Database!");
                     }
                 }
             }
         }
 
-        }
+        public void ChangePrintStatus(long OrderID)
+        {
+       
+            var connectionString = ConfigurationManager.ConnectionStrings["DBConnectionString"].ConnectionString;
+
+                using (var conn = new SqlConnection(connectionString))
+                {
+
+
+                    using (SqlCommand command = new SqlCommand("[dbo].[usp_ChangePrintStatus]", conn))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+                        
+                        command.Parameters.Add(new SqlParameter("@OrderID", SqlDbType.BigInt) { Value = OrderID });
+                        //command.Parameters.Add(new SqlParameter("@Color", SqlDbType.NVarChar, 50) { Value = order.Color });
+                        //command.Parameters.Add(new SqlParameter("@EmissionNorms", SqlDbType.NVarChar, 100) { Value = order.EmissionNorms });
+                        //command.Parameters.Add(new SqlParameter("@MajorVariant", SqlDbType.NVarChar, 500) { Value = order.MajorVariant });
+                        //command.Parameters.Add(new SqlParameter("@Type", SqlDbType.NVarChar, 20) { Value = order.BumperType });
+                        //command.Parameters.Add(new SqlParameter("@CustomerCode", SqlDbType.NVarChar, 150) { Value = order.CustomerCode });
+                        //command.Parameters.Add(new SqlParameter("@IsBarCodePrinted", SqlDbType.Bit, 1000) { Value = order.IsBarCodePrinted });
+
+
+                        conn.Open();
+                        int result = command.ExecuteNonQuery();
+
+                        // Check Error
+                        if (result < 0)
+                            Console.WriteLine("Error inserting data into Database!");
+                    }
+                }
+            }
+        
 
     }
+
+
+
+}
 
     //public class ProductContext 
     //{

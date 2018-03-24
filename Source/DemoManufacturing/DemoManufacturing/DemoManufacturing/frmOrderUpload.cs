@@ -21,8 +21,10 @@ namespace DemoManufacturing
         private BindingSource bSourceFront = new BindingSource();
         private SqlDataAdapter dataAdapter = new SqlDataAdapter();
 
-        public frmOrderUpload()
+        private frmDashboard masterForm = null;
+        public frmOrderUpload( frmDashboard dash)
         {
+            masterForm = dash;
             InitializeComponent();
 
             GetData("select * from [tbl_CustomerOrdersMisMatch] ", bSourceFront);
@@ -30,13 +32,13 @@ namespace DemoManufacturing
 
             dataGridView1.Columns["OrderID"].Visible = false;
 
-            //BindCombo("Select distinct Color as [Key] from tbl_Products", cmbColor);
+            BindCombo("Select distinct Color as [Key] from tbl_Products", cmbColor);
 
-            //BindCombo("Select distinct [EmissionNorms] as [Key] from tbl_Products", cmbEmissionNorms);
+            BindCombo("Select distinct [EmissionNorms] as [Key] from tbl_Products", cmbEmissionNorms);
 
-            //BindCombo("Select distinct [MajorVariant] as [Key] from tbl_Products", cmbMajorVariant);
+            BindCombo("Select distinct [MajorVariant] as [Key] from tbl_Products", cmbMajorVariant);
 
-            //BindCombo("Select distinct [Type] as [Key] from tbl_Products", cmbBumperType);
+            BindCombo("Select distinct [Type] as [Key] from tbl_Products", cmbBumperType);
 
         }
 
@@ -62,7 +64,7 @@ namespace DemoManufacturing
                 DataTable tblResult = new DataTable();
                 tblResult = FetchFromDb(selectCommand);
 
-                tblResult.Rows.InsertAt(tblResult.NewRow(), 0);
+               // tblResult.Rows.InsertAt(tblResult.NewRow(), 0);
                 bSource.DataSource = tblResult;
 
                 // Resize the DataGridView columns to fit the newly loaded content.
@@ -222,31 +224,31 @@ namespace DemoManufacturing
 
         private void dataGridView1_RowEnter(object sender, DataGridViewCellEventArgs e)
         {
-            //var rowIndex = e.RowIndex;
-            //var row = dataGridView1.Rows[rowIndex];
+            var rowIndex = e.RowIndex;
+            var row = dataGridView1.Rows[rowIndex];
 
-            //var barcode = row.Cells["BarCode"].Value.ToString();
-            //if (!string.IsNullOrEmpty(barcode))
-            //{
-            //    lblProductID.Text = row.Cells["ProductID"].Value.ToString();
-            //    cmbEmissionNorms.SelectedValue = row.Cells["EmissionNorms"].Value;
-            //    cmbColor.SelectedValue = row.Cells["Color"].Value;
-            //    cmbMajorVariant.SelectedValue = row.Cells["MajorVariant"].Value;
-            //    cmbBumperType.SelectedValue = row.Cells["Type"].Value;
-            //    txtCustomerCode.Text = row.Cells["CustomerCode"].Value.ToString();
-            //    txtBarCode.Text = row.Cells["BarCode"].Value.ToString();
-            //}
+            var orderID = row.Cells["OrderID"].Value.ToString();
+            if (!string.IsNullOrEmpty(orderID))
+            {
+                lblProductID.Text = row.Cells["OrderID"].Value.ToString();
+                cmbEmissionNorms.SelectedValue = row.Cells["EmissionNorms"].Value;
+                cmbColor.SelectedValue = row.Cells["Color"].Value;
+                cmbMajorVariant.SelectedValue = row.Cells["MajorVariant"].Value;
+                cmbBumperType.SelectedValue = row.Cells["Type"].Value;
+                txtCustomerCode.Text = row.Cells["CustomerCode"].Value.ToString();
+               // txtBarCode.Text = row.Cells["BarCode"].Value.ToString();
+            }
         }
 
         private void lblProductID_TextChanged(object sender, EventArgs e)
         {
-            //var productId = Convert.ToInt64(lblProductID.Text);
-            //if (productId > 0)
-            //{
-            //    btnSave.Text = "Save";
-            //}
-            //else
-            //    btnSave.Text = "Add";
+            var productId = Convert.ToInt64(lblProductID.Text);
+            if (productId > 0)
+            {
+                btnSave.Text = "Save";
+            }
+            else
+                btnSave.Text = "Add";
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -255,34 +257,51 @@ namespace DemoManufacturing
             // Specify a connection string. Replace the given value with a 
             // valid connection string for a Northwind SQL Server sample
             // database accessible to your system.
-            var connectionString = ConfigurationManager.ConnectionStrings["DBConnectionString"].ConnectionString;
+            //var connectionString = ConfigurationManager.ConnectionStrings["DBConnectionString"].ConnectionString;
 
 
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                using (SqlCommand command = new SqlCommand("[dbo].[usp_SaveProduct]", connection))
-                {
-                    command.CommandType = CommandType.StoredProcedure;
+            //using (SqlConnection connection = new SqlConnection(connectionString))
+            //{
+            //    using (SqlCommand command = new SqlCommand("[dbo].[usp_SaveProduct]", connection))
+            //    {
+            //        command.CommandType = CommandType.StoredProcedure;
 
 
 
-                    command.Parameters.Add(new SqlParameter("@ProductID", SqlDbType.BigInt) { Value = Convert.ToInt64(lblProductID.Text) });
-                    command.Parameters.Add(new SqlParameter("@Color", SqlDbType.NVarChar, 50) { Value = cmbColor.SelectedValue });
-                    command.Parameters.Add(new SqlParameter("@EmissionNorms", SqlDbType.NVarChar, 100) { Value = cmbEmissionNorms.SelectedValue });
-                    command.Parameters.Add(new SqlParameter("@MajorVariant", SqlDbType.NVarChar, 500) { Value = cmbMajorVariant.SelectedValue });
-                    command.Parameters.Add(new SqlParameter("@Type", SqlDbType.NVarChar, 20) { Value = cmbBumperType.SelectedValue });
-                    command.Parameters.Add(new SqlParameter("@CustomerCode", SqlDbType.NVarChar, 150) { Value = txtCustomerCode.Text });
-                    command.Parameters.Add(new SqlParameter("@BarCode", SqlDbType.NVarChar, 1000) { Value = txtBarCode.Text });
+            //        command.Parameters.Add(new SqlParameter("@ProductID", SqlDbType.BigInt) { Value = Convert.ToInt64(lblProductID.Text) });
+            //        command.Parameters.Add(new SqlParameter("@Color", SqlDbType.NVarChar, 50) { Value = cmbColor.SelectedValue });
+            //        command.Parameters.Add(new SqlParameter("@EmissionNorms", SqlDbType.NVarChar, 100) { Value = cmbEmissionNorms.SelectedValue });
+            //        command.Parameters.Add(new SqlParameter("@MajorVariant", SqlDbType.NVarChar, 500) { Value = cmbMajorVariant.SelectedValue });
+            //        command.Parameters.Add(new SqlParameter("@Type", SqlDbType.NVarChar, 20) { Value = cmbBumperType.SelectedValue });
+            //        command.Parameters.Add(new SqlParameter("@CustomerCode", SqlDbType.NVarChar, 150) { Value = txtCustomerCode.Text });
+            //        command.Parameters.Add(new SqlParameter("@BarCode", SqlDbType.NVarChar, 1000) { Value = txtBarCode.Text });
 
 
-                    connection.Open();
-                    int result = command.ExecuteNonQuery();
+            //        connection.Open();
+            //        int result = command.ExecuteNonQuery();
 
-                    // Check Error
-                    if (result < 0)
-                        Console.WriteLine("Error inserting data into Database!");
-                }
-            }
+            //        // Check Error
+            //        if (result < 0)
+            //            Console.WriteLine("Error inserting data into Database!");
+            //    }
+            //}
+
+            //IList<CustomerOrder> orders
+
+            CustomerOrder order = new CustomerOrder();
+            order.OrderID = Convert.ToInt64(lblProductID.Text);
+            order.MajorVariant = cmbMajorVariant.SelectedValue != null?cmbMajorVariant.SelectedValue.ToString():"" ;
+            order.EmissionNorms = cmbEmissionNorms.SelectedValue != null ? cmbEmissionNorms.SelectedValue.ToString() : "";
+            order.BumperType = cmbBumperType.SelectedValue != null ? cmbBumperType.SelectedValue.ToString() : "";
+            order.Color = cmbColor.SelectedValue != null ? cmbColor.SelectedValue.ToString() : "";
+            order.CustomerCode = txtCustomerCode.Text;
+
+            new CustomerOrderRepository().AddOrder(new List<CustomerOrder>() { order });
+        }
+
+        private void frmOrderUpload_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            masterForm.LoadGridData();
         }
 
     }

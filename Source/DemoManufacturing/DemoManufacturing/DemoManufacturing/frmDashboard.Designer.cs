@@ -34,6 +34,7 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -45,9 +46,9 @@
             this.dgFrontBumpers = new System.Windows.Forms.DataGridView();
             this.dgBackBumpers = new System.Windows.Forms.DataGridView();
             this.panel4 = new System.Windows.Forms.Panel();
-            this.label2 = new System.Windows.Forms.Label();
+            this.lblRearBump = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblFrontBump = new System.Windows.Forms.Label();
             this.flowLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -69,10 +70,10 @@
             // 
             // panel2
             // 
-            this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(197)))), ((int)(((byte)(9)))));
+            this.panel2.BackColor = System.Drawing.Color.White;
             this.panel2.Location = new System.Drawing.Point(3, 3);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(178, 82);
+            this.panel2.Size = new System.Drawing.Size(160, 82);
             this.panel2.TabIndex = 0;
             // 
             // panel1
@@ -85,7 +86,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel1.Location = new System.Drawing.Point(0, 85);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(181, 424);
+            this.panel1.Size = new System.Drawing.Size(163, 424);
             this.panel1.TabIndex = 1;
             // 
             // btnExit
@@ -96,7 +97,7 @@
             this.btnExit.Image = global::DemoManufacturing.Properties.Resources.Logout_small1;
             this.btnExit.Location = new System.Drawing.Point(0, 357);
             this.btnExit.Name = "btnExit";
-            this.btnExit.Size = new System.Drawing.Size(181, 119);
+            this.btnExit.Size = new System.Drawing.Size(163, 119);
             this.btnExit.TabIndex = 4;
             this.btnExit.Text = "Exit";
             this.btnExit.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
@@ -112,7 +113,7 @@
             this.btnUploadOrder.Image = global::DemoManufacturing.Properties.Resources.Upload;
             this.btnUploadOrder.Location = new System.Drawing.Point(0, 238);
             this.btnUploadOrder.Name = "btnUploadOrder";
-            this.btnUploadOrder.Size = new System.Drawing.Size(181, 119);
+            this.btnUploadOrder.Size = new System.Drawing.Size(163, 119);
             this.btnUploadOrder.TabIndex = 3;
             this.btnUploadOrder.Text = "Upload Order";
             this.btnUploadOrder.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
@@ -128,7 +129,7 @@
             this.btnOrderProcessing.Image = global::DemoManufacturing.Properties.Resources.OrderProcessing_small;
             this.btnOrderProcessing.Location = new System.Drawing.Point(0, 119);
             this.btnOrderProcessing.Name = "btnOrderProcessing";
-            this.btnOrderProcessing.Size = new System.Drawing.Size(181, 119);
+            this.btnOrderProcessing.Size = new System.Drawing.Size(163, 119);
             this.btnOrderProcessing.TabIndex = 1;
             this.btnOrderProcessing.Text = "Process Order";
             this.btnOrderProcessing.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
@@ -143,7 +144,7 @@
             this.btnMasterUpload.Image = global::DemoManufacturing.Properties.Resources.Upload;
             this.btnMasterUpload.Location = new System.Drawing.Point(0, 0);
             this.btnMasterUpload.Name = "btnMasterUpload";
-            this.btnMasterUpload.Size = new System.Drawing.Size(181, 119);
+            this.btnMasterUpload.Size = new System.Drawing.Size(163, 119);
             this.btnMasterUpload.TabIndex = 0;
             this.btnMasterUpload.Text = "Upload Master Data";
             this.btnMasterUpload.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
@@ -161,12 +162,12 @@
             this.tableLayoutPanel1.Controls.Add(this.panel4, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.panel3, 0, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(181, 85);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(163, 85);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 26F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(649, 424);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(667, 424);
             this.tableLayoutPanel1.TabIndex = 2;
             // 
             // dgFrontBumpers
@@ -174,13 +175,13 @@
             this.dgFrontBumpers.AllowUserToAddRows = false;
             this.dgFrontBumpers.AllowUserToDeleteRows = false;
             this.dgFrontBumpers.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dgFrontBumpers.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgFrontBumpers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -196,93 +197,104 @@
             this.dgFrontBumpers.Margin = new System.Windows.Forms.Padding(0);
             this.dgFrontBumpers.Name = "dgFrontBumpers";
             this.dgFrontBumpers.ReadOnly = true;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dgFrontBumpers.RowsDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgFrontBumpers.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dgFrontBumpers.RowsDefaultCellStyle = dataGridViewCellStyle4;
             this.dgFrontBumpers.RowTemplate.DefaultCellStyle.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dgFrontBumpers.RowTemplate.Height = 50;
             this.dgFrontBumpers.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgFrontBumpers.Size = new System.Drawing.Size(324, 549);
+            this.dgFrontBumpers.Size = new System.Drawing.Size(333, 549);
             this.dgFrontBumpers.TabIndex = 3;
             this.dgFrontBumpers.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgFrontBumpers_CellContentClick);
             this.dgFrontBumpers.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgFrontBumpers_CellFormatting);
             // 
             // dgBackBumpers
             // 
+            this.dgBackBumpers.AllowUserToAddRows = false;
+            this.dgBackBumpers.AllowUserToDeleteRows = false;
             this.dgBackBumpers.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgBackBumpers.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
-            this.dgBackBumpers.ColumnHeadersHeight = 30;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
             dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgBackBumpers.DefaultCellStyle = dataGridViewCellStyle5;
+            this.dgBackBumpers.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            this.dgBackBumpers.ColumnHeadersHeight = 28;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgBackBumpers.DefaultCellStyle = dataGridViewCellStyle6;
             this.dgBackBumpers.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgBackBumpers.Location = new System.Drawing.Point(324, 26);
+            this.dgBackBumpers.Location = new System.Drawing.Point(333, 26);
             this.dgBackBumpers.Margin = new System.Windows.Forms.Padding(0);
             this.dgBackBumpers.Name = "dgBackBumpers";
+            this.dgBackBumpers.ReadOnly = true;
             this.dgBackBumpers.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.dgBackBumpers.RowHeadersWidth = 60;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dgBackBumpers.RowsDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dgBackBumpers.RowsDefaultCellStyle = dataGridViewCellStyle7;
             this.dgBackBumpers.RowTemplate.DefaultCellStyle.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dgBackBumpers.RowTemplate.Height = 50;
             this.dgBackBumpers.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgBackBumpers.Size = new System.Drawing.Size(325, 549);
+            this.dgBackBumpers.Size = new System.Drawing.Size(334, 549);
             this.dgBackBumpers.TabIndex = 2;
             this.dgBackBumpers.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgBackBumpers_CellContentClick);
             this.dgBackBumpers.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgBackBumpers_CellFormatting);
             // 
             // panel4
             // 
-            this.panel4.Controls.Add(this.label2);
+            this.panel4.Controls.Add(this.lblRearBump);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel4.Location = new System.Drawing.Point(327, 3);
+            this.panel4.Location = new System.Drawing.Point(336, 3);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(319, 20);
+            this.panel4.Size = new System.Drawing.Size(328, 20);
             this.panel4.TabIndex = 1;
             // 
-            // label2
+            // lblRearBump
             // 
-            this.label2.BackColor = System.Drawing.Color.White;
-            this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(0, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(319, 20);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "Rear Bumpers";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblRearBump.BackColor = System.Drawing.Color.White;
+            this.lblRearBump.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblRearBump.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblRearBump.Location = new System.Drawing.Point(0, 0);
+            this.lblRearBump.Name = "lblRearBump";
+            this.lblRearBump.Size = new System.Drawing.Size(328, 20);
+            this.lblRearBump.TabIndex = 1;
+            this.lblRearBump.Text = "Rear Bumpers";
+            this.lblRearBump.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // panel3
             // 
-            this.panel3.Controls.Add(this.label1);
+            this.panel3.Controls.Add(this.lblFrontBump);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel3.Location = new System.Drawing.Point(3, 3);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(318, 20);
+            this.panel3.Size = new System.Drawing.Size(327, 20);
             this.panel3.TabIndex = 0;
             // 
-            // label1
+            // lblFrontBump
             // 
-            this.label1.BackColor = System.Drawing.Color.White;
-            this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(0, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(318, 20);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Front Bumpers";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblFrontBump.BackColor = System.Drawing.Color.White;
+            this.lblFrontBump.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblFrontBump.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblFrontBump.Location = new System.Drawing.Point(0, 0);
+            this.lblFrontBump.Name = "lblFrontBump";
+            this.lblFrontBump.Size = new System.Drawing.Size(327, 20);
+            this.lblFrontBump.TabIndex = 0;
+            this.lblFrontBump.Text = "Front Bumpers";
+            this.lblFrontBump.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // frmDashboard
             // 
@@ -317,9 +329,9 @@
         private System.Windows.Forms.Button btnOrderProcessing;
         private System.Windows.Forms.Button btnMasterUpload;
         private System.Windows.Forms.Panel panel4;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lblRearBump;
         private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblFrontBump;
         private System.Windows.Forms.DataGridView dgBackBumpers;
         private System.Windows.Forms.DataGridView dgFrontBumpers;
         private System.Windows.Forms.Button btnExit;

@@ -8,6 +8,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using DemoManufacturing.DataAccess;
 
 namespace DemoManufacturing
 {
@@ -52,7 +53,7 @@ namespace DemoManufacturing
             LoadGridData();
         }
 
-        private void LoadGridData()
+        public void LoadGridData()
         {
 
     //        [ProductID] [bigint] IDENTITY(1,1) NOT NULL,
@@ -64,17 +65,21 @@ namespace DemoManufacturing
     //[CustomerCode] [nvarchar](150) NOT NULL,
     //[BarCode] [nvarchar](1000) NULL,
 
+            dgFrontBumpers.DataSource = null;
+            dgBackBumpers.DataSource = null;
+            dgBackBumpers.Columns.Clear();
+            dgFrontBumpers.Columns.Clear();
 
             // Bind the DataGridView to the BindingSource
             // and load the data from the database.
             dgFrontBumpers.DataSource = bSourceBack;
-            GetData("select OrderID, [Color],[EmissionNorms],[MajorVariant],[IsBarCodePrinted] from [tbl_CustomerOrders] where Type ='Front'", bSourceBack);
+            GetData("select OrderID, [Color],[EmissionNorms],[MajorVariant],[IsBarCodePrinted],[BarCode] from [tbl_CustomerOrders] where Type ='Front'", bSourceBack);
 
             dgFrontBumpers.Columns["EmissionNorms"].HeaderText = "Emission Norms";
             dgFrontBumpers.Columns["MajorVariant"].HeaderText = "Major Variant";
 
             dgBackBumpers.DataSource = bSourceFront;
-            GetData("select OrderID, [Color],[EmissionNorms],[MajorVariant],[IsBarCodePrinted] from [tbl_CustomerOrders] where Type ='Rear'", bSourceFront);
+            GetData("select OrderID, [Color],[EmissionNorms],[MajorVariant],[IsBarCodePrinted],[BarCode] from [tbl_CustomerOrders] where Type ='Rear'", bSourceFront);
 
             dgBackBumpers.Columns["EmissionNorms"].HeaderText = "Emission Norms";
             dgBackBumpers.Columns["MajorVariant"].HeaderText = "Major Variant";
@@ -82,10 +87,14 @@ namespace DemoManufacturing
 
             dgFrontBumpers.Columns["OrderID"].Visible = false;
             dgBackBumpers.Columns["OrderID"].Visible = false;
+            dgFrontBumpers.Columns["BarCode"].Visible = false;
+            dgBackBumpers.Columns["BarCode"].Visible = false;
 
             dgFrontBumpers.Columns["IsBarCodePrinted"].Visible = false;
             dgBackBumpers.Columns["IsBarCodePrinted"].Visible = false;
 
+            lblFrontBump.Text = "Front Bumpers" + "(" + dgFrontBumpers.Rows.Count + ")";
+            lblRearBump.Text = "Rear Bumpers" + "(" + dgBackBumpers.Rows.Count + ")";
 
 
 
@@ -178,49 +187,75 @@ namespace DemoManufacturing
 
         private void btnUploadOrder_Click(object sender, EventArgs e)
         {
-            frmOrderUpload orderUpload = new frmOrderUpload();
+            frmOrderUpload orderUpload = new frmOrderUpload(this);
             orderUpload.ShowDialog();
+            orderUpload.FormClosed += frmOrder_FormClosed;
 
         }
 
         private void dgFrontBumpers_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
-            DataGridViewRow row = dgFrontBumpers.Rows[e.RowIndex];// get you required index
-            // check the cell value under your specific column and then you can toggle your colors
-
-            if (((bool)row.Cells["IsBarCodePrinted"].Value))
+            //DataView tb = dgFrontBumpers.DataS as DataTable;
+            if (dgFrontBumpers.Rows != null && dgFrontBumpers.Rows.Count > 0)
             {
-                row.DefaultCellStyle.BackColor = Color.FromArgb(185, 245, 191); 
+                DataGridViewRow row = dgFrontBumpers.Rows[e.RowIndex];// get you required index
+                // check the cell value under your specific column and then you can toggle your colors
+               
+                    if (((bool)row.Cells["IsBarCodePrinted"].Value))
+                    {
+                        row.DefaultCellStyle.BackColor = Color.FromArgb(127, 186, 0);
+                    }
+                    else
+                        row.DefaultCellStyle.BackColor = Color.FromArgb(255, 140, 0);
+                
             }
-            else
-                row.DefaultCellStyle.BackColor = Color.FromArgb(248, 153, 109); 
         }
 
         private void dgFrontBumpers_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.ColumnIndex == this.dgFrontBumpers.Columns["Print"].Index)
             {
-                if (e.RowIndex > 0)
+                if (e.RowIndex >= 0)
                 {
                     var row = dgFrontBumpers.Rows[e.RowIndex]; //dgFrontBumpers.se
+                    //green
+                    row.DefaultCellStyle.BackColor = Color.FromArgb(127, 186, 0);
 
-                    row.DefaultCellStyle.BackColor = Color.FromArgb(185, 245, 191);
-
+                    //set print status
+                    SetPrintStatus(Convert.ToInt64(row.Cells["OrderID"].Value.ToString()), row.Cells["BarCode"].Value.ToString());
+                    LoadGridData();
+                    MessageBox.Show("Barcode printed successfully");
                     // MessageBox.Show(row.Cells["OrderID"].Value.ToString());
                 }
             }
+        }
+
+        public void SetPrintStatus(long OrderID,string Barcode)
+        {
+            //new CustomerOrderRepository
+
+            new CustomerOrderRepository().ChangePrintStatus(OrderID);
+
+            //var barcode = "select * from tbl"
+
+            frmBarcodePrinting barcodePrint = new frmBarcodePrinting(Barcode);
+            barcodePrint.ShowDialog();
         }
 
         private void dgBackBumpers_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.ColumnIndex == this.dgBackBumpers.Columns["Print"].Index)
             {
-                if (e.RowIndex > 0)
+                if (e.RowIndex >= 0)
                 {
                     var row = dgBackBumpers.Rows[e.RowIndex]; //dgFrontBumpers.se
 
-                    row.DefaultCellStyle.BackColor = Color.FromArgb(185, 245, 191);
+                    row.DefaultCellStyle.BackColor = Color.FromArgb(127, 186, 0);
 
+                    //set print status
+                    SetPrintStatus(Convert.ToInt64(row.Cells["OrderID"].Value.ToString()),"123");
+                    LoadGridData();
+                    MessageBox.Show("Barcode printed successfully");
                     // MessageBox.Show(row.Cells["OrderID"].Value.ToString());
                 }
             }
@@ -228,15 +263,24 @@ namespace DemoManufacturing
 
         private void dgBackBumpers_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
-            DataGridViewRow row = dgBackBumpers.Rows[e.RowIndex];// get you required index
-            // check the cell value under your specific column and then you can toggle your colors
-
-            if (((bool)row.Cells["IsBarCodePrinted"].Value))
+            if (dgFrontBumpers.Rows != null && dgFrontBumpers.Rows.Count > 0)
             {
-                row.DefaultCellStyle.BackColor = Color.FromArgb(185, 245, 191);
+                DataGridViewRow row = dgBackBumpers.Rows[e.RowIndex];// get you required index
+                // check the cell value under your specific column and then you can toggle your colors
+
+                if (((bool)row.Cells["IsBarCodePrinted"].Value))
+                {
+                    row.DefaultCellStyle.BackColor = Color.FromArgb(127, 186, 0);
+                }
+                else
+                    row.DefaultCellStyle.BackColor = Color.FromArgb(255, 140, 0);
+
             }
-            else
-                row.DefaultCellStyle.BackColor = Color.FromArgb(248, 153, 109); 
+        }
+
+        private void frmOrder_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            LoadGridData();
         }
     }
 }

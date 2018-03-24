@@ -360,6 +360,7 @@
             this.Name = "frmOrderUpload";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmMasterUpload";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmOrderUpload_FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.PerformLayout();

@@ -90,6 +90,12 @@
     <Compile Include="DataAccess\CustomerOrderRepository.cs" />
     <Compile Include="Entities\CustomerOrder.cs" />
     <Compile Include="Entities\Product.cs" />
+    <Compile Include="frmBarcodePrinting.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmBarcodePrinting.Designer.cs">
+      <DependentUpon>frmBarcodePrinting.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmCurrentOrder.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -116,6 +122,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="frmBarcodePrinting.resx">
+      <DependentUpon>frmBarcodePrinting.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmCurrentOrder.resx">
       <DependentUpon>frmCurrentOrder.cs</DependentUpon>
     </EmbeddedResource>

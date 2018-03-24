@@ -27,7 +27,7 @@ namespace DemoManufacturing
 
             ReLoadGrid();
 
-            BindComboBoxes();
+           // BindComboBoxes();
         }
 
         private void ReLoadGrid()
@@ -44,13 +44,13 @@ namespace DemoManufacturing
 
         private void BindComboBoxes()
         {
-            BindCombo("Select distinct Color as [Key] from tbl_Products", cmbColor);
+            BindCombo("Select distinct Color as [Key] from tbl_Products", cmbColor1);
 
-            BindCombo("Select distinct [EmissionNorms] as [Key] from tbl_Products", cmbEmissionNorms);
+            BindCombo("Select distinct [EmissionNorms] as [Key] from tbl_Products", cmbEmission);
 
-            BindCombo("Select distinct [MajorVariant] as [Key] from tbl_Products", cmbMajorVariant);
+            BindCombo("Select distinct [MajorVariant] as [Key] from tbl_Products", cmbMajorVariant1);
 
-            BindCombo("Select distinct [Type] as [Key] from tbl_Products", cmbBumperType);
+            BindCombo("Select distinct [Type] as [Key] from tbl_Products", cmbBumperType1);
         }
 
         public void BindCombo(string selectCommand, ComboBox cmb)
@@ -75,7 +75,7 @@ namespace DemoManufacturing
                 DataTable tblResult = new DataTable();
                 tblResult = FetchFromDb(selectCommand);
 
-                tblResult.Rows.InsertAt(tblResult.NewRow(), 0);
+               // tblResult.Rows.InsertAt(tblResult.NewRow(), 0);
                 bSource.DataSource = tblResult;
 
                 // Resize the DataGridView columns to fit the newly loaded content.
@@ -134,8 +134,8 @@ namespace DemoManufacturing
                         //dataGridView1.DataSource = dtExcel;
 
                         ReLoadGrid();
-                        
 
+                        MessageBox.Show("Master data uploaded successfully");
                     }
                     catch (Exception ex)
                     {
@@ -242,12 +242,12 @@ namespace DemoManufacturing
             if (!string.IsNullOrEmpty(barcode))
             {
                 lblProductID.Text = row.Cells["ProductID"].Value.ToString();
-                cmbEmissionNorms.SelectedValue = row.Cells["EmissionNorms"].Value;
-                cmbColor.SelectedValue = row.Cells["Color"].Value;
-                cmbMajorVariant.SelectedValue = row.Cells["MajorVariant"].Value;
-                cmbBumperType.SelectedValue = row.Cells["Type"].Value;
-                txtCustomerCode.Text = row.Cells["CustomerCode"].Value.ToString();
-                txtBarCode.Text = row.Cells["BarCode"].Value.ToString();
+                cmbEmission.SelectedValue = row.Cells["EmissionNorms"].Value;
+                cmbColor1.SelectedValue = row.Cells["Color"].Value;
+                cmbMajorVariant1.SelectedValue = row.Cells["MajorVariant"].Value;
+                cmbBumperType1.SelectedValue = row.Cells["Type"].Value;
+                txtCustCode1.Text = row.Cells["CustomerCode"].Value.ToString();
+                txtBarCode1.Text = row.Cells["BarCode"].Value.ToString();
             }
         }
 
@@ -256,10 +256,10 @@ namespace DemoManufacturing
             var productId = Convert.ToInt64(lblProductID.Text);
             if (productId > 0)
             {
-                btnSave.Text = "Save";
+                btnAdd.Text = "Save";
             }
             else
-                btnSave.Text = "Add";
+                btnAdd.Text = "Add";
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -280,12 +280,12 @@ namespace DemoManufacturing
 
 
                     command.Parameters.Add(new SqlParameter("@ProductID", SqlDbType.BigInt) { Value = Convert.ToInt64(lblProductID.Text) });
-                    command.Parameters.Add(new SqlParameter("@Color", SqlDbType.NVarChar, 50) { Value = cmbColor.SelectedValue });
-                    command.Parameters.Add(new SqlParameter("@EmissionNorms", SqlDbType.NVarChar, 100) { Value = cmbEmissionNorms.SelectedValue });
-                    command.Parameters.Add(new SqlParameter("@MajorVariant", SqlDbType.NVarChar, 500) { Value = cmbMajorVariant.SelectedValue });
-                    command.Parameters.Add(new SqlParameter("@Type", SqlDbType.NVarChar, 20) { Value = cmbBumperType.SelectedValue });
-                    command.Parameters.Add(new SqlParameter("@CustomerCode", SqlDbType.NVarChar, 150) { Value = txtCustomerCode.Text });
-                    command.Parameters.Add(new SqlParameter("@BarCode", SqlDbType.NVarChar, 1000) { Value = txtBarCode.Text });
+                    command.Parameters.Add(new SqlParameter("@Color", SqlDbType.NVarChar, 50) { Value = cmbColor1.SelectedValue });
+                    command.Parameters.Add(new SqlParameter("@EmissionNorms", SqlDbType.NVarChar, 100) { Value = cmbEmission.SelectedValue });
+                    command.Parameters.Add(new SqlParameter("@MajorVariant", SqlDbType.NVarChar, 500) { Value = cmbMajorVariant1.SelectedValue });
+                    command.Parameters.Add(new SqlParameter("@Type", SqlDbType.NVarChar, 20) { Value = cmbBumperType1.SelectedValue });
+                    command.Parameters.Add(new SqlParameter("@CustomerCode", SqlDbType.NVarChar, 150) { Value = txtCustCode1.Text });
+                    command.Parameters.Add(new SqlParameter("@BarCode", SqlDbType.NVarChar, 1000) { Value = txtBarCode1.Text });
 
 
                     connection.Open();
@@ -304,7 +304,15 @@ namespace DemoManufacturing
 
         private void button3_Click(object sender, EventArgs e)
         {
+            ResetEdit();       
+        }
 
+        private void ResetEdit()
+        {
+            cmbEmission.SelectedValue = "Please select";
+            cmbColor1.SelectedValue = cmbMajorVariant1.SelectedValue = cmbBumperType1.SelectedValue = "Please select";
+            txtCustCode1.Text = txtBarCode1.Text = "";
+            lblProductID.Text = "0";
         }
 
         private void btnSearch_Click(object sender, EventArgs e)

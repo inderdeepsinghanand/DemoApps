@@ -14,6 +14,7 @@ C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufact
 C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\bin\x86\Debug\DemoManufacturing.exe
 C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\bin\x86\Debug\DemoManufacturing.pdb
 C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\bin\x86\Debug\Microsoft.VisualBasic.PowerPacks.Vs.dll
+C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\obj\x86\Debug\DemoManufacturing.frmBarcodePrinting.resources
 C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\obj\x86\Debug\DemoManufacturing.frmCurrentOrder.resources
 C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\obj\x86\Debug\DemoManufacturing.frmDashboard.resources
 C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\obj\x86\Debug\DemoManufacturing.frmOrderUpload.resources
