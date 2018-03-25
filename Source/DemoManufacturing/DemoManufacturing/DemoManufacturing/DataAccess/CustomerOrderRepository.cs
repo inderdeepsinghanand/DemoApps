@@ -17,7 +17,7 @@ namespace DemoManufacturing.DataAccess
 {
     public class CustomerOrderRepository
     {
-        public void AddOrder(IList<CustomerOrder> orders)
+        public void AddOrder(IList<CustomerOrder> orders,bool SaveMisMatchOrder = false)
         {
             //using (var ctx = new ProductContext())
             //{
@@ -57,9 +57,9 @@ namespace DemoManufacturing.DataAccess
                         command.Parameters.Add(new SqlParameter("@Color", SqlDbType.NVarChar, 50) { Value = order.Color });
                         command.Parameters.Add(new SqlParameter("@EmissionNorms", SqlDbType.NVarChar, 100) { Value = order.EmissionNorms });
                         command.Parameters.Add(new SqlParameter("@MajorVariant", SqlDbType.NVarChar, 500) { Value = order.MajorVariant });
-                        command.Parameters.Add(new SqlParameter("@Type", SqlDbType.NVarChar, 20) { Value = order.BumperType });
-                        command.Parameters.Add(new SqlParameter("@CustomerCode", SqlDbType.NVarChar, 150) { Value = order.CustomerCode });
-                        command.Parameters.Add(new SqlParameter("@IsBarCodePrinted", SqlDbType.Bit, 1000) { Value = order.IsBarCodePrinted });
+                        //command.Parameters.Add(new SqlParameter("@Type", SqlDbType.NVarChar, 20) { Value = order.BumperType });
+                        command.Parameters.Add(new SqlParameter("@OrderStatusID",SqlDbType.BigInt) { Value = order.OrderStatusID });
+                       // command.Parameters.Add(new SqlParameter("@SaveMisMatchOrder", SqlDbType.Bit) { Value = SaveMisMatchOrder });
 
 
                         conn.Open();
@@ -71,6 +71,49 @@ namespace DemoManufacturing.DataAccess
                     }
                 }
             }
+        }
+
+        public void UpdateMisMatchOrder(CustomerOrder order)
+        { 
+        
+            var connectionString = ConfigurationManager.ConnectionStrings["DBConnectionString"].ConnectionString;
+
+
+                using (var conn = new SqlConnection(connectionString))
+                {
+
+
+                    using (SqlCommand command = new SqlCommand("[dbo].[usp_SaveMisMatchOrder]", conn))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+                        //                            @OrderID BIGINT,
+                        //@Color nvarchar(50),
+                        //@EmissionNorms nvarchar(100)
+                        //,@MajorVariant nvarchar(500)
+                        //,@Type nvarchar(20)
+                        //,@CustomerCode nvarchar(150)
+                        //,@IsBarCodePrinted BIT
+
+
+                        command.Parameters.Add(new SqlParameter("@OrderID", SqlDbType.BigInt) { Value = order.OrderID });
+                        command.Parameters.Add(new SqlParameter("@Color", SqlDbType.NVarChar, 50) { Value = order.Color });
+                        command.Parameters.Add(new SqlParameter("@EmissionNorms", SqlDbType.NVarChar, 100) { Value = order.EmissionNorms });
+                        command.Parameters.Add(new SqlParameter("@MajorVariant", SqlDbType.NVarChar, 500) { Value = order.MajorVariant });
+                        //command.Parameters.Add(new SqlParameter("@Type", SqlDbType.NVarChar, 20) { Value = order.BumperType });
+                        command.Parameters.Add(new SqlParameter("@OrderStatusID",SqlDbType.BigInt) { Value = order.OrderStatusID });
+                        //command.Parameters.Add(new SqlParameter("@SaveMisMatchOrder", SqlDbType.Bit) { Value = SaveMisMatchOrder });
+
+
+                        conn.Open();
+                        int result = command.ExecuteNonQuery();
+
+                        // Check Error
+                        if (result < 0)
+                            Console.WriteLine("Error inserting data into Database!");
+                    }
+                }
+           
+            
         }
 
         public void ChangePrintStatus(long OrderID)

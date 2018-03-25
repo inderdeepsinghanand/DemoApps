@@ -86,9 +86,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="frmInspDashboard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmInspDashboard.Designer.cs">
+      <DependentUpon>frmInspDashboard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\UserRepository.cs" />
+    <Compile Include="Entities\LoggedInUser.cs" />
+    <Compile Include="Entities\UserRights.cs" />
+    <Compile Include="frmLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmLogin.Designer.cs">
+      <DependentUpon>frmLogin.cs</DependentUpon>
+    </Compile>
     <Compile Include="DataAccess\ProductRepository.cs" />
     <Compile Include="DataAccess\CustomerOrderRepository.cs" />
     <Compile Include="Entities\CustomerOrder.cs" />
+    <Compile Include="Entities\Enums.cs" />
     <Compile Include="Entities\Product.cs" />
     <Compile Include="frmBarcodePrinting.cs">
       <SubType>Form</SubType>
@@ -122,6 +138,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="frmInspDashboard.resx">
+      <DependentUpon>frmInspDashboard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmLogin.resx">
+      <DependentUpon>frmLogin.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmBarcodePrinting.resx">
       <DependentUpon>frmBarcodePrinting.cs</DependentUpon>
     </EmbeddedResource>

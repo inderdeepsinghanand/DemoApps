@@ -13,7 +13,7 @@ using DemoManufacturing.Entities;
 
 namespace DemoManufacturing
 {
-    public partial class frmDashboard : Form
+    public partial class frmInspDashboard : Form
     {
 
         private DataGridView dataGridView1 = new DataGridView();
@@ -23,7 +23,7 @@ namespace DemoManufacturing
         private Button reloadButton = new Button();
         private Button submitButton = new Button();
 
-        public frmDashboard()
+        public frmInspDashboard()
         {
             InitializeComponent();
 
@@ -188,9 +188,9 @@ namespace DemoManufacturing
 
         private void btnUploadOrder_Click(object sender, EventArgs e)
         {
-            frmOrderUpload orderUpload = new frmOrderUpload(this);
-            orderUpload.ShowDialog();
-            orderUpload.FormClosed += frmOrder_FormClosed;
+            //frmOrderUpload orderUpload = new frmOrderUpload(this);
+            //orderUpload.ShowDialog();
+            //orderUpload.FormClosed += frmOrder_FormClosed;
 
         }
 

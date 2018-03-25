@@ -13,7 +13,7 @@ namespace DemoManufacturing.Entities
         public string BumperType { get; set; }
         public string CustomerCode { get; set; }
         public bool IsBarCodePrinted { get; set; }
-
+        public long OrderStatusID { get; set; }
         public string MajorVariant
         {
             get;

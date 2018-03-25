@@ -1,6 +1,6 @@
 ﻿namespace DemoManufacturing
 {
-    partial class frmDashboard
+    partial class frmInspDashboard
     {
         /// <summary>
         /// Required designer variable.
@@ -155,6 +155,7 @@
             this.btnUploadOrder.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.btnUploadOrder.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.btnUploadOrder.UseVisualStyleBackColor = true;
+            this.btnUploadOrder.Visible = false;
             this.btnUploadOrder.Click += new System.EventHandler(this.btnUploadOrder_Click);
             // 
             // btnMasterUpload
@@ -171,6 +172,7 @@
             this.btnMasterUpload.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.btnMasterUpload.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.btnMasterUpload.UseVisualStyleBackColor = true;
+            this.btnMasterUpload.Visible = false;
             this.btnMasterUpload.Click += new System.EventHandler(this.btnMasterUpload_Click);
             // 
             // pnlReaLabel
@@ -348,7 +350,7 @@
             this.lblFrontBump.Text = "Front Bumpers";
             this.lblFrontBump.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // frmDashboard
+            // frmInspDashboard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -357,7 +359,7 @@
             this.Controls.Add(this.pnlReaLabel);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "frmDashboard";
+            this.Name = "frmInspDashboard";
             this.Text = "frmDashboard";
             this.Load += new System.EventHandler(this.frmDashboard_Load);
             this.panel1.ResumeLayout(false);

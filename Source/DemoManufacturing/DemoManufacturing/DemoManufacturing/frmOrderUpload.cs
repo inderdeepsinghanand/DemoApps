@@ -26,6 +26,12 @@ namespace DemoManufacturing
         {
             masterForm = dash;
             InitializeComponent();
+            RefreshPage();
+
+        }
+
+        private void RefreshPage()
+        {
 
             GetData("select * from [tbl_CustomerOrdersMisMatch] ", bSourceFront);
             dataGridView1.DataSource = bSourceFront;
@@ -39,7 +45,6 @@ namespace DemoManufacturing
             BindCombo("Select distinct [MajorVariant] as [Key] from tbl_Products", cmbMajorVariant);
 
             BindCombo("Select distinct [Type] as [Key] from tbl_Products", cmbBumperType);
-
         }
 
         public void BindCombo(string selectCommand, ComboBox cmb)
@@ -154,9 +159,9 @@ namespace DemoManufacturing
                     order.Color = dr["F2"].ToString();
                     order.EmissionNorms = dr["F3"].ToString();
                     order.MajorVariant = dr["F4"].ToString();
-                    order.BumperType = dr["F5"].ToString();
-                    order.CustomerCode = dr["F6"].ToString();
-                    order.IsBarCodePrinted = false;
+                    //order.BumperType = dr["F5"].ToString();
+                    //order.CustomerCode = dr["F6"].ToString();
+                   //[o order.IsBarCodePrinted = false;
 
                     orders.Add(order);
                 }
@@ -254,37 +259,7 @@ namespace DemoManufacturing
         private void btnSave_Click(object sender, EventArgs e)
         {
 
-            // Specify a connection string. Replace the given value with a 
-            // valid connection string for a Northwind SQL Server sample
-            // database accessible to your system.
-            //var connectionString = ConfigurationManager.ConnectionStrings["DBConnectionString"].ConnectionString;
-
-
-            //using (SqlConnection connection = new SqlConnection(connectionString))
-            //{
-            //    using (SqlCommand command = new SqlCommand("[dbo].[usp_SaveProduct]", connection))
-            //    {
-            //        command.CommandType = CommandType.StoredProcedure;
-
-
-
-            //        command.Parameters.Add(new SqlParameter("@ProductID", SqlDbType.BigInt) { Value = Convert.ToInt64(lblProductID.Text) });
-            //        command.Parameters.Add(new SqlParameter("@Color", SqlDbType.NVarChar, 50) { Value = cmbColor.SelectedValue });
-            //        command.Parameters.Add(new SqlParameter("@EmissionNorms", SqlDbType.NVarChar, 100) { Value = cmbEmissionNorms.SelectedValue });
-            //        command.Parameters.Add(new SqlParameter("@MajorVariant", SqlDbType.NVarChar, 500) { Value = cmbMajorVariant.SelectedValue });
-            //        command.Parameters.Add(new SqlParameter("@Type", SqlDbType.NVarChar, 20) { Value = cmbBumperType.SelectedValue });
-            //        command.Parameters.Add(new SqlParameter("@CustomerCode", SqlDbType.NVarChar, 150) { Value = txtCustomerCode.Text });
-            //        command.Parameters.Add(new SqlParameter("@BarCode", SqlDbType.NVarChar, 1000) { Value = txtBarCode.Text });
-
-
-            //        connection.Open();
-            //        int result = command.ExecuteNonQuery();
-
-            //        // Check Error
-            //        if (result < 0)
-            //            Console.WriteLine("Error inserting data into Database!");
-            //    }
-            //}
+           
 
             //IList<CustomerOrder> orders
 
@@ -296,7 +271,8 @@ namespace DemoManufacturing
             order.Color = cmbColor.SelectedValue != null ? cmbColor.SelectedValue.ToString() : "";
             order.CustomerCode = txtCustomerCode.Text;
 
-            new CustomerOrderRepository().AddOrder(new List<CustomerOrder>() { order });
+            new CustomerOrderRepository().UpdateMisMatchOrder( order );
+            RefreshPage();
         }
 
         private void frmOrderUpload_FormClosed(object sender, FormClosedEventArgs e)

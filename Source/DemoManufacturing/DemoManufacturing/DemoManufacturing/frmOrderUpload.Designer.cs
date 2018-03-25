@@ -81,7 +81,7 @@
             this.btnMasterUpload.Name = "btnMasterUpload";
             this.btnMasterUpload.Size = new System.Drawing.Size(133, 23);
             this.btnMasterUpload.TabIndex = 1;
-            this.btnMasterUpload.Text = "Select Master File";
+            this.btnMasterUpload.Text = "Select Order File";
             this.btnMasterUpload.UseVisualStyleBackColor = true;
             this.btnMasterUpload.Click += new System.EventHandler(this.btnMasterUpload_Click);
             // 
