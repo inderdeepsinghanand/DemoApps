@@ -60,7 +60,7 @@ namespace DemoManufacturing.DataAccess
                         //command.Parameters.Add(new SqlParameter("@Type", SqlDbType.NVarChar, 20) { Value = order.BumperType });
                         command.Parameters.Add(new SqlParameter("@OrderStatusID",SqlDbType.BigInt) { Value = order.OrderStatusID });
                        // command.Parameters.Add(new SqlParameter("@SaveMisMatchOrder", SqlDbType.Bit) { Value = SaveMisMatchOrder });
-
+                        LoggedInUser.SetUserParameters(command);
 
                         conn.Open();
                         int result = command.ExecuteNonQuery();
@@ -102,7 +102,7 @@ namespace DemoManufacturing.DataAccess
                         //command.Parameters.Add(new SqlParameter("@Type", SqlDbType.NVarChar, 20) { Value = order.BumperType });
                         command.Parameters.Add(new SqlParameter("@OrderStatusID",SqlDbType.BigInt) { Value = order.OrderStatusID });
                         //command.Parameters.Add(new SqlParameter("@SaveMisMatchOrder", SqlDbType.Bit) { Value = SaveMisMatchOrder });
-
+                        LoggedInUser.SetUserParameters(command);
 
                         conn.Open();
                         int result = command.ExecuteNonQuery();
@@ -130,6 +130,8 @@ namespace DemoManufacturing.DataAccess
                         command.CommandType = CommandType.StoredProcedure;
                         
                         command.Parameters.Add(new SqlParameter("@OrderID", SqlDbType.BigInt) { Value = OrderID });
+                        LoggedInUser.SetUserParameters(command);
+
                         //command.Parameters.Add(new SqlParameter("@Color", SqlDbType.NVarChar, 50) { Value = order.Color });
                         //command.Parameters.Add(new SqlParameter("@EmissionNorms", SqlDbType.NVarChar, 100) { Value = order.EmissionNorms });
                         //command.Parameters.Add(new SqlParameter("@MajorVariant", SqlDbType.NVarChar, 500) { Value = order.MajorVariant });

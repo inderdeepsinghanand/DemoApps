@@ -45,13 +45,13 @@ namespace DemoManufacturing.DataAccess
                         cmd.CommandText = @"INSERT INTO [EnterpriseApp].[dbo].[tbl_Products]
                                        ([Color], [EmissionNorms]
                                        ,[MajorVariant]
-                                       ,[BarCode],[Type],[CustomerCode])
+                                       ,[BarCode],[Type],[CustomerCode],[CreatedByUserId],[CreatedByName])
                                  VALUES
                                        (
                                        '" + prod.Color + "',' " + prod.EmissionNorms 
                                           + "','" + prod.MajorVariant 
                                           + "','" + prod.BarCode + "','" 
-                                          + prod.BumperType + "','" + prod.CustomerCode + "' );";
+                                          + prod.BumperType + "','" + prod.CustomerCode + "'," +LoggedInUser.UserID + ",'"+LoggedInUser.Name+"' );";
                         conn.Open();
                         cmd.ExecuteNonQuery();
                         conn.Close();

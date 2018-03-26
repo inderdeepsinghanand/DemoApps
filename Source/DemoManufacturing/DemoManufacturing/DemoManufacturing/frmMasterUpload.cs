@@ -32,7 +32,13 @@ namespace DemoManufacturing
 
         private void ReLoadGrid()
         {
-            GetData("select * from tbl_Products ", bSourceFront);
+            GetData(@"select [ProductID]
+      ,[Color]
+      ,[EmissionNorms]
+      ,[MajorVariant]
+      ,[Type]
+      ,[CustomerCode]
+      ,[BarCode] from tbl_Products ", bSourceFront);
             dataGridView1.DataSource = bSourceFront;
 
             dataGridView1.Columns["ProductID"].Visible = false;
@@ -286,7 +292,7 @@ namespace DemoManufacturing
                     command.Parameters.Add(new SqlParameter("@Type", SqlDbType.NVarChar, 20) { Value = cmbBumperType1.SelectedValue });
                     command.Parameters.Add(new SqlParameter("@CustomerCode", SqlDbType.NVarChar, 150) { Value = txtCustCode1.Text });
                     command.Parameters.Add(new SqlParameter("@BarCode", SqlDbType.NVarChar, 1000) { Value = txtBarCode1.Text });
-
+                    LoggedInUser. SetUserParameters(command);
 
                     connection.Open();
                     int result = command.ExecuteNonQuery();
