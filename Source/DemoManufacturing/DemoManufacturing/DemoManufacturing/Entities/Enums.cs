@@ -5,7 +5,7 @@ using System.Text;
 
 namespace DemoManufacturing.Entities
 {
-    public enum Enums
+    public enum OrderStatus
     {
         New = 1,
         BCPrinted,

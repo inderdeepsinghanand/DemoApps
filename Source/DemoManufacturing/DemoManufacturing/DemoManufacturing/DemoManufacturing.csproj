@@ -86,6 +86,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="frmApproveRejectOrder.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmApproveRejectOrder.Designer.cs">
+      <DependentUpon>frmApproveRejectOrder.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmInspDashboard.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -138,6 +144,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="frmApproveRejectOrder.resx">
+      <DependentUpon>frmApproveRejectOrder.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmInspDashboard.resx">
       <DependentUpon>frmInspDashboard.cs</DependentUpon>
     </EmbeddedResource>

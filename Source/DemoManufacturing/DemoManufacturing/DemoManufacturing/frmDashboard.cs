@@ -203,7 +203,7 @@ namespace DemoManufacturing
                 // check the cell value under your specific column and then you can toggle your colors
 
                     var cell = row.Cells["OrderStatusID"];
-                    if (((long)cell.Value) == (long)Enums.New )
+                    if (((long)cell.Value) == (long)OrderStatus.New )
                     {
                        // row.DefaultCellStyle.BackColor = Color.FromArgb(127, 186, 0);
                     }
@@ -270,7 +270,7 @@ namespace DemoManufacturing
                 // check the cell value under your specific column and then you can toggle your colors
 
                 var cell = row.Cells["OrderStatusID"];
-                if (((long)cell.Value) == (long)Enums.New)
+                if (((long)cell.Value) == (long)OrderStatus.New)
                 {
                    // row.DefaultCellStyle.BackColor = Color.FromArgb(127, 186, 0);
                 }
