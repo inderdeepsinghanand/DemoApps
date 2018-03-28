@@ -151,7 +151,7 @@ namespace DemoManufacturing.DataAccess
             }
 
 
-        public void ApproveRejectOrder(long OrderID,OrderStatus status, string reason )
+        public bool ApproveRejectOrder(long OrderID,OrderStatus status, string reason )
         {
 
             var connectionString = ConfigurationManager.ConnectionStrings["DBConnectionString"].ConnectionString;
@@ -160,13 +160,13 @@ namespace DemoManufacturing.DataAccess
             {
 
 
-                using (SqlCommand command = new SqlCommand("[dbo].[usp_ChangePrintStatus]", conn))
+                using (SqlCommand command = new SqlCommand("[dbo].[usp_ApproveRejectOrder]", conn))
                 {
                     command.CommandType = CommandType.StoredProcedure;
 
                     command.Parameters.Add(new SqlParameter("@OrderID", SqlDbType.BigInt) { Value = OrderID });
                     command.Parameters.Add(new SqlParameter("@StatusID", SqlDbType.BigInt) { Value = (long)status });
-                    command.Parameters.Add(new SqlParameter("@Reason", SqlDbType.NVarChar,1000) { Value = OrderID });
+                    command.Parameters.Add(new SqlParameter("@Reason", SqlDbType.NVarChar, 1000) { Value = reason });
                     LoggedInUser.SetUserParameters(command);
 
  
@@ -182,8 +182,8 @@ namespace DemoManufacturing.DataAccess
                     int result = command.ExecuteNonQuery();
 
                     // Check Error
-                    if (result < 0)
-                        Console.WriteLine("Error inserting data into Database!");
+                    return result > 0;
+                       // Console.WriteLine("Error inserting data into Database!");
                 }
             }
         }

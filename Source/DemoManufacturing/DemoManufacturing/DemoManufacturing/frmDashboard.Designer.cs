@@ -38,6 +38,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.pnlLogo = new System.Windows.Forms.Panel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pnlButtons = new System.Windows.Forms.Panel();
             this.btnExit = new System.Windows.Forms.Button();
             this.btnOrderProcessing = new System.Windows.Forms.Button();
@@ -54,6 +55,8 @@
             this.lblFrontBump = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
+            this.pnlLogo.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.pnlButtons.SuspendLayout();
             this.pnlReaLabel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgFrontBumpers)).BeginInit();
@@ -90,11 +93,21 @@
             // pnlLogo
             // 
             this.pnlLogo.BackColor = System.Drawing.Color.IndianRed;
+            this.pnlLogo.Controls.Add(this.pictureBox1);
             this.pnlLogo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlLogo.Location = new System.Drawing.Point(3, 3);
             this.pnlLogo.Name = "pnlLogo";
             this.pnlLogo.Size = new System.Drawing.Size(157, 94);
             this.pnlLogo.TabIndex = 1;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pictureBox1.Location = new System.Drawing.Point(0, 0);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(157, 94);
+            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.TabStop = false;
             // 
             // pnlButtons
             // 
@@ -197,15 +210,16 @@
             this.dgFrontBumpers.AllowUserToAddRows = false;
             this.dgFrontBumpers.AllowUserToDeleteRows = false;
             this.dgFrontBumpers.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgFrontBumpers.BackgroundColor = System.Drawing.Color.White;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(80)))), ((int)(((byte)(67)))));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dgFrontBumpers.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            this.dgFrontBumpers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgFrontBumpers.ColumnHeadersHeight = 40;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -215,6 +229,7 @@
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dgFrontBumpers.DefaultCellStyle = dataGridViewCellStyle2;
             this.dgFrontBumpers.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgFrontBumpers.EnableHeadersVisualStyles = false;
             this.dgFrontBumpers.Location = new System.Drawing.Point(0, 80);
             this.dgFrontBumpers.Margin = new System.Windows.Forms.Padding(0);
             this.dgFrontBumpers.Name = "dgFrontBumpers";
@@ -266,12 +281,12 @@
             // 
             this.lblRearBump.BackColor = System.Drawing.Color.White;
             this.lblRearBump.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblRearBump.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblRearBump.Font = new System.Drawing.Font("Microsoft Sans Serif", 17F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblRearBump.Location = new System.Drawing.Point(0, 0);
             this.lblRearBump.Name = "lblRearBump";
             this.lblRearBump.Size = new System.Drawing.Size(328, 37);
             this.lblRearBump.TabIndex = 1;
-            this.lblRearBump.Text = "Rear Bumpers";
+            this.lblRearBump.Text = "Rear";
             this.lblRearBump.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // dgBackBumpers
@@ -279,15 +294,16 @@
             this.dgBackBumpers.AllowUserToAddRows = false;
             this.dgBackBumpers.AllowUserToDeleteRows = false;
             this.dgBackBumpers.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgBackBumpers.BackgroundColor = System.Drawing.Color.White;
             dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(80)))), ((int)(((byte)(67)))));
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.White;
             dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dgBackBumpers.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
-            this.dgBackBumpers.ColumnHeadersHeight = 28;
+            this.dgBackBumpers.ColumnHeadersHeight = 40;
             dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -297,6 +313,7 @@
             dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dgBackBumpers.DefaultCellStyle = dataGridViewCellStyle6;
             this.dgBackBumpers.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgBackBumpers.EnableHeadersVisualStyles = false;
             this.dgBackBumpers.Location = new System.Drawing.Point(333, 80);
             this.dgBackBumpers.Margin = new System.Windows.Forms.Padding(0);
             this.dgBackBumpers.Name = "dgBackBumpers";
@@ -340,12 +357,12 @@
             // 
             this.lblFrontBump.BackColor = System.Drawing.Color.White;
             this.lblFrontBump.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblFrontBump.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblFrontBump.Font = new System.Drawing.Font("Microsoft Sans Serif", 17F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblFrontBump.Location = new System.Drawing.Point(0, 0);
             this.lblFrontBump.Name = "lblFrontBump";
             this.lblFrontBump.Size = new System.Drawing.Size(327, 37);
             this.lblFrontBump.TabIndex = 0;
-            this.lblFrontBump.Text = "Front Bumpers";
+            this.lblFrontBump.Text = "Front";
             this.lblFrontBump.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // frmDashboard
@@ -362,6 +379,8 @@
             this.Load += new System.EventHandler(this.frmDashboard_Load);
             this.panel1.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
+            this.pnlLogo.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.pnlButtons.ResumeLayout(false);
             this.pnlReaLabel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgFrontBumpers)).EndInit();
@@ -391,5 +410,6 @@
         private System.Windows.Forms.Button btnOrderProcessing;
         private System.Windows.Forms.Button btnUploadOrder;
         private System.Windows.Forms.Button btnMasterUpload;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }

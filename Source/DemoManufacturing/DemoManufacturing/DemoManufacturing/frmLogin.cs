@@ -48,6 +48,8 @@ namespace DemoManufacturing
 
             if (table != null && table.Rows.Count > 0)
             {
+
+                txtUsername.Text = txtPassword.Text = "";
                 //check screen access 
                 //map screen access
                 var rights = MapUserRights(table);
@@ -61,12 +63,12 @@ namespace DemoManufacturing
 
                 if (dashboardAccess) {
                     new frmDashboard().Show();
-                   // this.Close();
+                    this.Hide();
                 }
                 else if (inspAccess)
                 {
                     new frmInspDashboard().Show();
-                    //this.Close();
+                    this.Hide();
                 }
                 else { }
             }

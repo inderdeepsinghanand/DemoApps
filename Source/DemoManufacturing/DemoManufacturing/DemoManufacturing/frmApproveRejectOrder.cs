@@ -16,14 +16,35 @@ namespace DemoManufacturing
     public partial class frmApproveRejectOrder : Form
     {
         public long _orderID = 0;
-        public frmApproveRejectOrder(long orderID)
+        public frmInspDashboard parent =null;
+        public frmDashboard dashboard = null;
+        public frmApproveRejectOrder(long orderID, frmInspDashboard dashboard)
         {
             InitializeComponent();
             _orderID = orderID;
+
+            parent = dashboard;
             //if(barCode.
           //  string barCode = txtCode.Text;
 
             
+        }
+
+        public frmApproveRejectOrder(long orderID, frmDashboard _dashboard)
+        {
+            InitializeComponent();
+            _orderID = orderID;
+
+            dashboard = _dashboard;
+
+            this.cmbStatus.Items.Clear();
+            this.cmbStatus.Items.Add("Reject");
+            this.cmbStatus.Enabled = false;
+            this.cmbStatus.Text = "Reject";
+            //if(barCode.
+            //  string barCode = txtCode.Text;
+
+
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -38,7 +59,7 @@ namespace DemoManufacturing
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            var status = cmbStatus.SelectedText;
+            var status = cmbStatus.Text;
             OrderStatus orderStatus;
             if ((status.ToUpper().Contains("OK") || status.ToUpper().Contains("REJECT")) && !string.IsNullOrEmpty(txtReason.Text))
             {
@@ -47,13 +68,23 @@ namespace DemoManufacturing
                 }else
                     orderStatus = OrderStatus.Rejected;
 
-                new CustomerOrderRepository().ApproveRejectOrder(_orderID, orderStatus, txtReason.Text);
-
+               var saveStatus =  new CustomerOrderRepository().ApproveRejectOrder(_orderID, orderStatus, txtReason.Text);
+               if (saveStatus)
+               {
+                   MessageBox.Show("Status updated successfully.");
+                   if(parent !=null)parent.LoadGridData();
+                   if (dashboard != null) dashboard.LoadGridData();
+                   this.Close();
+               }
+               else
+                   MessageBox.Show("Error while updating status, please contact administrator.");
 
             }
             else {
-                MessageBox.Show("Please select valid status");
+                MessageBox.Show("Please select valid status and reason.");
             }
+
+            
         }
     }
 }

@@ -37,7 +37,6 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.button3 = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
-            this.lblPrintBarCode = new System.Windows.Forms.LinkLabel();
             this.txtBarCode = new System.Windows.Forms.TextBox();
             this.txtCustomerCode = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -138,7 +137,6 @@
             // 
             this.groupBox1.Controls.Add(this.button3);
             this.groupBox1.Controls.Add(this.btnSave);
-            this.groupBox1.Controls.Add(this.lblPrintBarCode);
             this.groupBox1.Controls.Add(this.txtBarCode);
             this.groupBox1.Controls.Add(this.txtCustomerCode);
             this.groupBox1.Controls.Add(this.label4);
@@ -182,17 +180,6 @@
             this.btnSave.Text = "Add";
             this.btnSave.UseVisualStyleBackColor = false;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
-            // 
-            // lblPrintBarCode
-            // 
-            this.lblPrintBarCode.AutoSize = true;
-            this.lblPrintBarCode.Location = new System.Drawing.Point(513, 170);
-            this.lblPrintBarCode.Name = "lblPrintBarCode";
-            this.lblPrintBarCode.Size = new System.Drawing.Size(75, 13);
-            this.lblPrintBarCode.TabIndex = 18;
-            this.lblPrintBarCode.TabStop = true;
-            this.lblPrintBarCode.Text = "Print Bar Code";
-            this.lblPrintBarCode.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lblPrintBarCode_LinkClicked);
             // 
             // txtBarCode
             // 
@@ -397,7 +384,6 @@
         private System.Windows.Forms.ComboBox cmbMajorVariant;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.ComboBox cmbEmissionNorms;
-        private System.Windows.Forms.LinkLabel lblPrintBarCode;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button btnSave;
         //private Microsoft.VisualBasic.PowerPacks.ShapeContainer shapeContainer1;

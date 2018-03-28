@@ -1,0 +1,24 @@
+Front and Rear only with bigger font in caps
+InProgress/BCPrinted/Rejected/Tested OK and count 
+column names in bold.
+
+column gray color with white font
+
+rejec t button for damaged orders
+and row to be selected only upto status?
+
+search only on Color, emission norms and major variant, remove others.
+
+
+order upload remove barcode print
+headers center align and bold.
+
+print button on print screen and status to be changed on print button click
+
+date to be added..
+
+
+
+wpf and 3 tier
+
+

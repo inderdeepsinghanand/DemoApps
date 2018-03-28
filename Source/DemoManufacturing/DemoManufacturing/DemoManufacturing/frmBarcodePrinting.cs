@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.IO;
 using System.Drawing.Imaging;
 using DemoManufacturing.Entities;
+using DemoManufacturing.DataAccess;
 
 namespace DemoManufacturing
 {
@@ -29,8 +30,8 @@ namespace DemoManufacturing
                 PointF point = new PointF(2f, 2f);
                 SolidBrush blackBrush = new SolidBrush(Color.Black);
                 SolidBrush whiteBrush = new SolidBrush(Color.White);
-                graphics.DrawString("Hello", oFont, blackBrush, point);
-                graphics.FillRectangle(whiteBrush, 0, 20, bitMap.Width, bitMap.Height);
+                graphics.DrawString("Hello asadsads s dasdada da dasdsaa", oFont, blackBrush, 0,0);
+                graphics.FillRectangle(whiteBrush, 10, 20, bitMap.Width, bitMap.Height);
                 graphics.DrawString("*" + barCode + "*", oFont, blackBrush, point);
             }
             using (MemoryStream ms = new MemoryStream())
@@ -42,5 +43,28 @@ namespace DemoManufacturing
             }
 
         }
+
+        private void btnPrint_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        public void SetPrintStatus(long OrderID, string Barcode)
+        {
+            //new CustomerOrderRepository
+
+            new CustomerOrderRepository().ChangePrintStatus(OrderID);
+
+            //var barcode = "select * from tbl"
+
+            //frmBarcodePrinting barcodePrint = new frmBarcodePrinting(Barcode);
+            //barcodePrint.ShowDialog();
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
     }
 }

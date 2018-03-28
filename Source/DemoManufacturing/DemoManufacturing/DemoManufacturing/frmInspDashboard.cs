@@ -74,13 +74,13 @@ namespace DemoManufacturing
             // Bind the DataGridView to the BindingSource
             // and load the data from the database.
             dgFrontBumpers.DataSource = bSourceBack;
-            GetData("select OrderID, [Color],[EmissionNorms],[MajorVariant],[IsBarCodePrinted],[BarCode],[OrderStatusID], [Reason] from [tbl_CustomerOrders] where Type ='Front'", bSourceBack);
+            GetData("select OrderID, [Color],[EmissionNorms],[MajorVariant],[IsBarCodePrinted],[BarCode],[OrderStatusID], [Reason] from [tbl_CustomerOrders] where OrderStatusID != " + (long)OrderStatus.New + "AND Type ='Front'", bSourceBack);
 
             dgFrontBumpers.Columns["EmissionNorms"].HeaderText = "Emission Norms";
             dgFrontBumpers.Columns["MajorVariant"].HeaderText = "Major Variant";
 
             dgBackBumpers.DataSource = bSourceFront;
-            GetData("select OrderID, [Color],[EmissionNorms],[MajorVariant],[IsBarCodePrinted],[BarCode],[OrderStatusID], [Reason] from [tbl_CustomerOrders] where Type ='Rear'", bSourceFront);
+            GetData("select OrderID, [Color],[EmissionNorms],[MajorVariant],[IsBarCodePrinted],[BarCode],[OrderStatusID], [Reason] from [tbl_CustomerOrders] where OrderStatusID != " + (long)OrderStatus.New + "AND Type ='Rear'", bSourceFront);
 
             dgBackBumpers.Columns["EmissionNorms"].HeaderText = "Emission Norms";
             dgBackBumpers.Columns["MajorVariant"].HeaderText = "Major Variant";
@@ -203,12 +203,14 @@ namespace DemoManufacturing
                 // check the cell value under your specific column and then you can toggle your colors
 
                     var cell = row.Cells["OrderStatusID"];
-                    if (((long)cell.Value) == (long)OrderStatus.New)
+                    if (((long)cell.Value) == (long)OrderStatus.Approved)
                     {
-                       // row.DefaultCellStyle.BackColor = Color.FromArgb(127, 186, 0);
+                        row.DefaultCellStyle.BackColor = Color.FromArgb(127, 186, 0);
                     }
-                    else
+                    else if (((long)cell.Value) == (long)OrderStatus.BCPrinted)
                         row.DefaultCellStyle.BackColor = Color.FromArgb(255, 140, 0);
+                    else
+                        row.DefaultCellStyle.BackColor = Color.FromArgb(255, 0, 0);
                 
             }
         }
@@ -242,7 +244,7 @@ namespace DemoManufacturing
             //}
         }
 
-        public void SetPrintStatus(long OrderID,string Barcode)
+        public void SetStatus(long OrderID,string Barcode)
         {
             //new CustomerOrderRepository
 
@@ -250,8 +252,8 @@ namespace DemoManufacturing
 
             //var barcode = "select * from tbl"
 
-            frmBarcodePrinting barcodePrint = new frmBarcodePrinting(Barcode);
-            barcodePrint.ShowDialog();
+            frmApproveRejectOrder approve = new frmApproveRejectOrder(OrderID,this);
+            approve.ShowDialog();
         }
 
         private void dgBackBumpers_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -305,7 +307,7 @@ namespace DemoManufacturing
                     //  row.DefaultCellStyle.BackColor = Color.FromArgb(127, 186, 0);
 
                     //set print status
-                    SetPrintStatus(Convert.ToInt64(row.Cells["OrderID"].Value.ToString()), "123");
+                    SetStatus(Convert.ToInt64(row.Cells["OrderID"].Value.ToString()), "123");
                     row.DefaultCellStyle.BackColor = Color.FromArgb(255, 140, 0);
                    // LoadGridData();
                     if (cell.RowIndex < dgFrontBumpers.Rows.Count)

@@ -35,6 +35,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.txtUsername = new System.Windows.Forms.TextBox();
             this.txtPassword = new System.Windows.Forms.TextBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // fdMasterUpload
@@ -46,7 +48,7 @@
             this.btnLogin.BackColor = System.Drawing.Color.AliceBlue;
             this.btnLogin.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLogin.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLogin.Location = new System.Drawing.Point(106, 167);
+            this.btnLogin.Location = new System.Drawing.Point(139, 205);
             this.btnLogin.Name = "btnLogin";
             this.btnLogin.Size = new System.Drawing.Size(75, 23);
             this.btnLogin.TabIndex = 20;
@@ -59,7 +61,7 @@
             this.btnExit.BackColor = System.Drawing.Color.AliceBlue;
             this.btnExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnExit.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnExit.Location = new System.Drawing.Point(199, 167);
+            this.btnExit.Location = new System.Drawing.Point(232, 205);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(75, 23);
             this.btnExit.TabIndex = 21;
@@ -71,7 +73,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(45, 51);
+            this.label1.Location = new System.Drawing.Point(84, 110);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(71, 13);
             this.label1.TabIndex = 22;
@@ -81,7 +83,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(45, 108);
+            this.label2.Location = new System.Drawing.Point(85, 156);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(69, 13);
             this.label2.TabIndex = 23;
@@ -89,35 +91,46 @@
             // 
             // txtUsername
             // 
-            this.txtUsername.Location = new System.Drawing.Point(142, 51);
+            this.txtUsername.Location = new System.Drawing.Point(170, 110);
             this.txtUsername.Name = "txtUsername";
             this.txtUsername.Size = new System.Drawing.Size(189, 20);
             this.txtUsername.TabIndex = 24;
             // 
             // txtPassword
             // 
-            this.txtPassword.Location = new System.Drawing.Point(142, 105);
+            this.txtPassword.Location = new System.Drawing.Point(170, 153);
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.PasswordChar = '*';
             this.txtPassword.Size = new System.Drawing.Size(189, 20);
             this.txtPassword.TabIndex = 25;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::DemoManufacturing.Properties.Resources.Logo;
+            this.pictureBox1.Location = new System.Drawing.Point(79, 6);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(343, 88);
+            this.pictureBox1.TabIndex = 26;
+            this.pictureBox1.TabStop = false;
             // 
             // frmLogin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(385, 220);
+            this.ClientSize = new System.Drawing.Size(491, 254);
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.txtPassword);
             this.Controls.Add(this.txtUsername);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnExit);
             this.Controls.Add(this.btnLogin);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "frmLogin";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "frmMasterUpload";
+            this.Text = "Login";
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -133,6 +146,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtUsername;
         private System.Windows.Forms.TextBox txtPassword;
+        private System.Windows.Forms.PictureBox pictureBox1;
         //private Microsoft.VisualBasic.PowerPacks.ShapeContainer shapeContainer1;
         //private Microsoft.VisualBasic.PowerPacks.LineShape lineShape2;
         //private Microsoft.VisualBasic.PowerPacks.LineShape lineShape1;
