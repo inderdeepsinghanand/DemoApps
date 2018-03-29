@@ -33,10 +33,10 @@ namespace DemoManufacturing.DataAccess
             //var connString = System.Configuration.Conn
 
 
-            var connectionString = ConfigurationManager.ConnectionStrings["DBConnectionString"].ConnectionString;
+            //var connectionString = ConfigurationManager.ConnectionStrings["DBConnectionString"].ConnectionString;
 
             foreach(var prod in products){
-                using (var conn = new SqlConnection(connectionString))
+                using (var conn = new SqlConnection(ConnectionStringHelper.GetConnectionString()))
                 {
                     using (var cmd = conn.CreateCommand())
                     {

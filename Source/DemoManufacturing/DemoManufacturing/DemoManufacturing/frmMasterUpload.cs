@@ -99,10 +99,10 @@ namespace DemoManufacturing
             // Specify a connection string. Replace the given value with a 
             // valid connection string for a Northwind SQL Server sample
             // database accessible to your system.
-            var connectionString = ConfigurationManager.ConnectionStrings["DBConnectionString"].ConnectionString;
+            //var connectionString = ConfigurationManager.ConnectionStrings["DBConnectionString"].ConnectionString;
 
             // Create a new data adapter based on the specified query.
-            dataAdapter = new SqlDataAdapter(selectCommand, connectionString);
+            dataAdapter = new SqlDataAdapter(selectCommand, ConnectionStringHelper.GetConnectionString());
 
             // Create a command builder to generate SQL update, insert, and
             // delete commands based on selectCommand. These are used to
@@ -171,9 +171,9 @@ namespace DemoManufacturing
                     prod.Color = dr["F2"].ToString();
                     prod.EmissionNorms = dr["F3"].ToString();
                     prod.MajorVariant = dr["F4"].ToString();
-                    prod.BumperType = dr["F5"].ToString();
-                    prod.CustomerCode = dr["F6"].ToString();
-                    prod.BarCode = dr["F7"].ToString();
+                   // prod.BumperType = dr["F5"].ToString();
+                    prod.CustomerCode = dr["F5"].ToString();
+                    prod.BarCode = dr["F6"].ToString();
 
                     products.Add(prod);
                 }
@@ -236,8 +236,36 @@ namespace DemoManufacturing
 
         private void lblPrintBarCode_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
+            PrintProduct product = new PrintProduct();
+            var productId = Convert.ToInt64(lblProductID.Text);
+            if (productId > 0)
+            {
+               // lblProductID.Text = row.Cells["ProductID"].Value.ToString();
+               product.EmissionNorms =  cmbEmission.SelectedValue.ToString() ;//= row.Cells["EmissionNorms"].Value;
+               product.Color =  cmbColor1.SelectedValue.ToString(); //= row.Cells["Color"].Value;
+               product.MajorVariant = cmbMajorVariant1.SelectedValue.ToString();// = row.Cells["MajorVariant"].Value;
+               product.Type = cmbBumperType1.SelectedValue.ToString(); //= row.Cells["Type"].Value;
+               product.CustomerCode = txtCustCode1.Text; //= row.Cells["CustomerCode"].Value.ToString();
+              product.BarCode =  txtBarCode1.Text ;//= row.Cells["BarCode"].Value.ToString();
 
+              PrintBarcode(product);
+            }
+            //else { 
+            ////do 
+            
+            //}
+            
         }
+
+
+        public void PrintBarcode(PrintProduct order)
+        {
+           
+
+            frmBarcodePrinting barcodePrint = new frmBarcodePrinting(order, null);
+            barcodePrint.ShowDialog();
+        }
+
 
         private void dataGridView1_RowEnter(object sender, DataGridViewCellEventArgs e)
         {
@@ -265,7 +293,10 @@ namespace DemoManufacturing
                 btnAdd.Text = "Save";
             }
             else
+            {
                 btnAdd.Text = "Add";
+                lnkPrint.Visible = false;
+            }
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -274,10 +305,10 @@ namespace DemoManufacturing
             // Specify a connection string. Replace the given value with a 
             // valid connection string for a Northwind SQL Server sample
             // database accessible to your system.
-            var connectionString = ConfigurationManager.ConnectionStrings["DBConnectionString"].ConnectionString;
+            //var connectionString = ConfigurationManager.ConnectionStrings["DBConnectionString"].ConnectionString;
 
 
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(ConnectionStringHelper.GetConnectionString()))
             {
                 using (SqlCommand command = new SqlCommand("[dbo].[usp_SaveProduct]", connection))
                 {

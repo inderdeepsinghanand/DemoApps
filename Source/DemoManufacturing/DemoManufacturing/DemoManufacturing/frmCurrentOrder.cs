@@ -77,10 +77,10 @@ namespace DemoManufacturing
                 // Specify a connection string. Replace the given value with a 
                 // valid connection string for a Northwind SQL Server sample
                 // database accessible to your system.
-                var connectionString = ConfigurationManager.ConnectionStrings["DBConnectionString"].ConnectionString;
+               
 
                 // Create a new data adapter based on the specified query.
-                dataAdapter = new SqlDataAdapter(selectCommand, connectionString);
+                dataAdapter = new SqlDataAdapter(selectCommand, ConnectionStringHelper.GetConnectionString());
 
                 // Create a command builder to generate SQL update, insert, and
                 // delete commands based on selectCommand. These are used to

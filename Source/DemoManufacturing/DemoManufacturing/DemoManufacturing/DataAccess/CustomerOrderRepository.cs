@@ -33,11 +33,11 @@ namespace DemoManufacturing.DataAccess
             //var connString = System.Configuration.Conn
 
 
-            var connectionString = ConfigurationManager.ConnectionStrings["DBConnectionString"].ConnectionString;
+            //var connectionString = ConfigurationManager.ConnectionStrings["DBConnectionString"].ConnectionString;
 
             foreach (var order in orders)
             {
-                using (var conn = new SqlConnection(connectionString))
+                using (var conn = new SqlConnection(ConnectionStringHelper.GetConnectionString()))
                 {
 
 
@@ -76,10 +76,10 @@ namespace DemoManufacturing.DataAccess
         public void UpdateMisMatchOrder(CustomerOrder order)
         { 
         
-            var connectionString = ConfigurationManager.ConnectionStrings["DBConnectionString"].ConnectionString;
+            //var connectionString = ConfigurationManager.ConnectionStrings["DBConnectionString"].ConnectionString;
 
 
-                using (var conn = new SqlConnection(connectionString))
+                using (var conn = new SqlConnection(ConnectionStringHelper.GetConnectionString()))
                 {
 
 
@@ -119,9 +119,9 @@ namespace DemoManufacturing.DataAccess
         public void ChangePrintStatus(long OrderID)
         {
        
-            var connectionString = ConfigurationManager.ConnectionStrings["DBConnectionString"].ConnectionString;
+            //var connectionString = ConfigurationManager.ConnectionStrings["DBConnectionString"].ConnectionString;
 
-                using (var conn = new SqlConnection(connectionString))
+                using (var conn = new SqlConnection(ConnectionStringHelper.GetConnectionString()))
                 {
 
 
@@ -154,9 +154,9 @@ namespace DemoManufacturing.DataAccess
         public bool ApproveRejectOrder(long OrderID,OrderStatus status, string reason )
         {
 
-            var connectionString = ConfigurationManager.ConnectionStrings["DBConnectionString"].ConnectionString;
+            //var connectionString = ConfigurationManager.ConnectionStrings["DBConnectionString"].ConnectionString;
 
-            using (var conn = new SqlConnection(connectionString))
+            using (var conn = new SqlConnection(ConnectionStringHelper.GetConnectionString()))
             {
 
 

@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoManufacturing", "DemoMa
 EndProject
 Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "EnterpriseAppSetup", "EnterpriseAppSetup\EnterpriseAppSetup.wixproj", "{1B534A4F-7A76-4306-B878-889BC3B80E94}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Encryptor", "Encryptor\Encryptor.csproj", "{9CC7776B-E079-4682-A7B5-B45FDE583785}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -46,6 +48,18 @@ Global
 		{1B534A4F-7A76-4306-B878-889BC3B80E94}.Release|x64.ActiveCfg = Release|x86
 		{1B534A4F-7A76-4306-B878-889BC3B80E94}.Release|x86.ActiveCfg = Release|x86
 		{1B534A4F-7A76-4306-B878-889BC3B80E94}.Release|x86.Build.0 = Release|x86
+		{9CC7776B-E079-4682-A7B5-B45FDE583785}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9CC7776B-E079-4682-A7B5-B45FDE583785}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9CC7776B-E079-4682-A7B5-B45FDE583785}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{9CC7776B-E079-4682-A7B5-B45FDE583785}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{9CC7776B-E079-4682-A7B5-B45FDE583785}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{9CC7776B-E079-4682-A7B5-B45FDE583785}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9CC7776B-E079-4682-A7B5-B45FDE583785}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9CC7776B-E079-4682-A7B5-B45FDE583785}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9CC7776B-E079-4682-A7B5-B45FDE583785}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{9CC7776B-E079-4682-A7B5-B45FDE583785}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{9CC7776B-E079-4682-A7B5-B45FDE583785}.Release|x64.ActiveCfg = Release|Any CPU
+		{9CC7776B-E079-4682-A7B5-B45FDE583785}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

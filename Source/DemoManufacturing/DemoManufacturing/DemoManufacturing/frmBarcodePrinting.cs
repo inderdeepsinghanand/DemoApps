@@ -19,13 +19,34 @@ namespace DemoManufacturing
 
         private PrintProduct product = null;
         public long _orderId = 0;
-        public frmBarcodePrinting(PrintProduct _product,frmDashboard dashboard)
+        frmDashboard parentForm = null;
+        public frmBarcodePrinting(PrintProduct _product,frmDashboard parent)
         {
             InitializeComponent();
             //if(barCode.
           //  string barCode = txtCode.Text;
             product = _product;
             _orderId = product.OrderID;
+            parentForm = parent;
+            DrawBarcode();
+
+        }
+
+        //public frmBarcodePrinting(PrintProduct _product, frmMasterUpload parent)
+        //{
+        //    InitializeComponent();
+        //    //if(barCode.
+        //    //  string barCode = txtCode.Text;
+        //    product = _product;
+        //    _orderId = product.OrderID;
+        //    parentForm = parent;
+
+        //    DrawBarcode();
+
+        //}
+
+        private void DrawBarcode()
+        {
             label1.Font = new Font(FontFamily.GenericSansSerif, 7f);
             label1.Text = "EmissionNorms:" + product.EmissionNorms + ",Color:" + product.Color + ",MajorVariant:" + product.MajorVariant + ",Type:" + product.BumperType + ",CustomerCode:" + product.CustomerCode + "";
             Bitmap bitMap = new Bitmap(product.BarCode.Length * 17, 80);
@@ -36,13 +57,13 @@ namespace DemoManufacturing
                 PointF point = new PointF(2f, 2f);
                 SolidBrush blackBrush = new SolidBrush(Color.Black);
                 SolidBrush whiteBrush = new SolidBrush(Color.White);
-               // graphics.DrawString("Hello asadsads s dasdada da dasdsaa", oFont, blackBrush, 0,0);
+                // graphics.DrawString("Hello asadsads s dasdada da dasdsaa", oFont, blackBrush, 0,0);
                 graphics.FillRectangle(whiteBrush, 10, 20, bitMap.Width, bitMap.Height);
                 graphics.DrawString("*" + product.BarCode + "*", oFont, blackBrush, point);
-               // int y = bitMap.Height + Convert.ToInt32(graphics.MeasureString("*" + barCode + "*", oFont).Height) + 2;
+                // int y = bitMap.Height + Convert.ToInt32(graphics.MeasureString("*" + barCode + "*", oFont).Height) + 2;
 
-               //graphics.DrawString(label1.Text, new Font(FontFamily.GenericSansSerif, 11),Brushes.Black, new PointF(10f, y));
-                
+                //graphics.DrawString(label1.Text, new Font(FontFamily.GenericSansSerif, 11),Brushes.Black, new PointF(10f, y));
+
             }
             using (MemoryStream ms = new MemoryStream())
             {
@@ -51,7 +72,6 @@ namespace DemoManufacturing
                 pictureBox1.Height = bitMap.Height;
                 pictureBox1.Width = bitMap.Width;
             }
-
         }
 
         private void btnPrint_Click(object sender, EventArgs e)
@@ -60,13 +80,25 @@ namespace DemoManufacturing
             PrintDocument pd = new PrintDocument();
             pd.PrintPage += new PrintPageEventHandler(PrintBarCode);
 
+            pd.BeginPrint += pd_BeginPrint;
             pd.DefaultPageSettings.PaperSize = new PaperSize("210 x 297 mm", pictureBox1.Image.Width + 20, pictureBox1.Image.Height + 20);
             printPreviewDialog1.Document = pd;
             if (printPreviewDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK) {
                // pd.Print();
             }
             
-            SetPrintStatus();
+        
+        }
+
+        void pd_BeginPrint(object sender, PrintEventArgs e)
+        {
+            var pd = (PrintDocument)sender;
+
+            if (pd != null && !pd.PrintController.IsPreview)
+            {
+
+                SetPrintStatus();
+            }
         }
 
 
@@ -121,6 +153,8 @@ namespace DemoManufacturing
             if (_orderId > 0)
             {
                 new CustomerOrderRepository().ChangePrintStatus(_orderId);
+
+                if (parentForm != null) { parentForm.LoadGridData(); }
             }
             //var barcode = "select * from tbl"
 

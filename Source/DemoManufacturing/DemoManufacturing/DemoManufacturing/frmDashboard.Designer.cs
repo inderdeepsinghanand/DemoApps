@@ -331,6 +331,7 @@
             this.dgBackBumpers.TabIndex = 2;
             this.dgBackBumpers.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgBackBumpers_CellContentClick);
             this.dgBackBumpers.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgBackBumpers_CellFormatting);
+            this.dgBackBumpers.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgBackBumpers_CellMouseClick);
             this.dgBackBumpers.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgBackBumpers_KeyDown);
             // 
             // pnlFrontLabel

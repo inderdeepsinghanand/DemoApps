@@ -51,7 +51,7 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnAdd = new System.Windows.Forms.Button();
-            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
+            this.lnkPrint = new System.Windows.Forms.LinkLabel();
             this.txtBarCode1 = new System.Windows.Forms.TextBox();
             this.txtCustCode1 = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
@@ -164,6 +164,8 @@
             this.splitContainer1.Panel1.Controls.Add(this.label1);
             this.splitContainer1.Panel1.Controls.Add(this.btnClose);
             this.splitContainer1.Panel1.Controls.Add(this.grpFileUpload);
+            this.splitContainer1.Panel1.Controls.Add(this.label7);
+            this.splitContainer1.Panel1.Controls.Add(this.cmbBumperType1);
             // 
             // splitContainer1.Panel2
             // 
@@ -207,6 +209,7 @@
             this.textBox7.Name = "textBox7";
             this.textBox7.Size = new System.Drawing.Size(308, 20);
             this.textBox7.TabIndex = 35;
+            this.textBox7.Visible = false;
             // 
             // textBox6
             // 
@@ -241,6 +244,7 @@
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(308, 20);
             this.textBox3.TabIndex = 32;
+            this.textBox3.Visible = false;
             // 
             // textBox4
             // 
@@ -248,6 +252,7 @@
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(268, 20);
             this.textBox4.TabIndex = 31;
+            this.textBox4.Visible = false;
             // 
             // label19
             // 
@@ -268,6 +273,7 @@
             this.label14.Size = new System.Drawing.Size(59, 13);
             this.label14.TabIndex = 30;
             this.label14.Text = "Bar Code";
+            this.label14.Visible = false;
             // 
             // label15
             // 
@@ -278,6 +284,7 @@
             this.label15.Size = new System.Drawing.Size(92, 13);
             this.label15.TabIndex = 29;
             this.label15.Text = "Customer Code";
+            this.label15.Visible = false;
             // 
             // label18
             // 
@@ -298,6 +305,7 @@
             this.label16.Size = new System.Drawing.Size(35, 13);
             this.label16.TabIndex = 28;
             this.label16.Text = "Type";
+            this.label16.Visible = false;
             // 
             // label17
             // 
@@ -313,13 +321,11 @@
             // 
             this.groupBox3.Controls.Add(this.btnCancel);
             this.groupBox3.Controls.Add(this.btnAdd);
-            this.groupBox3.Controls.Add(this.linkLabel1);
+            this.groupBox3.Controls.Add(this.lnkPrint);
             this.groupBox3.Controls.Add(this.txtBarCode1);
             this.groupBox3.Controls.Add(this.txtCustCode1);
             this.groupBox3.Controls.Add(this.label5);
             this.groupBox3.Controls.Add(this.label6);
-            this.groupBox3.Controls.Add(this.label7);
-            this.groupBox3.Controls.Add(this.cmbBumperType1);
             this.groupBox3.Controls.Add(this.label11);
             this.groupBox3.Controls.Add(this.cmbMajorVariant1);
             this.groupBox3.Controls.Add(this.label12);
@@ -360,20 +366,20 @@
             this.btnAdd.UseVisualStyleBackColor = false;
             this.btnAdd.Click += new System.EventHandler(this.btnSave_Click);
             // 
-            // linkLabel1
+            // lnkPrint
             // 
-            this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(513, 116);
-            this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(89, 13);
-            this.linkLabel1.TabIndex = 18;
-            this.linkLabel1.TabStop = true;
-            this.linkLabel1.Text = "Print Bar Code";
-            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lblPrintBarCode_LinkClicked);
+            this.lnkPrint.AutoSize = true;
+            this.lnkPrint.Location = new System.Drawing.Point(513, 83);
+            this.lnkPrint.Name = "lnkPrint";
+            this.lnkPrint.Size = new System.Drawing.Size(89, 13);
+            this.lnkPrint.TabIndex = 18;
+            this.lnkPrint.TabStop = true;
+            this.lnkPrint.Text = "Print Bar Code";
+            this.lnkPrint.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lblPrintBarCode_LinkClicked);
             // 
             // txtBarCode1
             // 
-            this.txtBarCode1.Location = new System.Drawing.Point(513, 91);
+            this.txtBarCode1.Location = new System.Drawing.Point(513, 61);
             this.txtBarCode1.Name = "txtBarCode1";
             this.txtBarCode1.Size = new System.Drawing.Size(300, 20);
             this.txtBarCode1.TabIndex = 17;
@@ -389,7 +395,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(417, 98);
+            this.label5.Location = new System.Drawing.Point(417, 65);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(59, 13);
             this.label5.TabIndex = 15;
@@ -409,7 +415,7 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(417, 64);
+            this.label7.Location = new System.Drawing.Point(441, 177);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(35, 13);
             this.label7.TabIndex = 11;
@@ -421,7 +427,10 @@
             this.cmbBumperType1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cmbBumperType1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbBumperType1.FormattingEnabled = true;
-            this.cmbBumperType1.Location = new System.Drawing.Point(513, 61);
+            this.cmbBumperType1.Items.AddRange(new object[] {
+            "Front",
+            "Rear"});
+            this.cmbBumperType1.Location = new System.Drawing.Point(537, 174);
             this.cmbBumperType1.Name = "cmbBumperType1";
             this.cmbBumperType1.Size = new System.Drawing.Size(300, 23);
             this.cmbBumperType1.TabIndex = 10;
@@ -779,7 +788,7 @@
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnAdd;
-        private System.Windows.Forms.LinkLabel linkLabel1;
+        private System.Windows.Forms.LinkLabel lnkPrint;
         private System.Windows.Forms.TextBox txtBarCode1;
         private System.Windows.Forms.TextBox txtCustCode1;
         private System.Windows.Forms.Label label5;

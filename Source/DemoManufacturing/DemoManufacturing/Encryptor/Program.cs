@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace DemoManufacturing
+namespace Encryptor
 {
     static class Program
     {
@@ -15,8 +15,7 @@ namespace DemoManufacturing
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-           // Application.Run(new frmLogin());
-            Application.Run(new frmInspDashboard());
+            Application.Run(new Form1());
         }
     }
 }
