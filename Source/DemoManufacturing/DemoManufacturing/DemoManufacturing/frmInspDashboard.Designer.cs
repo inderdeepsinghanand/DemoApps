@@ -38,6 +38,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.pnlLogo = new System.Windows.Forms.Panel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pnlButtons = new System.Windows.Forms.Panel();
             this.btnExit = new System.Windows.Forms.Button();
             this.btnOrderProcessing = new System.Windows.Forms.Button();
@@ -52,17 +53,16 @@
             this.pnlFrontLabel = new System.Windows.Forms.Panel();
             this.lblFrontStats = new System.Windows.Forms.Label();
             this.lblFrontBump = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.pnlLogo.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.pnlButtons.SuspendLayout();
             this.pnlReaLabel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgFrontBumpers)).BeginInit();
             this.panel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgBackBumpers)).BeginInit();
             this.pnlFrontLabel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -99,6 +99,16 @@
             this.pnlLogo.Name = "pnlLogo";
             this.pnlLogo.Size = new System.Drawing.Size(186, 94);
             this.pnlLogo.TabIndex = 1;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pictureBox1.Image = global::DemoManufacturing.Properties.Resources.LogoCorner;
+            this.pictureBox1.Location = new System.Drawing.Point(0, 0);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(186, 94);
+            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.TabStop = false;
             // 
             // pnlButtons
             // 
@@ -221,6 +231,7 @@
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dgFrontBumpers.DefaultCellStyle = dataGridViewCellStyle2;
             this.dgFrontBumpers.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgFrontBumpers.EnableHeadersVisualStyles = false;
             this.dgFrontBumpers.Location = new System.Drawing.Point(0, 80);
             this.dgFrontBumpers.Margin = new System.Windows.Forms.Padding(0);
             this.dgFrontBumpers.Name = "dgFrontBumpers";
@@ -305,6 +316,7 @@
             dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dgBackBumpers.DefaultCellStyle = dataGridViewCellStyle6;
             this.dgBackBumpers.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgBackBumpers.EnableHeadersVisualStyles = false;
             this.dgBackBumpers.Location = new System.Drawing.Point(319, 80);
             this.dgBackBumpers.Margin = new System.Windows.Forms.Padding(0);
             this.dgBackBumpers.Name = "dgBackBumpers";
@@ -360,16 +372,6 @@
             this.lblFrontBump.Text = "Front Bumpers";
             this.lblFrontBump.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBox1.Image = global::DemoManufacturing.Properties.Resources.LogoCorner;
-            this.pictureBox1.Location = new System.Drawing.Point(0, 0);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(186, 94);
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
-            // 
             // frmInspDashboard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -385,13 +387,13 @@
             this.panel1.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.pnlLogo.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.pnlButtons.ResumeLayout(false);
             this.pnlReaLabel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgFrontBumpers)).EndInit();
             this.panel4.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgBackBumpers)).EndInit();
             this.pnlFrontLabel.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }

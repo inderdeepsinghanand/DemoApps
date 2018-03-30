@@ -95,18 +95,10 @@ namespace DemoManufacturing
             lblFrontBump.Text = "Front Bumpers" + "(" + dgFrontBumpers.Rows.Count + ")";
             lblRearBump.Text = "Rear Bumpers" + "(" + dgBackBumpers.Rows.Count + ")";
 
+            dgBackBumpers.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgFrontBumpers.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
 
-            if (frnRowIndex < dgFrontBumpers.Rows.Count)
-            {
-                var nextRow = dgFrontBumpers.Rows[frnRowIndex];
-                nextRow.Selected = true;
-            }
-
-            if (RearRowIndex < dgBackBumpers.Rows.Count)
-            {
-                var nextRow = dgBackBumpers.Rows[RearRowIndex];
-                nextRow.Selected = true;
-            }
+           
 
 
 
@@ -145,7 +137,19 @@ namespace DemoManufacturing
                 // lblRearStats.Text = "Rear Bumpers" + "(" + dgBackBumpers.Rows.Count + ")";
             }
 
+            frnRowIndex = frnRowIndex - 1;
+            RearRowIndex = RearRowIndex - 1;
+            //if (frnRowIndex >= 0 && frnRowIndex < dgFrontBumpers.Rows.Count)
+            //{
+            //    var nextRow = dgFrontBumpers.Rows[frnRowIndex];
+            //    nextRow.Selected = true;
+            //}
 
+            //if (RearRowIndex >= 0 && RearRowIndex < dgBackBumpers.Rows.Count)
+            //{
+            //    var nextRow = dgBackBumpers.Rows[RearRowIndex];
+            //    nextRow.Selected = true;
+            //}
 
             
         }
@@ -297,15 +301,15 @@ namespace DemoManufacturing
 
         private void dgFrontBumpers_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex >= 0)
-            {
-                var row = dgFrontBumpers.Rows[e.RowIndex]; //dgFrontBumpers.se
-                //green
-                //  row.DefaultCellStyle.BackColor = Color.FromArgb(127, 186, 0);
+            //if (e.RowIndex >= 0)
+            //{
+            //    var row = dgFrontBumpers.Rows[e.RowIndex]; //dgFrontBumpers.se
+            //    //green
+            //    //  row.DefaultCellStyle.BackColor = Color.FromArgb(127, 186, 0);
 
-                row.Selected = true;
-                // MessageBox.Show(row.Cells["OrderID"].Value.ToString());
-            }
+            //    row.Selected = true;
+            //    // MessageBox.Show(row.Cells["OrderID"].Value.ToString());
+            //}
 
             //if (e.ColumnIndex == this.dgFrontBumpers.Columns["Print"].Index)
             //{
@@ -341,30 +345,30 @@ namespace DemoManufacturing
         private void dgBackBumpers_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
-            if (e.RowIndex >= 0)
-            {
-                RearRowIndex = e.RowIndex+1;
-                var row = dgBackBumpers.Rows[e.RowIndex]; //dgFrontBumpers.se
-                //green
-                //  row.DefaultCellStyle.BackColor = Color.FromArgb(127, 186, 0);
+            //if (e.RowIndex >= 0)
+            //{
+            //    RearRowIndex = e.RowIndex+1;
+            //    var row = dgBackBumpers.Rows[e.RowIndex]; //dgFrontBumpers.se
+            //    //green
+            //    //  row.DefaultCellStyle.BackColor = Color.FromArgb(127, 186, 0);
 
-                row.Selected = true;
-                //var rejectIndex = this.dgFrontBumpers.Columns["lnkReject"].Index;
-                //row.Cells[rejectIndex].Selected=false;
-                //row.Cells[rejectIndex].ba;
-                // MessageBox.Show(row.Cells["OrderID"].Value.ToString());
+            //    row.Selected = true;
+            //    //var rejectIndex = this.dgFrontBumpers.Columns["lnkReject"].Index;
+            //    //row.Cells[rejectIndex].Selected=false;
+            //    //row.Cells[rejectIndex].ba;
+            //    // MessageBox.Show(row.Cells["OrderID"].Value.ToString());
 
-                row.Selected = true;
-                // MessageBox.Show(row.Cells["OrderID"].Value.ToString());
-                SetStatus(Convert.ToInt64(row.Cells["OrderID"].Value.ToString()), "123");
-                row.DefaultCellStyle.BackColor = Color.FromArgb(255, 140, 0);
-                // LoadGridData();
-                if (e.RowIndex < dgFrontBumpers.Rows.Count)
-                {
-                    var nextRow = dgFrontBumpers.Rows[e.RowIndex + 1];
-                    nextRow.Selected = true;
-                }
-            }
+            //   // row.Selected = true;
+            //    // MessageBox.Show(row.Cells["OrderID"].Value.ToString());
+            //    SetStatus(Convert.ToInt64(row.Cells["OrderID"].Value.ToString()), "123");
+            //    row.DefaultCellStyle.BackColor = Color.FromArgb(255, 140, 0);
+            //    // LoadGridData();
+            //    if (e.RowIndex < dgBackBumpers.Rows.Count)
+            //    {
+            //        var nextRow = dgBackBumpers.Rows[e.RowIndex + 1];
+            //        nextRow.Selected = true;
+            //    }
+            //}
 
 
 
@@ -452,20 +456,42 @@ namespace DemoManufacturing
         private void dgFrontBumpers_KeyDown(object sender, KeyEventArgs e)
         {
 
+
+            //if (e.RowIndex >= 0)
+            //{
+            //    frnRowIndex = e.RowIndex + 1;
+
+            //    var row = dgFrontBumpers.Rows[e.RowIndex]; //dgFrontBumpers.se
+            //    //green
+            //    //  row.DefaultCellStyle.BackColor = Color.FromArgb(127, 186, 0);
+
+            //    row.Selected = true;
+            //    // MessageBox.Show(row.Cells["OrderID"].Value.ToString());
+            //    SetStatus(Convert.ToInt64(row.Cells["OrderID"].Value.ToString()), "123");
+            //    row.DefaultCellStyle.BackColor = Color.FromArgb(255, 140, 0);
+            //    // LoadGridData();
+            //    //if (e.RowIndex < dgFrontBumpers.Rows.Count)
+            //    //{
+            //    //    var nextRow = dgFrontBumpers.Rows[e.RowIndex + 1];
+            //    //    nextRow.Selected = true;
+            //    //}
+
+            //}
+
             if (e.KeyCode == Keys.Enter)
             {
                 var cell = dgFrontBumpers.SelectedCells[0];
                 //dgFrontBumpers.se
-              
+                var rowIndex = cell != null ? cell.RowIndex : -1; // dgFrontBumpers.SelectedRows[0].Index;
 
 
-                if (cell !=null && cell.RowIndex >= 0)
+                if (rowIndex >= 0)
                 {
-                    frnRowIndex = cell.RowIndex + 1;
+                    frnRowIndex = rowIndex + 1;
 
-                    var row = dgFrontBumpers.Rows[cell.RowIndex];
+                    var row = dgFrontBumpers.Rows[rowIndex];
                     row.Selected = true;
-                    
+                    e.Handled = true;
                   //  var row = dgBackBumpers.Rows[e.RowIndex]; //dgFrontBumpers.se
 
                     //  row.DefaultCellStyle.BackColor = Color.FromArgb(127, 186, 0);
@@ -474,11 +500,11 @@ namespace DemoManufacturing
                     SetStatus(Convert.ToInt64(row.Cells["OrderID"].Value.ToString()), "123");
                     row.DefaultCellStyle.BackColor = Color.FromArgb(255, 140, 0);
                    // LoadGridData();
-                    if (cell.RowIndex < dgFrontBumpers.Rows.Count)
-                    {
-                        var nextRow = dgFrontBumpers.Rows[cell.RowIndex +1];
-                        nextRow.Selected =true;
-                    }
+                    //if (cell.RowIndex < dgFrontBumpers.Rows.Count)
+                    //{
+                    //    var nextRow = dgFrontBumpers.Rows[rowIndex];
+                    //    nextRow.Selected = true;
+                    //}
                    // MessageBox.Show("Barcode printed successfully");
                     // MessageBox.Show(row.Cells["OrderID"].Value.ToString());
                 }
@@ -488,6 +514,8 @@ namespace DemoManufacturing
                 //MessageBox.Show(cell.RowIndex.ToString());
 
             }
+           
+            //e.h
         }
 
         private void dgFrontBumpers_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
@@ -505,11 +533,11 @@ namespace DemoManufacturing
                 SetStatus(Convert.ToInt64(row.Cells["OrderID"].Value.ToString()), "123");
                 row.DefaultCellStyle.BackColor = Color.FromArgb(255, 140, 0);
                 // LoadGridData();
-                if (e.RowIndex < dgFrontBumpers.Rows.Count)
-                {
-                    var nextRow = dgFrontBumpers.Rows[e.RowIndex + 1];
-                    nextRow.Selected = true;
-                }
+                //if (e.RowIndex < dgFrontBumpers.Rows.Count)
+                //{
+                //    var nextRow = dgFrontBumpers.Rows[e.RowIndex + 1];
+                //    nextRow.Selected = true;
+                //}
 
             }
         }
@@ -530,7 +558,7 @@ namespace DemoManufacturing
 
                     var row = dgBackBumpers.Rows[cell.RowIndex];
                     row.Selected = true;
-
+                    e.Handled = true;
                     //  var row = dgBackBumpers.Rows[e.RowIndex]; //dgFrontBumpers.se
 
                     //  row.DefaultCellStyle.BackColor = Color.FromArgb(127, 186, 0);

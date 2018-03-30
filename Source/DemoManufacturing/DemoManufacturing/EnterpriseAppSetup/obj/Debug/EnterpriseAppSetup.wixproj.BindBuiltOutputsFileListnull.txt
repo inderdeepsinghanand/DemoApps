@@ -1,3 +1,2 @@
-C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\EnterpriseAppSetup\bin\Debug\cab1.cab
 C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\EnterpriseAppSetup\bin\Debug\EnterpriseAppSetup.msi
 C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\EnterpriseAppSetup\bin\Debug\EnterpriseAppSetup.wixpdb

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.fdMasterUpload = new System.Windows.Forms.OpenFileDialog();
             this.txtSelectedFile = new System.Windows.Forms.TextBox();
             this.btnMasterUpload = new System.Windows.Forms.Button();
@@ -35,10 +36,10 @@
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.textBox8 = new System.Windows.Forms.TextBox();
+            this.txtMajorVariant = new System.Windows.Forms.TextBox();
             this.textBox7 = new System.Windows.Forms.TextBox();
-            this.textBox6 = new System.Windows.Forms.TextBox();
-            this.textBox5 = new System.Windows.Forms.TextBox();
+            this.txtEmissionNorms = new System.Windows.Forms.TextBox();
+            this.txtColor = new System.Windows.Forms.TextBox();
             this.btnSearch = new System.Windows.Forms.Button();
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.textBox4 = new System.Windows.Forms.TextBox();
@@ -56,8 +57,6 @@
             this.txtCustCode1 = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.cmbBumperType1 = new System.Windows.Forms.ComboBox();
             this.label11 = new System.Windows.Forms.Label();
             this.cmbMajorVariant1 = new System.Windows.Forms.ComboBox();
             this.label12 = new System.Windows.Forms.Label();
@@ -83,6 +82,8 @@
             this.lblProductID = new System.Windows.Forms.Label();
             this.btnClose = new System.Windows.Forms.Button();
             this.grpFileUpload = new System.Windows.Forms.GroupBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.cmbBumperType1 = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -133,11 +134,21 @@
             // 
             this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(80)))), ((int)(((byte)(67)))));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridView1.EnableHeadersVisualStyles = false;
             this.dataGridView1.Location = new System.Drawing.Point(0, 0);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
+            this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView1.Size = new System.Drawing.Size(927, 425);
             this.dataGridView1.TabIndex = 6;
@@ -176,10 +187,10 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.textBox8);
+            this.groupBox2.Controls.Add(this.txtMajorVariant);
             this.groupBox2.Controls.Add(this.textBox7);
-            this.groupBox2.Controls.Add(this.textBox6);
-            this.groupBox2.Controls.Add(this.textBox5);
+            this.groupBox2.Controls.Add(this.txtEmissionNorms);
+            this.groupBox2.Controls.Add(this.txtColor);
             this.groupBox2.Controls.Add(this.btnSearch);
             this.groupBox2.Controls.Add(this.textBox3);
             this.groupBox2.Controls.Add(this.textBox4);
@@ -189,6 +200,7 @@
             this.groupBox2.Controls.Add(this.label18);
             this.groupBox2.Controls.Add(this.label16);
             this.groupBox2.Controls.Add(this.label17);
+            this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox2.Location = new System.Drawing.Point(23, 241);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(861, 111);
@@ -196,34 +208,35 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Grid Search";
             // 
-            // textBox8
+            // txtMajorVariant
             // 
-            this.textBox8.Location = new System.Drawing.Point(132, 34);
-            this.textBox8.Name = "textBox8";
-            this.textBox8.Size = new System.Drawing.Size(268, 20);
-            this.textBox8.TabIndex = 36;
+            this.txtMajorVariant.Location = new System.Drawing.Point(132, 35);
+            this.txtMajorVariant.Name = "txtMajorVariant";
+            this.txtMajorVariant.Size = new System.Drawing.Size(268, 20);
+            this.txtMajorVariant.TabIndex = 36;
             // 
             // textBox7
             // 
-            this.textBox7.Location = new System.Drawing.Point(513, 38);
+            this.textBox7.Location = new System.Drawing.Point(513, 39);
             this.textBox7.Name = "textBox7";
             this.textBox7.Size = new System.Drawing.Size(308, 20);
             this.textBox7.TabIndex = 35;
             this.textBox7.Visible = false;
             // 
-            // textBox6
+            // txtEmissionNorms
             // 
-            this.textBox6.Location = new System.Drawing.Point(513, 12);
-            this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(308, 20);
-            this.textBox6.TabIndex = 34;
+            this.txtEmissionNorms.Location = new System.Drawing.Point(513, 13);
+            this.txtEmissionNorms.Name = "txtEmissionNorms";
+            this.txtEmissionNorms.Size = new System.Drawing.Size(308, 20);
+            this.txtEmissionNorms.TabIndex = 34;
             // 
-            // textBox5
+            // txtColor
             // 
-            this.textBox5.Location = new System.Drawing.Point(132, 9);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(268, 20);
-            this.textBox5.TabIndex = 33;
+            this.txtColor.Location = new System.Drawing.Point(132, 10);
+            this.txtColor.Name = "txtColor";
+            this.txtColor.Size = new System.Drawing.Size(268, 20);
+            this.txtColor.TabIndex = 33;
+            this.txtColor.TextChanged += new System.EventHandler(this.txtColor_TextChanged);
             // 
             // btnSearch
             // 
@@ -258,7 +271,7 @@
             // 
             this.label19.AutoSize = true;
             this.label19.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label19.Location = new System.Drawing.Point(36, 12);
+            this.label19.Location = new System.Drawing.Point(36, 13);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(36, 13);
             this.label19.TabIndex = 22;
@@ -290,7 +303,7 @@
             // 
             this.label18.AutoSize = true;
             this.label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label18.Location = new System.Drawing.Point(417, 12);
+            this.label18.Location = new System.Drawing.Point(417, 13);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(95, 13);
             this.label18.TabIndex = 24;
@@ -300,7 +313,7 @@
             // 
             this.label16.AutoSize = true;
             this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label16.Location = new System.Drawing.Point(417, 38);
+            this.label16.Location = new System.Drawing.Point(417, 39);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(35, 13);
             this.label16.TabIndex = 28;
@@ -311,7 +324,7 @@
             // 
             this.label17.AutoSize = true;
             this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label17.Location = new System.Drawing.Point(36, 41);
+            this.label17.Location = new System.Drawing.Point(36, 42);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(82, 13);
             this.label17.TabIndex = 26;
@@ -410,30 +423,6 @@
             this.label6.Size = new System.Drawing.Size(92, 13);
             this.label6.TabIndex = 13;
             this.label6.Text = "Customer Code";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(441, 177);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(35, 13);
-            this.label7.TabIndex = 11;
-            this.label7.Text = "Type";
-            // 
-            // cmbBumperType1
-            // 
-            this.cmbBumperType1.BackColor = System.Drawing.Color.AliceBlue;
-            this.cmbBumperType1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.cmbBumperType1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmbBumperType1.FormattingEnabled = true;
-            this.cmbBumperType1.Items.AddRange(new object[] {
-            "Front",
-            "Rear"});
-            this.cmbBumperType1.Location = new System.Drawing.Point(537, 174);
-            this.cmbBumperType1.Name = "cmbBumperType1";
-            this.cmbBumperType1.Size = new System.Drawing.Size(300, 23);
-            this.cmbBumperType1.TabIndex = 10;
             // 
             // label11
             // 
@@ -715,6 +704,30 @@
             this.grpFileUpload.TabStop = false;
             this.grpFileUpload.Text = "Upload Master";
             // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Location = new System.Drawing.Point(441, 177);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(35, 13);
+            this.label7.TabIndex = 11;
+            this.label7.Text = "Type";
+            // 
+            // cmbBumperType1
+            // 
+            this.cmbBumperType1.BackColor = System.Drawing.Color.AliceBlue;
+            this.cmbBumperType1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cmbBumperType1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbBumperType1.FormattingEnabled = true;
+            this.cmbBumperType1.Items.AddRange(new object[] {
+            "Front",
+            "Rear"});
+            this.cmbBumperType1.Location = new System.Drawing.Point(537, 174);
+            this.cmbBumperType1.Name = "cmbBumperType1";
+            this.cmbBumperType1.Size = new System.Drawing.Size(300, 23);
+            this.cmbBumperType1.TabIndex = 10;
+            // 
             // frmMasterUpload
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -801,9 +814,9 @@
         private System.Windows.Forms.ComboBox cmbEmission;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.ComboBox cmbColor1;
-        private System.Windows.Forms.TextBox textBox8;
+        private System.Windows.Forms.TextBox txtMajorVariant;
         private System.Windows.Forms.TextBox textBox7;
-        private System.Windows.Forms.TextBox textBox6;
-        private System.Windows.Forms.TextBox textBox5;
+        private System.Windows.Forms.TextBox txtEmissionNorms;
+        private System.Windows.Forms.TextBox txtColor;
     }
 }

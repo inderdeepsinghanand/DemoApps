@@ -103,6 +103,9 @@ namespace DemoManufacturing
             dgFrontBumpers.Columns["OrderStatusID"].Visible = false;
             dgBackBumpers.Columns["OrderStatusID"].Visible = false;
 
+            dgBackBumpers.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgFrontBumpers.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+
             //dgFrontBumpers.Columns["IsBarCodePrinted"].Visible = false;
             //dgBackBumpers.Columns["IsBarCodePrinted"].Visible = false;
             
@@ -142,13 +145,13 @@ namespace DemoManufacturing
           }
 
 
-          if (frnRowIndex < dgFrontBumpers.Rows.Count)
+          if (frnRowIndex >=0 && frnRowIndex < dgFrontBumpers.Rows.Count)
           {
               var nextRow = dgFrontBumpers.Rows[frnRowIndex];
               nextRow.Selected = true;
           }
 
-          if (RearRowIndex < dgBackBumpers.Rows.Count)
+          if (RearRowIndex >=0 && RearRowIndex < dgBackBumpers.Rows.Count)
           {
               var nextRow = dgBackBumpers.Rows[RearRowIndex];
               nextRow.Selected = true;
@@ -475,7 +478,7 @@ namespace DemoManufacturing
                 {
                     var row = dgFrontBumpers.Rows[cell.RowIndex];
                     row.Selected = true;
-                    
+                    e.Handled = true;
                   //  var row = dgBackBumpers.Rows[e.RowIndex]; //dgFrontBumpers.se
 
                     //  row.DefaultCellStyle.BackColor = Color.FromArgb(127, 186, 0);
@@ -556,7 +559,7 @@ namespace DemoManufacturing
                   //  RearRowIndex = cell.RowIndex +1;
                     var row = dgBackBumpers.Rows[cell.RowIndex];
                     row.Selected = true;
-
+                    e.Handled = true;
                     //  var row = dgBackBumpers.Rows[e.RowIndex]; //dgFrontBumpers.se
 
                     //  row.DefaultCellStyle.BackColor = Color.FromArgb(127, 186, 0);

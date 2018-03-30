@@ -33,7 +33,7 @@ namespace DemoManufacturing
         private void RefreshPage()
         {
 
-            GetData("select * from [tbl_CustomerOrdersMisMatch] ", bSourceFront);
+            GetData("select OrderID,Color,EmissionNorms, MajorVariant from [tbl_CustomerOrdersMisMatch] ", bSourceFront);
             dataGridView1.DataSource = bSourceFront;
 
             dataGridView1.Columns["OrderID"].Visible = false;
@@ -239,8 +239,8 @@ namespace DemoManufacturing
                 cmbEmissionNorms.SelectedValue = row.Cells["EmissionNorms"].Value;
                 cmbColor.SelectedValue = row.Cells["Color"].Value;
                 cmbMajorVariant.SelectedValue = row.Cells["MajorVariant"].Value;
-                cmbBumperType.SelectedValue = row.Cells["Type"].Value;
-                txtCustomerCode.Text = row.Cells["CustomerCode"].Value.ToString();
+               // cmbBumperType.SelectedValue = row.Cells["Type"].Value;
+               // txtCustomerCode.Text = row.Cells["CustomerCode"].Value.ToString();
                // txtBarCode.Text = row.Cells["BarCode"].Value.ToString();
             }
         }

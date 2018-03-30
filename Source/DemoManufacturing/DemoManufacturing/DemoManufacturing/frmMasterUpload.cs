@@ -32,6 +32,8 @@ namespace DemoManufacturing
 
         private void ReLoadGrid()
         {
+
+            bSourceFront = new BindingSource();
             GetData(@"select [ProductID]
       ,[Color]
       ,[EmissionNorms]
@@ -87,6 +89,26 @@ namespace DemoManufacturing
                 // Resize the DataGridView columns to fit the newly loaded content.
                 //dataGridView1.AutoResizeColumns(
                 //    DataGridViewAutoSizeColumnsMode.AllCellsExceptHeader);
+            }
+            catch (SqlException ex)
+            {
+                MessageBox.Show("Exception Occured: " + ex.Message + "\n Trace:" + ex.StackTrace);
+            }
+        }
+
+        private void GetSearchData(string selectCommand, BindingSource bSource, IList<SqlParameter> parameters = null)
+        {
+            try
+            {
+                var table = new CommonRepository().Get(selectCommand, CommandType.StoredProcedure, parameters);
+
+
+
+                bSource.DataSource = table;
+
+                // Resize the DataGridView columns to fit the newly loaded content.
+                dataGridView1.AutoResizeColumns(
+                    DataGridViewAutoSizeColumnsMode.AllCellsExceptHeader);
             }
             catch (SqlException ex)
             {
@@ -353,6 +375,37 @@ namespace DemoManufacturing
         }
 
         private void btnSearch_Click(object sender, EventArgs e)
+        {
+            string colorSearch = txtColor.Text;
+            string variant = txtMajorVariant.Text;
+            string emissionNorms = txtEmissionNorms.Text;
+
+//            
+
+//                @Color nvarchar(100) = ''
+//,@MajorVariant nvarchar(500) = ''
+//,@Emission nvarchar(100) = ''
+
+            if (!string.IsNullOrEmpty(colorSearch) || !string.IsNullOrEmpty(variant) || !string.IsNullOrEmpty(emissionNorms))
+            {
+                bSourceFront = new BindingSource();
+                var parameters = new List<SqlParameter>();
+                parameters.Add(new SqlParameter("@Color", SqlDbType.NVarChar, 100) { Value = colorSearch });
+                parameters.Add(new SqlParameter("@MajorVariant", SqlDbType.NVarChar, 500) { Value = variant });
+                parameters.Add(new SqlParameter("@Emission", SqlDbType.NVarChar, 100) { Value = emissionNorms });
+
+                GetSearchData("[dbo].[usp_SearchProduct]", bSourceFront, parameters);
+
+                     dataGridView1.DataSource = bSourceFront;
+
+                     dataGridView1.Columns["ProductID"].Visible = false;
+            }
+            else
+                MessageBox.Show("Please enter Color, Emission Norms or Major Variant to search.");
+
+        }
+
+        private void txtColor_TextChanged(object sender, EventArgs e)
         {
 
         }
