@@ -33,8 +33,9 @@ namespace DemoManufacturing
         {
             InitializeComponent();
 
-            FormBorderStyle = FormBorderStyle.None;//.Fixed3D;
+           // FormBorderStyle = FormBorderStyle.None;//.Fixed3D;
             WindowState = FormWindowState.Maximized;
+            tmrRefresh.Start();
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -69,25 +70,31 @@ namespace DemoManufacturing
             dgBackBumpers.Columns.Clear();
             dgFrontBumpers.Columns.Clear();
 
+            dgFrontBumpers.DefaultCellStyle.BackColor = amber;
+            dgBackBumpers.DefaultCellStyle.BackColor = amber;
             // Bind the DataGridView to the BindingSource
             // and load the data from the database.
             dgFrontBumpers.DataSource = bSourceBack;
-            GetData("select OrderID, [Color],[EmissionNorms],[MajorVariant],[IsBarCodePrinted],[BarCode],[OrderStatusID], [Reason] from [tbl_CustomerOrders] where OrderStatusID = " + (long)OrderStatus.BCPrinted + "AND Type ='Front'", bSourceBack);
+            GetData("select OrderID, [Color],[EmissionNorms],[MajorVariant],[IsBarCodePrinted],[BarCode],[OrderStatusID],os.[DisplayName] as Status, [Reason] from [tbl_CustomerOrders]  co inner join dbo.tbl_OrderStatus os on co.[OrderStatusID] = os.[StatusID] where OrderStatusID = " + (long)OrderStatus.BCPrinted + "AND Type ='Front'", bSourceBack);
 
             dgFrontBumpers.Columns["EmissionNorms"].HeaderText = "Emission Norms";
             dgFrontBumpers.Columns["MajorVariant"].HeaderText = "Major Variant";
 
             dgBackBumpers.DataSource = bSourceFront;
-            GetData("select OrderID, [Color],[EmissionNorms],[MajorVariant],[IsBarCodePrinted],[BarCode],[OrderStatusID], [Reason] from [tbl_CustomerOrders] where OrderStatusID = " + (long)OrderStatus.BCPrinted + "AND Type ='Rear'", bSourceFront);
+            GetData("select OrderID, [Color],[EmissionNorms],[MajorVariant],[IsBarCodePrinted],[BarCode],[OrderStatusID],os.[DisplayName] as Status, [Reason] from [tbl_CustomerOrders]  co inner join dbo.tbl_OrderStatus os on co.[OrderStatusID] = os.[StatusID] where OrderStatusID = " + (long)OrderStatus.BCPrinted + "AND Type ='Rear'", bSourceFront);
 
             dgBackBumpers.Columns["EmissionNorms"].HeaderText = "Emission Norms";
             dgBackBumpers.Columns["MajorVariant"].HeaderText = "Major Variant";
+          
 
 
             dgFrontBumpers.Columns["OrderID"].Visible = false;
             dgBackBumpers.Columns["OrderID"].Visible = false;
             dgFrontBumpers.Columns["BarCode"].Visible = false;
             dgBackBumpers.Columns["BarCode"].Visible = false;
+            dgBackBumpers.Columns["OrderStatusID"].Visible = false;
+            dgFrontBumpers.Columns["OrderStatusID"].Visible = false;
+
 
             dgFrontBumpers.Columns["IsBarCodePrinted"].Visible = false;
             dgBackBumpers.Columns["IsBarCodePrinted"].Visible = false;
@@ -215,6 +222,12 @@ namespace DemoManufacturing
         private void btnExit_Click(object sender, EventArgs e)
         {
             this.Close();
+            
+            int openForms = Application.OpenForms.Count;
+            for (int i = 0; i < openForms; i++)
+            {
+                Application.OpenForms[i].Close();
+            }
         }
 
         private void btnMasterUpload_Click(object sender, EventArgs e)
@@ -226,6 +239,12 @@ namespace DemoManufacturing
         private void btnExit_Click_1(object sender, EventArgs e)
         {
             this.Close();
+            
+            int openForms = Application.OpenForms.Count;
+            for (int i = 0; i < openForms; i++)
+            {
+                Application.OpenForms[i].Close();
+            }
         }
 
         private void btnUploadOrder_Click(object sender, EventArgs e)
@@ -260,43 +279,43 @@ namespace DemoManufacturing
 
         private void dgFrontBumpers_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
-            //DataView tb = dgFrontBumpers.DataS as DataTable;
-            if (dgFrontBumpers.Rows != null && dgFrontBumpers.Rows.Count > 0)
-            {
-                DataGridViewRow row = dgFrontBumpers.Rows[e.RowIndex];// get you required index
-                // check the cell value under your specific column and then you can toggle your colors
+            ////DataView tb = dgFrontBumpers.DataS as DataTable;
+            //if (dgFrontBumpers.Rows != null && dgFrontBumpers.Rows.Count > 0)
+            //{
+            //    DataGridViewRow row = dgFrontBumpers.Rows[e.RowIndex];// get you required index
+            //    // check the cell value under your specific column and then you can toggle your colors
 
-                var cell = row.Cells["OrderStatusID"];
+            //    var cell = row.Cells["OrderStatusID"];
 
-                // var cell = row.Cells["OrderStatusID"];
-
-
-                if (((long)cell.Value) == (long)OrderStatus.New)
-                {
-                    // row.DefaultCellStyle.BackColor = Color.FromArgb(127, 186, 0);
-                }
-                else if (((long)cell.Value) == (long)OrderStatus.Approved)
-                {
-                    row.DefaultCellStyle.BackColor = green;
-                }
-                else if (((long)cell.Value) == (long)OrderStatus.BCPrinted)
-                    row.DefaultCellStyle.BackColor = amber;
-                else
-                    row.DefaultCellStyle.BackColor = red;
+            //    // var cell = row.Cells["OrderStatusID"];
 
 
+            //    if (((long)cell.Value) == (long)OrderStatus.New)
+            //    {
+            //        // row.DefaultCellStyle.BackColor = Color.FromArgb(127, 186, 0);
+            //    }
+            //    else if (((long)cell.Value) == (long)OrderStatus.Approved)
+            //    {
+            //        row.DefaultCellStyle.BackColor = green;
+            //    }
+            //    else if (((long)cell.Value) == (long)OrderStatus.BCPrinted)
+            //        row.DefaultCellStyle.BackColor = amber;
+            //    else
+            //        row.DefaultCellStyle.BackColor = red;
 
-                //set the reject button cell
-                var rejectColumn = this.dgFrontBumpers.Columns["Reject"];
-                if (rejectColumn != null)
-                {
-                    var rejectIndex = rejectColumn.Index;
-                    row.Cells[rejectIndex].Style.Font = new Font(FontFamily.GenericSansSerif, 10.00f);
-                    row.Cells[rejectIndex].Style.BackColor = Color.White;
-                    //        print.DefaultCellStyle.Font = 
-                }
 
-            }
+
+            //    //set the reject button cell
+            //    var rejectColumn = this.dgFrontBumpers.Columns["Reject"];
+            //    if (rejectColumn != null)
+            //    {
+            //        var rejectIndex = rejectColumn.Index;
+            //        row.Cells[rejectIndex].Style.Font = new Font(FontFamily.GenericSansSerif, 10.00f);
+            //        row.Cells[rejectIndex].Style.BackColor = Color.White;
+            //        //        print.DefaultCellStyle.Font = 
+            //    }
+
+            //}
         }
 
         private void dgFrontBumpers_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -391,42 +410,42 @@ namespace DemoManufacturing
 
             //}
             //DataView tb = dgFrontBumpers.DataS as DataTable;
-            if (dgBackBumpers.Rows != null && dgBackBumpers.Rows.Count > 0)
-            {
-                DataGridViewRow row = dgBackBumpers.Rows[e.RowIndex];// get you required index
-                // check the cell value under your specific column and then you can toggle your colors
+            //if (dgBackBumpers.Rows != null && dgBackBumpers.Rows.Count > 0)
+            //{
+            //    DataGridViewRow row = dgBackBumpers.Rows[e.RowIndex];// get you required index
+            //    // check the cell value under your specific column and then you can toggle your colors
 
-                var cell = row.Cells["OrderStatusID"];
+            //    var cell = row.Cells["OrderStatusID"];
 
-                // var cell = row.Cells["OrderStatusID"];
-
-
-                if (((long)cell.Value) == (long)OrderStatus.New)
-                {
-                    // row.DefaultCellStyle.BackColor = Color.FromArgb(127, 186, 0);
-                }
-                else if (((long)cell.Value) == (long)OrderStatus.Approved)
-                {
-                    row.DefaultCellStyle.BackColor = green;
-                }
-                else if (((long)cell.Value) == (long)OrderStatus.BCPrinted)
-                    row.DefaultCellStyle.BackColor = amber;
-                else
-                    row.DefaultCellStyle.BackColor = red;
+            //    // var cell = row.Cells["OrderStatusID"];
 
 
+            //    if (((long)cell.Value) == (long)OrderStatus.New)
+            //    {
+            //        // row.DefaultCellStyle.BackColor = Color.FromArgb(127, 186, 0);
+            //    }
+            //    else if (((long)cell.Value) == (long)OrderStatus.Approved)
+            //    {
+            //        row.DefaultCellStyle.BackColor = green;
+            //    }
+            //    else if (((long)cell.Value) == (long)OrderStatus.BCPrinted)
+            //        row.DefaultCellStyle.BackColor = amber;
+            //    else
+            //        row.DefaultCellStyle.BackColor = red;
 
-                //set the reject button cell
-                var rejectColumn = this.dgFrontBumpers.Columns["Reject"];
-                if (rejectColumn != null)
-                {
-                    var rejectIndex = rejectColumn.Index;
-                    row.Cells[rejectIndex].Style.Font = new Font(FontFamily.GenericSansSerif, 10.00f);
-                    row.Cells[rejectIndex].Style.BackColor = Color.White;
-                    //        print.DefaultCellStyle.Font = 
-                }
 
-            }
+
+            //    //set the reject button cell
+            //    var rejectColumn = this.dgFrontBumpers.Columns["Reject"];
+            //    if (rejectColumn != null)
+            //    {
+            //        var rejectIndex = rejectColumn.Index;
+            //        row.Cells[rejectIndex].Style.Font = new Font(FontFamily.GenericSansSerif, 10.00f);
+            //        row.Cells[rejectIndex].Style.BackColor = Color.White;
+            //        //        print.DefaultCellStyle.Font = 
+            //    }
+
+            //}
 
         }
 
@@ -605,6 +624,25 @@ namespace DemoManufacturing
                 //}
 
             }
+        }
+
+        private void frmInspDashboard_KeyPress(object sender, KeyPressEventArgs e)
+        {
+
+        }
+
+        private void frmInspDashboard_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                this.WindowState = FormWindowState.Minimized;
+                e.Handled = true;
+            }
+        }
+
+        private void tmrRefresh_Tick(object sender, EventArgs e)
+        {
+            LoadGridData();
         }
     }
 }

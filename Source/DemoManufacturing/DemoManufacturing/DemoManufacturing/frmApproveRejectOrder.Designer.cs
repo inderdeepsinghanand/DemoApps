@@ -63,7 +63,7 @@
             this.cmbStatus.FormattingEnabled = true;
             this.cmbStatus.Items.AddRange(new object[] {
             "Please Select",
-            "Ok",
+            "Tested Ok",
             "Reject"});
             this.cmbStatus.Location = new System.Drawing.Point(133, 45);
             this.cmbStatus.Name = "cmbStatus";
@@ -108,6 +108,7 @@
             // 
             // frmApproveRejectOrder
             // 
+            this.AcceptButton = this.btnSave;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;

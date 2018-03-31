@@ -1,0 +1,8 @@
+C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\Encryptor\bin\Release\Encryptor.exe
+C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\Encryptor\bin\Release\Encryptor.pdb
+C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\Encryptor\obj\Release\Encryptor.csprojResolveAssemblyReference.cache
+C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\Encryptor\obj\Release\Encryptor.Form1.resources
+C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\Encryptor\obj\Release\Encryptor.Properties.Resources.resources
+C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\Encryptor\obj\Release\Encryptor.csproj.GenerateResource.Cache
+C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\Encryptor\obj\Release\Encryptor.exe
+C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\Encryptor\obj\Release\Encryptor.pdb

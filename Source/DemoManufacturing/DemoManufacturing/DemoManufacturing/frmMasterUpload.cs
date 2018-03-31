@@ -285,7 +285,7 @@ namespace DemoManufacturing
            
 
             frmBarcodePrinting barcodePrint = new frmBarcodePrinting(order, null);
-            barcodePrint.ShowDialog();
+           // barcodePrint.ShowDialog();
         }
 
 
@@ -408,6 +408,12 @@ namespace DemoManufacturing
         private void txtColor_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            txtEmissionNorms.Text = txtColor.Text = txtMajorVariant.Text = "";
+            ReLoadGrid();
         }
     }
 }

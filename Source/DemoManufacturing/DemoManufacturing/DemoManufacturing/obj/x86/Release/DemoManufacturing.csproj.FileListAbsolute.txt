@@ -1,0 +1,17 @@
+C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\bin\x86\Release\DemoManufacturing.exe.config
+C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\bin\x86\Release\DemoManufacturing.exe
+C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\bin\x86\Release\DemoManufacturing.pdb
+C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\bin\x86\Release\Microsoft.VisualBasic.PowerPacks.Vs.dll
+C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\obj\x86\Release\DemoManufacturing.frmApproveRejectOrder.resources
+C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\obj\x86\Release\DemoManufacturing.frmInspDashboard.resources
+C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\obj\x86\Release\DemoManufacturing.frmLogin.resources
+C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\obj\x86\Release\DemoManufacturing.frmBarcodePrinting.resources
+C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\obj\x86\Release\DemoManufacturing.frmCurrentOrder.resources
+C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\obj\x86\Release\DemoManufacturing.frmDashboard.resources
+C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\obj\x86\Release\DemoManufacturing.frmOrderUpload.resources
+C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\obj\x86\Release\DemoManufacturing.frmMasterUpload.resources
+C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\obj\x86\Release\DemoManufacturing.Properties.Resources.resources
+C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\obj\x86\Release\DemoManufacturing.csproj.GenerateResource.Cache
+C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\obj\x86\Release\DemoManufacturing.exe
+C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\obj\x86\Release\DemoManufacturing.pdb
+C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\obj\x86\Release\DemoManufacturing.csprojResolveAssemblyReference.cache

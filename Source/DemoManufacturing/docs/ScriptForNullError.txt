@@ -1,0 +1,209 @@
+
+
+/****** Object:  StoredProcedure [dbo].[usp_SaveMisMatchOrder]    Script Date: 03/21/2018 23:08:58 ******/
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[usp_SaveMisMatchOrder]') AND type in (N'P', N'PC'))
+DROP PROCEDURE [dbo].[usp_SaveMisMatchOrder]
+GO
+
+
+/****** Object:  StoredProcedure [dbo].[usp_SaveMisMatchOrder]    Script Date: 03/21/2018 23:08:58 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+create proc [dbo].[usp_SaveMisMatchOrder]
+@OrderID BIGINT,
+@Color nvarchar(50),
+@EmissionNorms nvarchar(100)
+,@MajorVariant nvarchar(500)
+--,@Type nvarchar(20)
+--,@CustomerCode nvarchar(150)
+--,@IsBarCodePrinted BIT
+,@OrderStatusID BIGINT
+--,@SaveMisMatchOrder BIT
+,@UserId [bigint] 
+,@Name nvarchar(250) 
+
+AS
+BEGIN
+
+DECLARE @IsMisMatch BIT
+declare @BarCode nvarchar(1000),@CustomerCode nvarchar(150)
+declare @Type nvarchar(20)
+declare @ProductID bigint
+declare @InsertNewOrder bit = 0
+
+
+IF @OrderStatusID <=0
+BEGIN
+Select @OrderStatusID = StatusID from dbo.tbl_OrderStatus where Name = 'New' 
+END
+
+SELECT top 1 @BarCode = BarCode,@CustomerCode =[CustomerCode], @ProductID = ProductID 
+	FROM dbo.tbl_Products where LTRIM(RTRIM([Color])) = LTRIM(RTRIM(@Color))
+	AND LTRIM(RTRIM([EmissionNorms]))=LTRIM(RTRIM(@EmissionNorms))
+	AND LTRIM(RTRIM([MajorVariant])) =LTRIM(RTRIM(@MajorVariant)) --AND LTRIM(RTRIM([Type])) = LTRIM(RTRIM(@Type)) 
+	--AND LTRIM(RTRIM([CustomerCode])) = LTRIM(RTRIM(@CustomerCode))
+
+--check for Missmatch
+IF  (@ProductID > 0)
+			 BEGIN
+			 SET @IsMisMatch = 0
+			 DELETE from dbo.tbl_CustomerOrdersMisMatch where OrderID = @OrderID
+			 --insert fro Front 
+	INSERT INTO tbl_CustomerOrders
+			   ([Color] 
+			   ,[EmissionNorms]
+			   ,[MajorVariant]
+			   ,[Type]
+			   ,[CustomerCode]
+			  -- ,[IsBarCodePrinted]
+			   ,[BarCode]
+			   ,[OrderStatusID] 
+			   ,[ProductID]
+			    ,CreatedByUserId
+			  ,CreatedByName
+			   ,CreatedDate)
+		 VALUES
+			   (@Color
+			   ,@EmissionNorms
+			   ,@MajorVariant
+			   ,'Front'
+			   ,@CustomerCode
+			  -- ,@IsBarCodePrinted
+			   ,@BarCode
+			   ,@OrderStatusID
+			   ,@ProductID
+			   ,@UserId
+			   ,@Name
+			   ,getdate()
+			   )
+			   
+			   --insert fro Rear
+			   INSERT INTO tbl_CustomerOrders
+			   ([Color] 
+			   ,[EmissionNorms]
+			   ,[MajorVariant]
+			   ,[Type]
+			   ,[CustomerCode]
+			  -- ,[IsBarCodePrinted]
+			   ,[BarCode]
+			   ,[OrderStatusID] 
+			   ,[ProductID]
+			   ,CreatedByUserId
+			  ,CreatedByName
+			   ,CreatedDate
+			   )
+		 VALUES
+			   (@Color
+			   ,@EmissionNorms
+			   ,@MajorVariant
+			   ,'Rear'
+			   ,@CustomerCode
+			  -- ,@IsBarCodePrinted
+			   ,@BarCode
+			   ,@OrderStatusID
+			   ,@ProductID
+			   ,@UserId
+			   ,@Name
+			   ,getdate()
+			   )
+			   
+			 END
+	ELSE
+			BEGIN
+			SET @IsMisMatch = 1;
+			IF (EXISTS(SELECT * FROM tbl_CustomerOrdersMisMatch where OrderID = @OrderID))
+			BEGIN
+			UPDATE tbl_CustomerOrdersMisMatch
+			SET [Color] = @Color
+			   ,[EmissionNorms] = @EmissionNorms
+			   ,[MajorVariant] = @MajorVariant
+			   ,[LastUpdatedDate] =getdate()
+			  -- ,[Type] = @Type
+				WHERE [OrderID] = @OrderID	
+			
+			END
+			ELSE
+			BEGIN
+			INSERT INTO tbl_CustomerOrdersMisMatch
+			   ([Color] 
+			   ,[EmissionNorms]
+			   ,[MajorVariant]
+			   ,[Type]
+			   ,[CustomerCode]
+			    ,CreatedByUserId
+			  ,CreatedByName
+			  ,CreatedDate
+			  
+			   )
+		 VALUES
+			   (@Color
+			   ,@EmissionNorms
+			   ,@MajorVariant
+			   ,@Type
+			   ,@CustomerCode
+			   ,@UserId
+			   ,@Name
+			   ,getdate()
+			   
+			   )
+			END
+			END
+
+
+--IF(@OrderID >0)
+--	BEGIN 
+	
+--	IF @IsMisMatch = 0
+--	BEGIN
+	
+--		IF EXISTS(SELECT * FROM tbl_CustomerOrders where OrderID = @OrderID)
+--			BEGIN
+--			UPDATE dbo.tbl_CustomerOrders
+--			SET [Color] = @Color
+--				   ,[EmissionNorms] = @EmissionNorms
+--				   ,[MajorVariant] = @MajorVariant
+--				   ,[Type] = @Type
+--				   ,[CustomerCode] = @CustomerCode
+--				  -- ,[IsBarCodePrinted] = @IsBarCodePrinted
+--				   ,[BarCode] = @BarCode
+--				   ,[ProductID] = @ProductID,
+--				   [OrderStatusID] = @OrderStatusID
+--			WHERE [OrderID] = @OrderID		   
+--		END
+--		ELSE
+--		BEGIN
+--		SEt @InsertNewOrder = 1
+--		END
+--	END
+--	ELSE
+--	BEGIN
+--	IF @SaveMisMatchOrder = 0
+--	BEGIN
+--	delete  from tbl_CustomerOrders where OrderID = @OrderID;
+--	END
+--	END
+	
+--	END
+--ELSE
+--	BEGIN
+	
+--	IF @IsMisMatch = 0
+--	BEGIN
+--		SET @InsertNewOrder = 1
+--	END
+	
+--	IF @InsertNewOrder = 1
+--	BEGIN
+	
+			   
+--END 
+	--END
+
+END
+GO
+
+GO

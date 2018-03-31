@@ -1,0 +1,66 @@
+upload order with only 5 records
+click on first record
+
+on enter
+
+
+
+inspec screen not happening on run time..
+
+on enter on ins screen app exits.
+
+on esc, minimize the forms.
+
+
+
+reject column  to : (action) and header name Rejection.
+
+only available for new status and reject.
+
+BC printed rows shoul be disabled...
+
+
+...
+---3 green only....
+---
+
+
+
+amber color to be exact yellow signal color.....red to be exact signal
+
+status to be blank = for new
+
+bc printed to inprogress - 
+
+selected record to blink.. blue white...
+
+ for reject allow print...
+
+rejectred row shoul not blink
+
+BC printed 
+
+master upload will have rear and front seprate records... enable typ as well
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

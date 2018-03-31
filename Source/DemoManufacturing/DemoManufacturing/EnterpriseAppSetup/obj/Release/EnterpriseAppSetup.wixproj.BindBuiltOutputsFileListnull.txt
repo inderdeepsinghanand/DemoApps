@@ -1,0 +1,2 @@
+C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\EnterpriseAppSetup\bin\Release\EnterpriseAppSetup.msi
+C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\EnterpriseAppSetup\bin\Release\EnterpriseAppSetup.wixpdb
