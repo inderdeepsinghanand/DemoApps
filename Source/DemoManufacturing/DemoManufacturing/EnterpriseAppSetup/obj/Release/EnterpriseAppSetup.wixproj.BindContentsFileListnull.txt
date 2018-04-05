@@ -1,2 +1,2 @@
-C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\bin\x86\Release\DemoManufacturing.exe
-C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\bin\x86\Release\\DemoManufacturing.exe.config
+C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\bin\x86\Release\BarCodePrinting.exe
+C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\bin\x86\Release\\BarCodePrinting.exe.config

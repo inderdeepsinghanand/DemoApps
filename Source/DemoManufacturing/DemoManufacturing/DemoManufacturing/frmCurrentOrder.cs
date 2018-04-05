@@ -8,10 +8,10 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using DemoManufacturing.DataAccess;
-using DemoManufacturing.Entities;
+using BarCodePrinting.DataAccess;
+using BarCodePrinting.Entities;
 
-namespace DemoManufacturing
+namespace BarCodePrinting
 {
     public partial class frmCurrentOrder : Form
     {

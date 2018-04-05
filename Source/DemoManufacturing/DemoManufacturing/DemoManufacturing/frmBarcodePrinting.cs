@@ -8,11 +8,11 @@ using System.Text;
 using System.Windows.Forms;
 using System.IO;
 using System.Drawing.Imaging;
-using DemoManufacturing.Entities;
-using DemoManufacturing.DataAccess;
+using BarCodePrinting.Entities;
+using BarCodePrinting.DataAccess;
 using System.Drawing.Printing;
 
-namespace DemoManufacturing
+namespace BarCodePrinting
 {
     public partial class frmBarcodePrinting : Form
     {
@@ -50,13 +50,15 @@ namespace DemoManufacturing
         {
             label1.Font = new Font(FontFamily.GenericSansSerif, 7f);
             label1.Text = "EmissionNorms:" + product.EmissionNorms + ",Color:" + product.Color + ",MajorVariant:" + product.MajorVariant + ",Type:" + product.BumperType + ",CustomerCode:" + product.CustomerCode + "";
-            int widthInPixels = 529; // 14 cms
-            int heightInPixels = 85; //leave some space for details
+            //paper size changed to 10cms
+            int widthInPixels = 377;
+            //int widthInPixels = 529; // 14 cms
+            int heightInPixels = 89; //leave some space for details
             Bitmap bitMap = new Bitmap(widthInPixels, heightInPixels);
 
             using (Graphics graphics = Graphics.FromImage(bitMap))
             {
-                Font oFont = new Font("IDAutomationHC39M", 9);
+                Font oFont = new Font("IDAutomationHC39M", 10.25f);
                 PointF point = new PointF(2f, 2f);
                 SolidBrush blackBrush = new SolidBrush(Color.Black);
                 SolidBrush whiteBrush = new SolidBrush(Color.White);
@@ -92,7 +94,7 @@ namespace DemoManufacturing
             pd.PrintPage += new PrintPageEventHandler(PrintBarCode);
 
             pd.BeginPrint += pd_BeginPrint;
-            pd.DefaultPageSettings.PaperSize = new PaperSize("25 x 140 mm", pictureBox1.Image.Width , pictureBox1.Image.Height);
+            pd.DefaultPageSettings.PaperSize = new PaperSize("25 x 100 mm", pictureBox1.Image.Width , pictureBox1.Image.Height);
            // printPreviewDialog1.Document = pd;
             pd.Print();
             //if (printPreviewDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
@@ -130,12 +132,12 @@ namespace DemoManufacturing
             e.Graphics.DrawImage(pictureBox1.Image, p);
             var barcodeDetails = "Emission Norms:" + product.EmissionNorms + ", Color:" + product.Color + ", Type:" + product.Type +  ", Customer Code:" + product.CustomerCode ;
 
-            if (barcodeDetails.Length < 100)
-                e.Graphics.DrawString(barcodeDetails, new Font(FontFamily.GenericSansSerif, 8), Brushes.Black, new PointF(10f, 60f));
+            if (barcodeDetails.Length < 50)
+                e.Graphics.DrawString(barcodeDetails, new Font(FontFamily.GenericSansSerif, 7), Brushes.Black, new PointF(10f, 64f));
             else
             {
-                e.Graphics.DrawString("Emission Norms:" + product.EmissionNorms + ", Color:" + product.Color + "", new Font(FontFamily.GenericSansSerif, 8), Brushes.Black, new PointF(10f, 60f));
-                  e.Graphics.DrawString("Type:" + product.Type +  ", Customer Code:" + product.CustomerCode, new Font(FontFamily.GenericSansSerif, 8), Brushes.Black, new PointF(10f,70f));
+                e.Graphics.DrawString("Emission Norms:" + product.EmissionNorms + ", Color:" + product.Color + "", new Font(FontFamily.GenericSansSerif, 7), Brushes.Black, new PointF(10f, 64f));
+                  e.Graphics.DrawString("Type:" + product.Type +  ", Customer Code:" + product.CustomerCode, new Font(FontFamily.GenericSansSerif, 7), Brushes.Black, new PointF(10f,74f));
 
             }
 

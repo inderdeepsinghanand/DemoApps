@@ -5,7 +5,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading;
-using DemoManufacturing.Entities;
+using BarCodePrinting.Entities;
 
 
 using System.Configuration;
@@ -13,7 +13,7 @@ using System.Configuration;
 using System.Windows.Forms;
 
 
-namespace DemoManufacturing.DataAccess
+namespace BarCodePrinting.DataAccess
 {
     public class CustomerOrderRepository
     {
@@ -57,7 +57,7 @@ namespace DemoManufacturing.DataAccess
                         command.Parameters.Add(new SqlParameter("@Color", SqlDbType.NVarChar, 50) { Value = order.Color });
                         command.Parameters.Add(new SqlParameter("@EmissionNorms", SqlDbType.NVarChar, 100) { Value = order.EmissionNorms });
                         command.Parameters.Add(new SqlParameter("@MajorVariant", SqlDbType.NVarChar, 500) { Value = order.MajorVariant });
-                        //command.Parameters.Add(new SqlParameter("@Type", SqlDbType.NVarChar, 20) { Value = order.BumperType });
+                      // command.Parameters.Add(new SqlParameter("@Type", SqlDbType.NVarChar, 20) { Value = order.BumperType });
                         command.Parameters.Add(new SqlParameter("@OrderStatusID",SqlDbType.BigInt) { Value = order.OrderStatusID });
                        // command.Parameters.Add(new SqlParameter("@SaveMisMatchOrder", SqlDbType.Bit) { Value = SaveMisMatchOrder });
                         LoggedInUser.SetUserParameters(command);
@@ -99,7 +99,7 @@ namespace DemoManufacturing.DataAccess
                         command.Parameters.Add(new SqlParameter("@Color", SqlDbType.NVarChar, 50) { Value = order.Color });
                         command.Parameters.Add(new SqlParameter("@EmissionNorms", SqlDbType.NVarChar, 100) { Value = order.EmissionNorms });
                         command.Parameters.Add(new SqlParameter("@MajorVariant", SqlDbType.NVarChar, 500) { Value = order.MajorVariant });
-                        //command.Parameters.Add(new SqlParameter("@Type", SqlDbType.NVarChar, 20) { Value = order.BumperType });
+                       // command.Parameters.Add(new SqlParameter("@Type", SqlDbType.NVarChar, 20) { Value = order.BumperType });
                         command.Parameters.Add(new SqlParameter("@OrderStatusID",SqlDbType.BigInt) { Value = order.OrderStatusID });
                         //command.Parameters.Add(new SqlParameter("@SaveMisMatchOrder", SqlDbType.Bit) { Value = SaveMisMatchOrder });
                         LoggedInUser.SetUserParameters(command);

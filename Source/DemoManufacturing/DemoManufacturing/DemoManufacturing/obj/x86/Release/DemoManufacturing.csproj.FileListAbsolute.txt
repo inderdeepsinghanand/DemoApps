@@ -2,6 +2,7 @@ C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufact
 C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\bin\x86\Release\DemoManufacturing.exe
 C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\bin\x86\Release\DemoManufacturing.pdb
 C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\bin\x86\Release\Microsoft.VisualBasic.PowerPacks.Vs.dll
+C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\obj\x86\Release\DemoManufacturing.csprojResolveAssemblyReference.cache
 C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\obj\x86\Release\DemoManufacturing.frmApproveRejectOrder.resources
 C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\obj\x86\Release\DemoManufacturing.frmInspDashboard.resources
 C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\obj\x86\Release\DemoManufacturing.frmLogin.resources
@@ -14,4 +15,3 @@ C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufact
 C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\obj\x86\Release\DemoManufacturing.csproj.GenerateResource.Cache
 C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\obj\x86\Release\DemoManufacturing.exe
 C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\obj\x86\Release\DemoManufacturing.pdb
-C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\obj\x86\Release\DemoManufacturing.csprojResolveAssemblyReference.cache

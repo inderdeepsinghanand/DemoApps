@@ -1,0 +1,11 @@
+skip..
+
+print happening on yellow and green...
+
+client not blinking first record.
+
+reject/ skip dropdown.....
+
+status log to be maintained on status change.
+
+ by default tested ok to be selected in client

@@ -1,4 +1,4 @@
-﻿namespace DemoManufacturing
+﻿namespace BarCodePrinting
 {
     partial class frmApproveRejectOrder
     {
@@ -62,7 +62,6 @@
             this.cmbStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbStatus.FormattingEnabled = true;
             this.cmbStatus.Items.AddRange(new object[] {
-            "Please Select",
             "Tested Ok",
             "Reject"});
             this.cmbStatus.Location = new System.Drawing.Point(133, 45);

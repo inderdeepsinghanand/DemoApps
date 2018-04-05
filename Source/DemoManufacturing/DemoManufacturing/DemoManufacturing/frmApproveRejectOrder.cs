@@ -8,10 +8,10 @@ using System.Text;
 using System.Windows.Forms;
 using System.IO;
 using System.Drawing.Imaging;
-using DemoManufacturing.Entities;
-using DemoManufacturing.DataAccess;
+using BarCodePrinting.Entities;
+using BarCodePrinting.DataAccess;
 
-namespace DemoManufacturing
+namespace BarCodePrinting
 {
     public partial class frmApproveRejectOrder : Form
     {
@@ -61,7 +61,7 @@ namespace DemoManufacturing
         {
             var status = cmbStatus.Text;
             OrderStatus orderStatus;
-            if ((status.ToUpper().Contains("OK") || status.ToUpper().Contains("REJECT")) && !string.IsNullOrEmpty(txtReason.Text))
+            if ((status.ToUpper().Contains("OK") || status.ToUpper().Contains("REJECT")) )
             {
                 if (status.ToUpper().Contains("OK")) {
                     orderStatus = OrderStatus.Approved;
@@ -81,7 +81,7 @@ namespace DemoManufacturing
 
             }
             else {
-                MessageBox.Show("Please select valid status and reason.");
+                MessageBox.Show("Please select valid status");
             }
 
             

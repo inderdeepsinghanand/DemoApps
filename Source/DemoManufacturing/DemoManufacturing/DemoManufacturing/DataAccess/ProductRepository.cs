@@ -5,7 +5,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading;
-using DemoManufacturing.Entities;
+using BarCodePrinting.Entities;
 
 
 using System.Configuration;
@@ -13,7 +13,7 @@ using System.Configuration;
 using System.Windows.Forms;
 
 
-namespace DemoManufacturing.DataAccess
+namespace BarCodePrinting.DataAccess
 {
     public class ProductRepository
     {

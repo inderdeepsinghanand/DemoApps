@@ -1,4 +1,4 @@
-﻿namespace DemoManufacturing
+﻿namespace BarCodePrinting
 {
     partial class frmCurrentOrder
     {

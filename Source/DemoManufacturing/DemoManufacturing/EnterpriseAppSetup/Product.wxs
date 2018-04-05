@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-	<Product Id="*" Name="EnterpriseAppSetup" Language="1033" Version="1.0.0.0" Manufacturer="Hewlett-Packard" UpgradeCode="a7783bf3-d9a4-4eaf-b942-82b9e446abf4">
+	<Product Id="*" Name="BarcodePrintingAppSetup" Language="1033" Version="1.0.0.0" Manufacturer="Hewlett-Packard" UpgradeCode="a7783bf3-d9a4-4eaf-b942-82b9e446abf4">
 		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
 
 		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
 		<MediaTemplate EmbedCab="yes" />
 
-		<Feature Id="ProductFeature" Title="EnterpriseAppSetup" Level="1">
+		<Feature Id="ProductFeature" Title="BarcodePrintingAppSetup" Level="1">
 			<ComponentGroupRef Id="ProductComponents" />
 		</Feature>
 	</Product>
@@ -14,7 +14,7 @@
 	<Fragment>
 		<Directory Id="TARGETDIR" Name="SourceDir">
 			<Directory Id="ProgramFilesFolder">
-				<Directory Id="INSTALLFOLDER" Name="Order Processing System" />
+				<Directory Id="INSTALLFOLDER" Name="Bar Code printing Application" />
 			</Directory>
     
   <!-- <Directory Id="ProgramMenuFolder">
@@ -26,10 +26,10 @@
 	<Fragment>
 		<ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
 			<!-- TODO: Remove the comments around this Component element and the ComponentRef below in order to add resources to this installer. -->
-			 <Component Id="EnterpriseApp.exe" Guid="{9722B2FD-8906-4CFE-A5C6-74292A88865C}"> 
+			 <Component Id="BarCodePrinting.exe" Guid="{9722B2FD-8906-4CFE-A5C6-74292A88865C}"> 
 				<!-- TODO: Insert files, registry keys, and other resources here. -->
-      <File Source="$(var.DemoManufacturing.TargetPath)" />
- <File Source="$(var.DemoManufacturing.TargetDir)\DemoManufacturing.exe.config" Name="DemoManufacturing.exe.config" Id="myid" KeyPath="yes"/>
+      <File Source="$(var.BarCodePrinting.TargetPath)" />
+ <File Source="$(var.BarCodePrinting.TargetDir)\BarCodePrinting.exe.config" Name="BarCodePrinting.exe.config" Id="myid" KeyPath="yes"/>
          <RemoveFolder Id="ApplicationProgramsFolder" On ="uninstall"/>
          <RemoveFolder Id="INSTALLFOLDER" On ="uninstall"/>
          <RemoveFolder Id="ProgramMenuFolder" On ="uninstall"/>

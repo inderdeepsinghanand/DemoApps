@@ -5,40 +5,40 @@ on enter
 
 
 
-inspec screen not happening on run time..
+inspec screen not happening on run time.. done
 
-on enter on ins screen app exits.
+on enter on ins screen app exits. done
 
-on esc, minimize the forms.
+on esc, minimize the forms. done 
 
 
 
-reject column  to : (action) and header name Rejection.
+reject column  to : (action) and header name Rejection. - done
 
-only available for new status and reject.
+only available for new status and reject. - done
 
-BC printed rows shoul be disabled...
+BC printed rows shoul be disabled... done
 
 
 ...
----3 green only....
+---3 green only....    --pending
 ---
 
 
 
-amber color to be exact yellow signal color.....red to be exact signal
+amber color to be exact yellow signal color.....red to be exact signal - done
 
-status to be blank = for new
+status to be blank = for new -- done
 
-bc printed to inprogress - 
+bc printed to inprogress -  -- done
 
-selected record to blink.. blue white...
+selected record to blink.. blue white... -- done
 
- for reject allow print...
+ for reject allow print... - done
 
-rejectred row shoul not blink
+rejectred row shoul not blink - done
 
-BC printed 
+BC printed  - done
 
 master upload will have rear and front seprate records... enable typ as well
 

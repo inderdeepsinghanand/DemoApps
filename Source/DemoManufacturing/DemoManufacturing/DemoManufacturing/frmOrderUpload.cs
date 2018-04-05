@@ -10,10 +10,10 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using DemoManufacturing.DataAccess;
-using DemoManufacturing.Entities;
+using BarCodePrinting.DataAccess;
+using BarCodePrinting.Entities;
 
-namespace DemoManufacturing
+namespace BarCodePrinting
 {
     public partial class frmOrderUpload : Form
     {
@@ -159,7 +159,7 @@ namespace DemoManufacturing
                     order.Color = dr["F2"].ToString();
                     order.EmissionNorms = dr["F3"].ToString();
                     order.MajorVariant = dr["F4"].ToString();
-                    //order.BumperType = dr["F5"].ToString();
+                   // order.BumperType = dr["F5"].ToString();
                     //order.CustomerCode = dr["F6"].ToString();
                    //[o order.IsBarCodePrinted = false;
 
@@ -239,7 +239,7 @@ namespace DemoManufacturing
                 cmbEmissionNorms.SelectedValue = row.Cells["EmissionNorms"].Value;
                 cmbColor.SelectedValue = row.Cells["Color"].Value;
                 cmbMajorVariant.SelectedValue = row.Cells["MajorVariant"].Value;
-               // cmbBumperType.SelectedValue = row.Cells["Type"].Value;
+                cmbBumperType.SelectedValue = row.Cells["Type"].Value;
                // txtCustomerCode.Text = row.Cells["CustomerCode"].Value.ToString();
                // txtBarCode.Text = row.Cells["BarCode"].Value.ToString();
             }

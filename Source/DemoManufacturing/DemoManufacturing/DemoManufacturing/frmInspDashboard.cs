@@ -8,10 +8,10 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using DemoManufacturing.DataAccess;
-using DemoManufacturing.Entities;
+using BarCodePrinting.DataAccess;
+using BarCodePrinting.Entities;
 
-namespace DemoManufacturing
+namespace BarCodePrinting
 {
     public partial class frmInspDashboard : Form
     {
@@ -22,9 +22,12 @@ namespace DemoManufacturing
         private SqlDataAdapter dataAdapter = new SqlDataAdapter();
         private Button reloadButton = new Button();
         private Button submitButton = new Button();
-        private Color red = Color.FromArgb(201, 33, 28);
-        private Color green = Color.FromArgb(127, 186, 0);
-        private Color amber = Color.FromArgb(255, 140, 0);
+        private Color red = Color.FromArgb(214, 14, 16);////201, 33, 28
+        private Color green = Color.FromArgb(0, 173, 39); // //127, 186, 0
+        private Color amber = Color.FromArgb(255, 216, 0); //212, 172, 17 //255, 140, 0
+
+        private Color selectionBlue = Color.FromArgb(51, 153, 255);
+        private Color disabledGray = Color.Red;//.LightGray;
 
         public int frnRowIndex, RearRowIndex;
 
@@ -64,7 +67,7 @@ namespace DemoManufacturing
         public void LoadGridData()
         {
 
-
+            tmrBlinkRecord.Stop();
             dgFrontBumpers.DataSource = null;
             dgBackBumpers.DataSource = null;
             dgBackBumpers.Columns.Clear();
@@ -123,7 +126,7 @@ namespace DemoManufacturing
                 var approvedCount = row["Approved"].ToString();
                 var rejectedCount = row["Rejected"].ToString();
 
-                lblFrontStats.Text = "New(" + newCount.ToString() + "), BC Printed(" + printedCount + "), Tested Ok(" + approvedCount + "), Rejected(" + rejectedCount + ")";
+                lblFrontStats.Text = "New(" + newCount.ToString() + "), In Process(" + printedCount + "), Tested Ok(" + approvedCount + "), Rejected(" + rejectedCount + ")";
                 //lblRearStats.Text = "Rear Bumpers" + "(" + dgBackBumpers.Rows.Count + ")";
             }
 
@@ -140,7 +143,7 @@ namespace DemoManufacturing
                 var approvedCount = row["Approved"].ToString();
                 var rejectedCount = row["Rejected"].ToString();
 
-                lblRearStats.Text = "In Process(" + newCount.ToString() + "), BC Printed(" + printedCount + "), Tested Ok(" + approvedCount + "), Rejected(" + rejectedCount + ")";
+                lblRearStats.Text = "New(" + newCount.ToString() + "), In Process(" + printedCount + "), Tested Ok(" + approvedCount + "), Rejected(" + rejectedCount + ")";
                 // lblRearStats.Text = "Rear Bumpers" + "(" + dgBackBumpers.Rows.Count + ")";
             }
 
@@ -157,7 +160,7 @@ namespace DemoManufacturing
             //    var nextRow = dgBackBumpers.Rows[RearRowIndex];
             //    nextRow.Selected = true;
             //}
-
+            tmrBlinkRecord.Start();
             
         }
 
@@ -171,7 +174,7 @@ namespace DemoManufacturing
             print.LinkBehavior = LinkBehavior.SystemDefault;
             print.HeaderText = "Print";
             print.Name = "Print";
-            print.DefaultCellStyle.Font = new Font(FontFamily.GenericSansSerif, 8.00f); 
+          //  print.DefaultCellStyle.Font = new Font(FontFamily.GenericSansSerif, 8.00f); 
             print.LinkColor = Color.Blue;
             print.TrackVisitedState = true;
             print.Text = "Print";
@@ -517,7 +520,7 @@ namespace DemoManufacturing
 
                     //set print status
                     SetStatus(Convert.ToInt64(row.Cells["OrderID"].Value.ToString()), "123");
-                    row.DefaultCellStyle.BackColor = Color.FromArgb(255, 140, 0);
+                   // row.DefaultCellStyle.BackColor = Color.FromArgb(255, 140, 0);
                    // LoadGridData();
                     //if (cell.RowIndex < dgFrontBumpers.Rows.Count)
                     //{
@@ -550,7 +553,7 @@ namespace DemoManufacturing
                 row.Selected = true;
                 // MessageBox.Show(row.Cells["OrderID"].Value.ToString());
                 SetStatus(Convert.ToInt64(row.Cells["OrderID"].Value.ToString()), "123");
-                row.DefaultCellStyle.BackColor = Color.FromArgb(255, 140, 0);
+               // row.DefaultCellStyle.BackColor = Color.FromArgb(255, 140, 0);
                 // LoadGridData();
                 //if (e.RowIndex < dgFrontBumpers.Rows.Count)
                 //{
@@ -584,7 +587,7 @@ namespace DemoManufacturing
 
                     //set print status
                     SetStatus(Convert.ToInt64(row.Cells["OrderID"].Value.ToString()), "123");
-                    row.DefaultCellStyle.BackColor = Color.FromArgb(255, 140, 0);
+                  //  row.DefaultCellStyle.BackColor = Color.FromArgb(255, 140, 0);
                     // LoadGridData();
                     //if (cell.RowIndex < dgBackBumpers.Rows.Count)
                     //{
@@ -615,7 +618,7 @@ namespace DemoManufacturing
                 row.Selected = true;
                 // MessageBox.Show(row.Cells["OrderID"].Value.ToString());
                 SetStatus(Convert.ToInt64(row.Cells["OrderID"].Value.ToString()), "123");
-                row.DefaultCellStyle.BackColor = Color.FromArgb(255, 140, 0);
+               // row.DefaultCellStyle.BackColor = Color.FromArgb(255, 140, 0);
                 // LoadGridData();
                 //if (e.RowIndex < dgBackBumpers.Rows.Count)
                 //{
@@ -644,5 +647,86 @@ namespace DemoManufacturing
         {
             LoadGridData();
         }
+
+        private void tmrBlinkRecord_Tick(object sender, EventArgs e)
+        {
+            if (dgFrontBumpers.SelectedRows.Count > 0 && dgFrontBumpers.SelectedRows[0] != null)
+            {
+                var row = dgFrontBumpers.SelectedRows[0];
+
+                //var statusCell = row.Cells["OrderStatusID"];
+                //var rejectColumn = this.dgFrontBumpers.Columns["Reject"];
+                //int rejectCellIndex = 0, statusId = 0;
+                //if (rejectColumn != null)
+                //{
+                //    rejectCellIndex = rejectColumn.Index;
+                //}
+                //if (statusCell != null)
+                //{
+                //    statusId = Convert.ToInt32(statusCell.Value);
+                //}
+
+                SetBlinkColor(row);
+            }
+            if (dgBackBumpers.SelectedRows.Count > 0 && dgBackBumpers.SelectedRows[0] != null)
+            {
+                var row = dgBackBumpers.SelectedRows[0];
+
+                //var statusCell = row.Cells["OrderStatusID"];
+                //var rejectColumn = this.dgBackBumpers.Columns["Reject"];
+                //int rejectCellIndex = 0, statusId = 0;
+                //if (rejectColumn != null)
+                //{
+                //    rejectCellIndex = rejectColumn.Index;
+                //}
+                //if (statusCell != null)
+                //{
+                //    statusId = Convert.ToInt32(statusCell.Value);
+                //}
+
+               SetBlinkColor(row);
+            }
+
+        }
+        private void SetBlinkColor(DataGridViewRow row)
+        {
+
+                if (row.DefaultCellStyle.SelectionBackColor.ToArgb() == selectionBlue.ToArgb()) // Color..Highlight)
+                {
+
+                    row.DefaultCellStyle.SelectionBackColor = amber;
+                   // row.DefaultCellStyle.SelectionForeColor = Color.Black;
+                }
+                else
+                {
+                    row.DefaultCellStyle.SelectionBackColor = selectionBlue;
+                    //row.DefaultCellStyle.SelectionForeColor = Color.White;
+              
+                }
+            }
+
+        private void frmInspDashboard_FormClosing(object sender, FormClosingEventArgs e)
+        {
+
+            //int openForms = Application.OpenForms.Count;
+            //for (int i = 1; i < openForms; i++)
+            //{
+            //    Application.OpenForms[i].Close();
+            //}
+        }
+
+        private void frmInspDashboard_FormClosed(object sender, FormClosedEventArgs e)
+        {
+
+            int openForms = Application.OpenForms.Count;
+            //if
+            for (int i = 0; i < openForms; i++)
+            {
+
+                Application.OpenForms[i].Close();
+            }
+        }
+
+        
     }
 }

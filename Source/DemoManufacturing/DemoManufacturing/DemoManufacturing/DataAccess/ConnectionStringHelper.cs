@@ -6,7 +6,7 @@ using System.Security.Cryptography;
 using System.Text;
 using DataEncrypterDecrypter;
 
-namespace DemoManufacturing.DataAccess
+namespace BarCodePrinting.DataAccess
 {
     public class ConnectionStringHelper
     {

@@ -7,8 +7,8 @@
     <ProjectGuid>{EAA41138-E20B-4B3D-8318-DCE572B5467D}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DemoManufacturing</RootNamespace>
-    <AssemblyName>DemoManufacturing</AssemblyName>
+    <RootNamespace>BarCodePrinting</RootNamespace>
+    <AssemblyName>BarCodePrinting</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

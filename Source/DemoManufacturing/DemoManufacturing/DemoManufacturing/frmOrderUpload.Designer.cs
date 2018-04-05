@@ -1,4 +1,4 @@
-﻿namespace DemoManufacturing
+﻿namespace BarCodePrinting
 {
     partial class frmOrderUpload
     {
@@ -235,6 +235,7 @@
             this.label10.Size = new System.Drawing.Size(35, 13);
             this.label10.TabIndex = 11;
             this.label10.Text = "Type";
+            this.label10.Visible = false;
             // 
             // cmbBumperType
             // 
@@ -246,6 +247,7 @@
             this.cmbBumperType.Name = "cmbBumperType";
             this.cmbBumperType.Size = new System.Drawing.Size(300, 23);
             this.cmbBumperType.TabIndex = 10;
+            this.cmbBumperType.Visible = false;
             // 
             // label9
             // 

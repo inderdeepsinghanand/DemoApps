@@ -22,8 +22,8 @@
     <Compile Include="Product.wxs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DemoManufacturing\DemoManufacturing.csproj">
-      <Name>DemoManufacturing</Name>
+    <ProjectReference Include="..\DemoManufacturing\BarCodePrinting.csproj">
+      <Name>BarCodePrinting</Name>
       <Project>{eaa41138-e20b-4b3d-8318-dce572b5467d}</Project>
       <Private>True</Private>
       <DoNotHarvest>True</DoNotHarvest>

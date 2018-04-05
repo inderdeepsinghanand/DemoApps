@@ -10,10 +10,10 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using DemoManufacturing.DataAccess;
-using DemoManufacturing.Entities;
+using BarCodePrinting.DataAccess;
+using BarCodePrinting.Entities;
 
-namespace DemoManufacturing
+namespace BarCodePrinting
 {
     public partial class frmMasterUpload : Form
     {
@@ -58,7 +58,7 @@ namespace DemoManufacturing
 
             BindCombo("Select distinct [MajorVariant] as [Key] from tbl_Products", cmbMajorVariant1);
 
-            BindCombo("Select distinct [Type] as [Key] from tbl_Products", cmbBumperType1);
+            BindCombo("Select distinct [Type] as [Key] from tbl_Products", cmbType);
         }
 
         public void BindCombo(string selectCommand, ComboBox cmb)
@@ -193,9 +193,9 @@ namespace DemoManufacturing
                     prod.Color = dr["F2"].ToString();
                     prod.EmissionNorms = dr["F3"].ToString();
                     prod.MajorVariant = dr["F4"].ToString();
-                   // prod.BumperType = dr["F5"].ToString();
-                    prod.CustomerCode = dr["F5"].ToString();
-                    prod.BarCode = dr["F6"].ToString();
+                    prod.BumperType = dr["F5"].ToString();
+                    prod.CustomerCode = dr["F6"].ToString();
+                    prod.BarCode = dr["F7"].ToString();
 
                     products.Add(prod);
                 }
@@ -266,7 +266,7 @@ namespace DemoManufacturing
                product.EmissionNorms =  cmbEmission.SelectedValue.ToString() ;//= row.Cells["EmissionNorms"].Value;
                product.Color =  cmbColor1.SelectedValue.ToString(); //= row.Cells["Color"].Value;
                product.MajorVariant = cmbMajorVariant1.SelectedValue.ToString();// = row.Cells["MajorVariant"].Value;
-               product.Type = cmbBumperType1.SelectedValue.ToString(); //= row.Cells["Type"].Value;
+               product.Type = cmbType.SelectedValue.ToString(); //= row.Cells["Type"].Value;
                product.CustomerCode = txtCustCode1.Text; //= row.Cells["CustomerCode"].Value.ToString();
               product.BarCode =  txtBarCode1.Text ;//= row.Cells["BarCode"].Value.ToString();
 
@@ -301,7 +301,7 @@ namespace DemoManufacturing
                 cmbEmission.SelectedValue = row.Cells["EmissionNorms"].Value;
                 cmbColor1.SelectedValue = row.Cells["Color"].Value;
                 cmbMajorVariant1.SelectedValue = row.Cells["MajorVariant"].Value;
-                cmbBumperType1.SelectedValue = row.Cells["Type"].Value;
+                cmbType.SelectedValue = row.Cells["Type"].Value;
                 txtCustCode1.Text = row.Cells["CustomerCode"].Value.ToString();
                 txtBarCode1.Text = row.Cells["BarCode"].Value.ToString();
             }
@@ -342,7 +342,7 @@ namespace DemoManufacturing
                     command.Parameters.Add(new SqlParameter("@Color", SqlDbType.NVarChar, 50) { Value = cmbColor1.SelectedValue });
                     command.Parameters.Add(new SqlParameter("@EmissionNorms", SqlDbType.NVarChar, 100) { Value = cmbEmission.SelectedValue });
                     command.Parameters.Add(new SqlParameter("@MajorVariant", SqlDbType.NVarChar, 500) { Value = cmbMajorVariant1.SelectedValue });
-                    command.Parameters.Add(new SqlParameter("@Type", SqlDbType.NVarChar, 20) { Value = cmbBumperType1.SelectedValue });
+                    command.Parameters.Add(new SqlParameter("@Type", SqlDbType.NVarChar, 20) { Value = cmbType.SelectedValue });
                     command.Parameters.Add(new SqlParameter("@CustomerCode", SqlDbType.NVarChar, 150) { Value = txtCustCode1.Text });
                     command.Parameters.Add(new SqlParameter("@BarCode", SqlDbType.NVarChar, 1000) { Value = txtBarCode1.Text });
                     LoggedInUser. SetUserParameters(command);
@@ -369,7 +369,7 @@ namespace DemoManufacturing
         private void ResetEdit()
         {
             cmbEmission.SelectedValue = "Please select";
-            cmbColor1.SelectedValue = cmbMajorVariant1.SelectedValue = cmbBumperType1.SelectedValue = "Please select";
+            cmbColor1.SelectedValue = cmbMajorVariant1.SelectedValue = cmbType.SelectedValue = "Please select";
             txtCustCode1.Text = txtBarCode1.Text = "";
             lblProductID.Text = "0";
         }

@@ -1,4 +1,4 @@
-﻿namespace DemoManufacturing
+﻿namespace BarCodePrinting
 {
     partial class frmMasterUpload
     {
@@ -36,6 +36,7 @@
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.btnClear = new System.Windows.Forms.Button();
             this.txtMajorVariant = new System.Windows.Forms.TextBox();
             this.textBox7 = new System.Windows.Forms.TextBox();
             this.txtEmissionNorms = new System.Windows.Forms.TextBox();
@@ -84,7 +85,8 @@
             this.grpFileUpload = new System.Windows.Forms.GroupBox();
             this.label7 = new System.Windows.Forms.Label();
             this.cmbBumperType1 = new System.Windows.Forms.ComboBox();
-            this.btnClear = new System.Windows.Forms.Button();
+            this.cmbType = new System.Windows.Forms.ComboBox();
+            this.label20 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -210,6 +212,19 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Grid Search";
             // 
+            // btnClear
+            // 
+            this.btnClear.BackColor = System.Drawing.Color.AliceBlue;
+            this.btnClear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnClear.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnClear.Location = new System.Drawing.Point(439, 88);
+            this.btnClear.Name = "btnClear";
+            this.btnClear.Size = new System.Drawing.Size(75, 23);
+            this.btnClear.TabIndex = 21;
+            this.btnClear.Text = "Clear";
+            this.btnClear.UseVisualStyleBackColor = false;
+            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
+            // 
             // txtMajorVariant
             // 
             this.txtMajorVariant.Location = new System.Drawing.Point(132, 35);
@@ -334,6 +349,8 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.label20);
+            this.groupBox3.Controls.Add(this.cmbType);
             this.groupBox3.Controls.Add(this.btnCancel);
             this.groupBox3.Controls.Add(this.btnAdd);
             this.groupBox3.Controls.Add(this.lnkPrint);
@@ -384,7 +401,7 @@
             // lnkPrint
             // 
             this.lnkPrint.AutoSize = true;
-            this.lnkPrint.Location = new System.Drawing.Point(513, 83);
+            this.lnkPrint.Location = new System.Drawing.Point(513, 114);
             this.lnkPrint.Name = "lnkPrint";
             this.lnkPrint.Size = new System.Drawing.Size(89, 13);
             this.lnkPrint.TabIndex = 18;
@@ -394,7 +411,7 @@
             // 
             // txtBarCode1
             // 
-            this.txtBarCode1.Location = new System.Drawing.Point(513, 61);
+            this.txtBarCode1.Location = new System.Drawing.Point(513, 92);
             this.txtBarCode1.Name = "txtBarCode1";
             this.txtBarCode1.Size = new System.Drawing.Size(300, 20);
             this.txtBarCode1.TabIndex = 17;
@@ -410,7 +427,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(417, 65);
+            this.label5.Location = new System.Drawing.Point(417, 96);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(59, 13);
             this.label5.TabIndex = 15;
@@ -730,18 +747,26 @@
             this.cmbBumperType1.Size = new System.Drawing.Size(300, 23);
             this.cmbBumperType1.TabIndex = 10;
             // 
-            // btnClear
+            // cmbType
             // 
-            this.btnClear.BackColor = System.Drawing.Color.AliceBlue;
-            this.btnClear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnClear.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnClear.Location = new System.Drawing.Point(439, 88);
-            this.btnClear.Name = "btnClear";
-            this.btnClear.Size = new System.Drawing.Size(75, 23);
-            this.btnClear.TabIndex = 21;
-            this.btnClear.Text = "Clear";
-            this.btnClear.UseVisualStyleBackColor = false;
-            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
+            this.cmbType.BackColor = System.Drawing.Color.AliceBlue;
+            this.cmbType.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cmbType.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbType.FormattingEnabled = true;
+            this.cmbType.Location = new System.Drawing.Point(516, 56);
+            this.cmbType.Name = "cmbType";
+            this.cmbType.Size = new System.Drawing.Size(298, 23);
+            this.cmbType.TabIndex = 21;
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label20.Location = new System.Drawing.Point(417, 61);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(81, 13);
+            this.label20.TabIndex = 22;
+            this.label20.Text = "Bumper Type";
             // 
             // frmMasterUpload
             // 
@@ -834,5 +859,7 @@
         private System.Windows.Forms.TextBox txtEmissionNorms;
         private System.Windows.Forms.TextBox txtColor;
         private System.Windows.Forms.Button btnClear;
+        private System.Windows.Forms.ComboBox cmbType;
+        private System.Windows.Forms.Label label20;
     }
 }

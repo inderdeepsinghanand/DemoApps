@@ -5,7 +5,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 
-namespace DemoManufacturing.Entities
+namespace BarCodePrinting.Entities
 {
     public static class LoggedInUser
     {
