@@ -10,6 +10,7 @@ using System.Text;
 using System.Windows.Forms;
 using BarCodePrinting.DataAccess;
 using BarCodePrinting.Entities;
+using BarCodePrinting.Helpers;
 
 namespace BarCodePrinting
 {
@@ -19,7 +20,7 @@ namespace BarCodePrinting
         private DataGridView dataGridView1 = new DataGridView();
         private BindingSource bSourceBack = new BindingSource();
         private BindingSource bSourceFront = new BindingSource();
-        
+
         private Button reloadButton = new Button();
         private Button submitButton = new Button();
         private Color red = Color.FromArgb(214, 14, 16);////201, 33, 28
@@ -58,7 +59,7 @@ namespace BarCodePrinting
 
             //dgBackBumpers.Location = new Point(pnlData.Location.X + dgFrontBumpers.Width + 10, pnlData.Location.Y);
 
-           // dgFrontBumpers.cellhe
+            // dgFrontBumpers.cellhe
             LoadGridData();
             dgFrontBumpers.Focus();
 
@@ -67,103 +68,121 @@ namespace BarCodePrinting
 
         public void LoadGridData()
         {
+            try
+            {
+                //        [ProductID] [bigint] IDENTITY(1,1) NOT NULL,
+                //--[Name] [nvarchar](500) NOT NULL,
+                //[Color] [nvarchar](50) NULL,
+                //[EmissionNorms] nvarchar(100),
+                //[MajorVariant] [nvarchar](500) NULL,
+                //[Type] [nvarchar](20) NULL,
+                //[CustomerCode] [nvarchar](150) NOT NULL,
+                //[BarCode] [nvarchar](1000) NULL,
 
-    //        [ProductID] [bigint] IDENTITY(1,1) NOT NULL,
-    //--[Name] [nvarchar](500) NOT NULL,
-    //[Color] [nvarchar](50) NULL,
-    //[EmissionNorms] nvarchar(100),
-    //[MajorVariant] [nvarchar](500) NULL,
-    //[Type] [nvarchar](20) NULL,
-    //[CustomerCode] [nvarchar](150) NOT NULL,
-    //[BarCode] [nvarchar](1000) NULL,
+                dgFrontBumpers.DataSource = null;
+                dgBackBumpers.DataSource = null;
+                dgBackBumpers.Columns.Clear();
+                dgFrontBumpers.Columns.Clear();
 
-            dgFrontBumpers.DataSource = null;
-            dgBackBumpers.DataSource = null;
-            dgBackBumpers.Columns.Clear();
-            dgFrontBumpers.Columns.Clear();
+                // Bind the DataGridView to the BindingSource
+                // and load the data from the database.
+                dgFrontBumpers.DataSource = bSourceBack;
+                var parameters = new List<SqlParameter>(){
+             new SqlParameter("@Type", SqlDbType.NVarChar,20){ Value = "Front"}
+            };
 
-            // Bind the DataGridView to the BindingSource
-            // and load the data from the database.
-            dgFrontBumpers.DataSource = bSourceBack;
-            GetData("select OrderID, [Color],[EmissionNorms],[MajorVariant],[BarCode],[OrderStatusID],os.[DisplayName], [Reason],[CustomerCode] from [tbl_CustomerOrders] co inner join dbo.tbl_OrderStatus os on co.[OrderStatusID] = os.[StatusID] where Type ='Front' order by co.OrderID", bSourceBack);
+                GetData("[dbo].[usp_GetOrdersForDashboard]", bSourceBack, parameters);
 
-            dgFrontBumpers.Columns["EmissionNorms"].HeaderText = "Emission Norms";
-            dgFrontBumpers.Columns["MajorVariant"].HeaderText = "Major Variant";
-            dgFrontBumpers.Columns["DisplayName"].HeaderText = "Status";
+                dgFrontBumpers.Columns["EmissionNorms"].HeaderText = "Emission Norms";
+                dgFrontBumpers.Columns["MajorVariant"].HeaderText = "Major Variant";
+                dgFrontBumpers.Columns["DisplayName"].HeaderText = "Status";
 
-            dgBackBumpers.DataSource = bSourceFront;
-            GetData("select OrderID, [Color],[EmissionNorms],[MajorVariant],[BarCode],[OrderStatusID],os.[DisplayName], [Reason],[CustomerCode] from [tbl_CustomerOrders]  co inner join dbo.tbl_OrderStatus os on co.[OrderStatusID] = os.[StatusID] where Type ='Rear' order by co.OrderID", bSourceFront);
+                dgBackBumpers.DataSource = bSourceFront;
+                parameters.Clear();
+                parameters = new List<SqlParameter>(){
+             new SqlParameter("@Type", SqlDbType.NVarChar,20){ Value = "Rear"}
+            };
 
-            dgBackBumpers.Columns["EmissionNorms"].HeaderText = "Emission Norms";
-            dgBackBumpers.Columns["MajorVariant"].HeaderText = "Major Variant";
-            dgBackBumpers.Columns["DisplayName"].HeaderText = "Status";
-            
+                GetData("[dbo].[usp_GetOrdersForDashboard]", bSourceFront, parameters);
 
-            dgFrontBumpers.Columns["OrderID"].Visible = false;
-            dgBackBumpers.Columns["OrderID"].Visible = false;
-            dgFrontBumpers.Columns["BarCode"].Visible = false;
-            dgBackBumpers.Columns["BarCode"].Visible = false;
-            dgBackBumpers.Columns["CustomerCode"].Visible = false;
-            dgFrontBumpers.Columns["CustomerCode"].Visible = false;
-            dgFrontBumpers.Columns["OrderStatusID"].Visible = false;
-            dgBackBumpers.Columns["OrderStatusID"].Visible = false;
-
-            dgBackBumpers.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgFrontBumpers.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-
-            //dgFrontBumpers.Columns["IsBarCodePrinted"].Visible = false;
-            //dgBackBumpers.Columns["IsBarCodePrinted"].Visible = false;
-            
-            //Getthe counts
-            var cmdparams = new List<SqlParameter>();
-            cmdparams.Add(new SqlParameter("@Type", SqlDbType.NVarChar, 20) { Value = "Front" });
+                dgBackBumpers.Columns["EmissionNorms"].HeaderText = "Emission Norms";
+                dgBackBumpers.Columns["MajorVariant"].HeaderText = "Major Variant";
+                dgBackBumpers.Columns["DisplayName"].HeaderText = "Status";
 
 
-            var tableFrnt = new CommonRepository().Get("[dbo].[usp_GetStatusCount]", CommandType.StoredProcedure, cmdparams);
-            if (tableFrnt.Rows.Count > 0)
-          {
-              var row = tableFrnt.Rows[0];
-              var newCount = row["New"].ToString();
-              var printedCount = row["Printed"].ToString();
-              var approvedCount = row["Approved"].ToString();
-              var rejectedCount = row["Rejected"].ToString();
+                dgFrontBumpers.Columns["OrderID"].Visible = false;
+                dgBackBumpers.Columns["OrderID"].Visible = false;
+                dgFrontBumpers.Columns["BarCode"].Visible = false;
+                dgBackBumpers.Columns["BarCode"].Visible = false;
+                dgBackBumpers.Columns["CustomerCode"].Visible = false;
+                dgFrontBumpers.Columns["CustomerCode"].Visible = false;
+                dgFrontBumpers.Columns["OrderStatusID"].Visible = false;
+                dgBackBumpers.Columns["OrderStatusID"].Visible = false;
 
-              lblFrontStats.Text = "New(" + newCount.ToString() + "), In Process(" + printedCount + "), Tested Ok(" + approvedCount + "), Rejected(" + rejectedCount + ")";
-              //lblRearStats.Text = "Rear Bumpers" + "(" + dgBackBumpers.Rows.Count + ")";
-          }
+                dgBackBumpers.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+                dgFrontBumpers.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
 
-            cmdparams.Clear();
-          cmdparams.Add(new SqlParameter("@Type", SqlDbType.NVarChar, 20) { Value = "Rear" });
+                //dgFrontBumpers.Columns["IsBarCodePrinted"].Visible = false;
+                //dgBackBumpers.Columns["IsBarCodePrinted"].Visible = false;
+
+                //Getthe counts
+                var cmdparams = new List<SqlParameter>();
+                cmdparams.Add(new SqlParameter("@Type", SqlDbType.NVarChar, 20) { Value = "Front" });
 
 
-          var tableRear = new CommonRepository().Get("[dbo].[usp_GetStatusCount]", CommandType.StoredProcedure, cmdparams);
-          if (tableRear.Rows.Count > 0)
-          {
-              var row = tableRear.Rows[0];
-              var newCount = row["New"].ToString();
-              var printedCount = row["Printed"].ToString();
-              var approvedCount = row["Approved"].ToString();
-              var rejectedCount = row["Rejected"].ToString();
+                var tableFrnt = new CommonRepository().Get("[dbo].[usp_GetStatusCount]", CommandType.StoredProcedure, cmdparams);
+                if (tableFrnt.Rows.Count > 0)
+                {
+                    var row = tableFrnt.Rows[0];
+                    var newCount = row["New"].ToString();
+                    var printedCount = row["Printed"].ToString();
+                    var approvedCount = row["Approved"].ToString();
+                    var rejectedCount = row["Rejected"].ToString();
+                    var skippedCount = row["Skipped"].ToString();
 
-              lblRearStats.Text = "New(" + newCount.ToString() + "), In Process(" + printedCount + "), Tested Ok(" + approvedCount + "), Rejected(" + rejectedCount + ")";
-             // lblRearStats.Text = "Rear Bumpers" + "(" + dgBackBumpers.Rows.Count + ")";
-          }
+                    lblFrontStats.Text = "New(" + newCount.ToString() + "), In Process(" + printedCount + "), Tested Ok(" + approvedCount + "), Rejected(" + rejectedCount + "), Skipped(" + skippedCount + ")";
+                    //lblRearStats.Text = "Rear Bumpers" + "(" + dgBackBumpers.Rows.Count + ")";
+                }
 
-            RowSelect();
+                cmdparams.Clear();
+                cmdparams.Add(new SqlParameter("@Type", SqlDbType.NVarChar, 20) { Value = "Rear" });
 
-            //if()
 
-            var print = GetRejectButton();
+                var tableRear = new CommonRepository().Get("[dbo].[usp_GetStatusCount]", CommandType.StoredProcedure, cmdparams);
+                if (tableRear.Rows.Count > 0)
+                {
+                    var row = tableRear.Rows[0];
+                    var newCount = row["New"].ToString();
+                    var printedCount = row["Printed"].ToString();
+                    var approvedCount = row["Approved"].ToString();
+                    var rejectedCount = row["Rejected"].ToString();
+                    var skippedCount = row["Skipped"].ToString();
 
-            var printBack = GetRejectButton();
 
-            this.dgFrontBumpers.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+                    lblRearStats.Text = "New(" + newCount.ToString() + "), In Process(" + printedCount + "), Tested Ok(" + approvedCount + "), Rejected(" + rejectedCount + "), Skipped(" + skippedCount + ")";
+                    // lblRearStats.Text = "Rear Bumpers" + "(" + dgBackBumpers.Rows.Count + ")";
+                }
+
+                RowSelect();
+
+                //if()
+
+                var print = GetRejectButton();
+
+                var printBack = GetRejectButton();
+
+                this.dgFrontBumpers.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             print});
 
-            this.dgBackBumpers.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+                this.dgBackBumpers.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             printBack});
 
-            
+                new ScreensRepository().UpdateScreenReload(3, false);
+            }
+            catch (Exception ex)
+            {
+                LogException(ex);
+            }
         }
 
         private void RowSelect()
@@ -174,7 +193,7 @@ namespace BarCodePrinting
 
             int frontrowIndex = -1, rearRowIndex = -1;
 
-            var newStatusId =  ((long)OrderStatus.New).ToString();
+            var newStatusId = ((long)OrderStatus.New).ToString();
 
             DataGridViewRow dgFrontRow = dgFrontBumpers.Rows
                 .Cast<DataGridViewRow>()
@@ -196,7 +215,7 @@ namespace BarCodePrinting
             else
                 RearRowIndex = -1;
 
-            
+
 
 
             if (frnRowIndex >= 0 && frnRowIndex < dgFrontBumpers.Rows.Count)
@@ -233,18 +252,18 @@ namespace BarCodePrinting
         {
             var print = new System.Windows.Forms.DataGridViewLinkColumn();
             print.Text = "Action";
-           // print.Name = "lnkReject";
+            // print.Name = "lnkReject";
 
             print.UseColumnTextForLinkValue = true;
             print.LinkBehavior = LinkBehavior.SystemDefault;
             print.HeaderText = "";
             print.Name = "Reject";
-           // print.DefaultCellStyle.Font = new Font(FontFamily.GenericSansSerif, 6.00f); 
+            // print.DefaultCellStyle.Font = new Font(FontFamily.GenericSansSerif, 6.00f); 
             print.LinkColor = Color.Black;
             print.TrackVisitedState = true;
-            print.HeaderText = "Reject";
+            print.HeaderText = "Skip/Reject";
             //print.
-           // print.Text = "Print";
+            // print.Text = "Print";
             print.UseColumnTextForLinkValue = true;
             print.DefaultCellStyle.SelectionBackColor = Color.White;
             //print.InheritedStyle = 
@@ -253,11 +272,11 @@ namespace BarCodePrinting
             return print;
         }
 
-        private void GetData(string selectCommand, BindingSource bSource)
+        private void GetData(string selectCommand, BindingSource bSource, List<SqlParameter> parameters = null)
         {
             try
             {
-                var table = new CommonRepository().Get(selectCommand, CommandType.Text);
+                var table = new CommonRepository().Get(selectCommand, CommandType.StoredProcedure, parameters);
 
 
 
@@ -267,9 +286,10 @@ namespace BarCodePrinting
                 dataGridView1.AutoResizeColumns(
                     DataGridViewAutoSizeColumnsMode.AllCellsExceptHeader);
             }
-            catch (SqlException ex)
+
+            catch (Exception ex)
             {
-                MessageBox.Show("Exception Occured: " + ex.Message + "\n Trace:" + ex.StackTrace);
+                LogException(ex);
             }
         }
 
@@ -286,11 +306,18 @@ namespace BarCodePrinting
 
         private void btnExit_Click_1(object sender, EventArgs e)
         {
-            this.Close();
-            int openForms = Application.OpenForms.Count;
-            for (int i = 0; i < openForms; i++)
+            try
             {
-                Application.OpenForms[i].Close();
+                this.Close();
+                int openForms = Application.OpenForms.Count;
+                for (int i = 0; i < openForms; i++)
+                {
+                    Application.OpenForms[i].Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                LogException(ex, false);
             }
         }
 
@@ -304,27 +331,29 @@ namespace BarCodePrinting
 
         private void dgFrontBumpers_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
-            //DataView tb = dgFrontBumpers.DataS as DataTable;
-            if (dgFrontBumpers.Rows != null && dgFrontBumpers.Rows.Count > 0)
+            try
             {
-                DataGridViewRow row = dgFrontBumpers.Rows[e.RowIndex];// get you required index
-                // check the cell value under your specific column and then you can toggle your colors
+                //DataView tb = dgFrontBumpers.DataS as DataTable;
+                if (dgFrontBumpers.Rows != null && dgFrontBumpers.Rows.Count > 0)
+                {
+                    DataGridViewRow row = dgFrontBumpers.Rows[e.RowIndex];// get you required index
+                    // check the cell value under your specific column and then you can toggle your colors
 
                     var cell = row.Cells["OrderStatusID"];
 
-                   // var cell = row.Cells["OrderStatusID"];
+                    // var cell = row.Cells["OrderStatusID"];
 
 
                     FormatRow(row, cell);
-                        
 
 
-                //set the reject button cell
+
+                    //set the reject button cell
                     var rejectColumn = this.dgFrontBumpers.Columns["Reject"];
                     if (rejectColumn != null)
                     {
                         var rejectIndex = rejectColumn.Index;
-                       // row.Cells[rejectIndex].Style.Font = new Font(FontFamily.GenericSansSerif, 10.00f);
+                        // row.Cells[rejectIndex].Style.Font = new Font(FontFamily.GenericSansSerif, 10.00f);
                         row.Cells[rejectIndex].Style.BackColor = Color.White;
                         //        print.DefaultCellStyle.Font = 
                         if (((long)cell.Value) == (long)OrderStatus.New)
@@ -341,7 +370,12 @@ namespace BarCodePrinting
                             row.DefaultCellStyle.BackColor = red;
 
                     }
-                
+
+                }
+            }
+            catch (Exception ex)
+            {
+                LogException(ex);
             }
         }
 
@@ -363,45 +397,47 @@ namespace BarCodePrinting
 
         private void dgFrontBumpers_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex >= 0)
+            try
             {
-                frnRowIndex = e.RowIndex +1;
-                var row = dgFrontBumpers.Rows[e.RowIndex]; //dgFrontBumpers.se
-                //green
-                //  row.DefaultCellStyle.BackColor = Color.FromArgb(127, 186, 0);
-
-              //  row.Selected = true;
-                //var rejectIndex = this.dgFrontBumpers.Columns["lnkReject"].Index;
-                //row.Cells[rejectIndex].Selected=false;
-                //row.Cells[rejectIndex].ba;
-                // MessageBox.Show(row.Cells["OrderID"].Value.ToString());
-                var cell = row.Cells["OrderStatusID"];
-                var statusId = (long)cell.Value;
-
-                var rejectColumn = this.dgFrontBumpers.Columns["Reject"];
-                if (rejectColumn != null)
+                if (e.RowIndex >= 0)
                 {
-                    var rejectIndex = rejectColumn.Index;
-                   
-                    //        print.DefaultCellStyle.Font = 
-                    if (e.ColumnIndex == rejectIndex && statusId != (long)OrderStatus.Approved)
+                    frnRowIndex = e.RowIndex + 1;
+                    var row = dgFrontBumpers.Rows[e.RowIndex]; //dgFrontBumpers.se
+                    //green
+                    //  row.DefaultCellStyle.BackColor = Color.FromArgb(127, 186, 0);
+
+                    //  row.Selected = true;
+                    //var rejectIndex = this.dgFrontBumpers.Columns["lnkReject"].Index;
+                    //row.Cells[rejectIndex].Selected=false;
+                    //row.Cells[rejectIndex].ba;
+                    // MessageBox.Show(row.Cells["OrderID"].Value.ToString());
+                    var cell = row.Cells["OrderStatusID"];
+                    var statusId = (long)cell.Value;
+
+                    var rejectColumn = this.dgFrontBumpers.Columns["Reject"];
+                    if (rejectColumn != null)
                     {
+                        var rejectIndex = rejectColumn.Index;
+
+                        //        print.DefaultCellStyle.Font = 
+                        if (e.ColumnIndex == rejectIndex && (statusId == (long)OrderStatus.New || statusId == (long)OrderStatus.Rejected || statusId == (long)OrderStatus.Skip))
+                        {
 
 
-                        //green
-                        //  row.DefaultCellStyle.BackColor = Color.FromArgb(127, 186, 0);
+                            //green
+                            //  row.DefaultCellStyle.BackColor = Color.FromArgb(127, 186, 0);
 
-                        //set print status
-                        SetRejectStatus(Convert.ToInt64(row.Cells["OrderID"].Value.ToString()));
-                        LoadGridData();
-                        // MessageBox.Show("Barcode printed successfully");
-                        // MessageBox.Show(row.Cells["OrderID"].Value.ToString());
+                            //set print status
+                            SetRejectStatus(Convert.ToInt64(row.Cells["OrderID"].Value.ToString()));
+                            LoadGridData();
+                            // MessageBox.Show("Barcode printed successfully");
+                            // MessageBox.Show(row.Cells["OrderID"].Value.ToString());
 
-                    }
-                    else
-                    {
-                        //TODO check the status
-                                                     //  var row = dgBackBumpers.Rows[e.RowIndex]; //dgFrontBumpers.se
+                        }
+                        else
+                        {
+                            //TODO check the status
+                            //  var row = dgBackBumpers.Rows[e.RowIndex]; //dgFrontBumpers.se
 
                             ////  row.DefaultCellStyle.BackColor = Color.FromArgb(127, 186, 0);
                             //var order = new PrintProduct();
@@ -417,20 +453,24 @@ namespace BarCodePrinting
                             ////set print status
                             //SetPrintStatus(order);
 
-                        
+
+                        }
                     }
                 }
             }
+            catch (Exception ex)
+            {
+                LogException(ex);
+            }
 
 
-          
         }
 
         public void SetRejectStatus(long OrderID)
         {
             //new CustomerOrderRepository
 
-           // new CustomerOrderRepository().ChangePrintStatus(OrderID);
+            // new CustomerOrderRepository().ChangePrintStatus(OrderID);
 
             //var barcode = "select * from tbl"
 
@@ -442,24 +482,25 @@ namespace BarCodePrinting
         {
             //new CustomerOrderRepository
 
-           // new CustomerOrderRepository().ChangePrintStatus(OrderID);
+            // new CustomerOrderRepository().ChangePrintStatus(OrderID);
 
             //var barcode = "select * from tbl"
 
             frmBarcodePrinting barcodePrint = new frmBarcodePrinting(order, this);
-           // barcodePrint.ShowDialog();
+            // barcodePrint.ShowDialog();
         }
 
         private void dgBackBumpers_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-
+            try
+            {
                 if (e.RowIndex >= 0)
                 {
                     var row = dgBackBumpers.Rows[e.RowIndex]; //dgFrontBumpers.se
                     //green
                     //  row.DefaultCellStyle.BackColor = Color.FromArgb(127, 186, 0);
 
-                  //  row.Selected = true;
+                    //  row.Selected = true;
                     //var rejectIndex = this.dgFrontBumpers.Columns["lnkReject"].Index;
                     //row.Cells[rejectIndex].Selected=false;
                     //row.Cells[rejectIndex].ba;
@@ -474,7 +515,7 @@ namespace BarCodePrinting
                         var rejectIndex = rejectColumn.Index;
 
                         //        print.DefaultCellStyle.Font = 
-                        if (e.ColumnIndex == rejectIndex && statusId != (long)OrderStatus.Approved)
+                        if (e.ColumnIndex == rejectIndex && (statusId == (long)OrderStatus.New || statusId == (long)OrderStatus.Rejected || statusId == (long)OrderStatus.Skip))
                         {
 
 
@@ -491,66 +532,76 @@ namespace BarCodePrinting
                     }
                 }
 
-                
-            
+            }
+            catch (Exception ex)
+            {
+                LogException(ex);
+            }
+
         }
 
         private void dgBackBumpers_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
-            //if (dgFrontBumpers.Rows != null && dgFrontBumpers.Rows.Count > 0)
-            //{
-            //    DataGridViewRow row = dgBackBumpers.Rows[e.RowIndex];// get you required index
-            //    // check the cell value under your specific column and then you can toggle your colors
-
-            //    var cell = row.Cells["OrderStatusID"];
-            //    if (((long)cell.Value) == (long)OrderStatus.New)
-            //    {
-            //       // row.DefaultCellStyle.BackColor = Color.FromArgb(127, 186, 0);
-            //    }
-            //    else
-            //        row.DefaultCellStyle.BackColor = Color.FromArgb(255, 140, 0);
-
-            //}
-            //DataView tb = dgFrontBumpers.DataS as DataTable;
-            if (dgBackBumpers.Rows != null && dgBackBumpers.Rows.Count > 0)
+            try
             {
-                DataGridViewRow row = dgBackBumpers.Rows[e.RowIndex];// get you required index
-                // check the cell value under your specific column and then you can toggle your colors
+                //if (dgFrontBumpers.Rows != null && dgFrontBumpers.Rows.Count > 0)
+                //{
+                //    DataGridViewRow row = dgBackBumpers.Rows[e.RowIndex];// get you required index
+                //    // check the cell value under your specific column and then you can toggle your colors
 
-                var cell = row.Cells["OrderStatusID"];
+                //    var cell = row.Cells["OrderStatusID"];
+                //    if (((long)cell.Value) == (long)OrderStatus.New)
+                //    {
+                //       // row.DefaultCellStyle.BackColor = Color.FromArgb(127, 186, 0);
+                //    }
+                //    else
+                //        row.DefaultCellStyle.BackColor = Color.FromArgb(255, 140, 0);
 
-                // var cell = row.Cells["OrderStatusID"];
-
-
-                FormatRow(row, cell);
-
-
-
-                //set the reject button cell
-                var rejectColumn = this.dgFrontBumpers.Columns["Reject"];
-                if (rejectColumn != null)
+                //}
+                //DataView tb = dgFrontBumpers.DataS as DataTable;
+                if (dgBackBumpers.Rows != null && dgBackBumpers.Rows.Count > 0)
                 {
-                    var rejectIndex = rejectColumn.Index;
-                   // row.Cells[rejectIndex].Style.Font = new Font(FontFamily.GenericSansSerif, 10.00f);
-                    row.Cells[rejectIndex].Style.BackColor = Color.White;
-                    //        print.DefaultCellStyle.Font = 
-                    if (((long)cell.Value) == (long)OrderStatus.New)
+                    DataGridViewRow row = dgBackBumpers.Rows[e.RowIndex];// get you required index
+                    // check the cell value under your specific column and then you can toggle your colors
+
+                    var cell = row.Cells["OrderStatusID"];
+
+                    // var cell = row.Cells["OrderStatusID"];
+
+
+                    FormatRow(row, cell);
+
+
+
+                    //set the reject button cell
+                    var rejectColumn = this.dgFrontBumpers.Columns["Reject"];
+                    if (rejectColumn != null)
                     {
-                        // row.DefaultCellStyle.BackColor = Color.FromArgb(127, 186, 0);
+                        var rejectIndex = rejectColumn.Index;
+                        // row.Cells[rejectIndex].Style.Font = new Font(FontFamily.GenericSansSerif, 10.00f);
+                        row.Cells[rejectIndex].Style.BackColor = Color.White;
+                        //        print.DefaultCellStyle.Font = 
+                        if (((long)cell.Value) == (long)OrderStatus.New)
+                        {
+                            // row.DefaultCellStyle.BackColor = Color.FromArgb(127, 186, 0);
+                        }
+                        else if (((long)cell.Value) == (long)OrderStatus.Approved)
+                        {
+                            // row.Cells[rejectIndex].Style.BackColor = disabled//.ReadOnly = true;
+                        }
+                        else if (((long)cell.Value) == (long)OrderStatus.BCPrinted)
+                            row.Cells[rejectIndex].ReadOnly = true;
+                        else
+                            row.DefaultCellStyle.BackColor = red;
+
                     }
-                    else if (((long)cell.Value) == (long)OrderStatus.Approved)
-                    {
-                       // row.Cells[rejectIndex].Style.BackColor = disabled//.ReadOnly = true;
-                    }
-                    else if (((long)cell.Value) == (long)OrderStatus.BCPrinted)
-                        row.Cells[rejectIndex].ReadOnly = true;
-                    else
-                        row.DefaultCellStyle.BackColor = red;
 
                 }
-
             }
-
+            catch (Exception ex)
+            {
+                LogException(ex, true);
+            }
         }
 
         private void frmOrder_FormClosed(object sender, FormClosedEventArgs e)
@@ -560,248 +611,277 @@ namespace BarCodePrinting
 
         private void dgFrontBumpers_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Down || e.KeyCode == Keys.Up || e.KeyCode == Keys.Left || e.KeyCode == Keys.Right)
+            try
             {
-                e.Handled = true;
-            }
-
-
-            if (e.KeyCode == Keys.Enter)
-            {
-                var cell = dgFrontBumpers.SelectedCells[0];
-                //dgFrontBumpers.se
-              
-
-
-                if (cell !=null && cell.RowIndex >= 0)
+                if (e.KeyCode == Keys.Down || e.KeyCode == Keys.Up || e.KeyCode == Keys.Left || e.KeyCode == Keys.Right)
                 {
-                    dgFrontBumpers.ClearSelection();
-//                    dgBackBumpers.ClearSelection();
-
-                    var row = dgFrontBumpers.Rows[cell.RowIndex];
-                   // dgFrontBumpers.Rows[cell.RowIndex].Selected = true;
-                    //dgFrontBumpers.FirstDisplayedScrollingRowIndex = cell.RowIndex;
                     e.Handled = true;
-                  //  var row = dgBackBumpers.Rows[e.RowIndex]; //dgFrontBumpers.se
-                     var cell1 = row.Cells["OrderStatusID"];
-                         var statusId = (long)cell1.Value;
-                       //  row.Selected = true;
-                         if (statusId == (long)OrderStatus.New || statusId == (long)OrderStatus.Rejected)
-                         {
-                             //  row.DefaultCellStyle.BackColor = Color.FromArgb(127, 186, 0);
-                             var order = new PrintProduct();
-                             order.OrderID = Convert.ToInt64(row.Cells["OrderID"].Value.ToString());
-                             order.BarCode = row.Cells["BarCode"].Value.ToString();
-                             order.CustomerCode = row.Cells["CustomerCode"].Value.ToString();
-                             order.EmissionNorms = row.Cells["EmissionNorms"].Value.ToString();
-                             order.Color = row.Cells["Color"].Value.ToString();
-                             order.MajorVariant = row.Cells["MajorVariant"].Value.ToString();
-                             order.Type = "Front";
-
-
-                             //set print status
-                             SetPrintStatus(order);
-                             // row.DefaultCellStyle.BackColor = Color.FromArgb(255, 140, 0);
-                             // LoadGridData();
-                             //if (cell.RowIndex < dgFrontBumpers.Rows.Count)
-                             //{
-                             //    var nextRow = dgFrontBumpers.Rows[cell.RowIndex +1];
-                             //    nextRow.Selected =true;
-                             //}
-                             // MessageBox.Show("Barcode printed successfully");
-                             // MessageBox.Show(row.Cells["OrderID"].Value.ToString());
-                         }
                 }
 
-               
-                //MessageBox.Show(cell.Value.ToString());
-                //MessageBox.Show(cell.RowIndex.ToString());
 
+                if (e.KeyCode == Keys.Enter)
+                {
+                    var cell = dgFrontBumpers.SelectedCells[0];
+                    //dgFrontBumpers.se
+
+
+
+                    if (cell != null && cell.RowIndex >= 0)
+                    {
+                        dgFrontBumpers.ClearSelection();
+                        //                    dgBackBumpers.ClearSelection();
+
+                        var row = dgFrontBumpers.Rows[cell.RowIndex];
+                        // dgFrontBumpers.Rows[cell.RowIndex].Selected = true;
+                        //dgFrontBumpers.FirstDisplayedScrollingRowIndex = cell.RowIndex;
+                        e.Handled = true;
+                        //  var row = dgBackBumpers.Rows[e.RowIndex]; //dgFrontBumpers.se
+                        var cell1 = row.Cells["OrderStatusID"];
+                        var statusId = (long)cell1.Value;
+                        //  row.Selected = true;
+                        if (statusId == (long)OrderStatus.New || statusId == (long)OrderStatus.Rejected || statusId == (long)OrderStatus.Skip)
+                        {
+                            //  row.DefaultCellStyle.BackColor = Color.FromArgb(127, 186, 0);
+                            var order = new PrintProduct();
+                            order.OrderID = Convert.ToInt64(row.Cells["OrderID"].Value.ToString());
+                            order.BarCode = row.Cells["BarCode"].Value.ToString();
+                            order.CustomerCode = row.Cells["CustomerCode"].Value.ToString();
+                            order.EmissionNorms = row.Cells["EmissionNorms"].Value.ToString();
+                            order.Color = row.Cells["Color"].Value.ToString();
+                            order.MajorVariant = row.Cells["MajorVariant"].Value.ToString();
+                            order.Type = "Front";
+
+
+                            //set print status
+                            SetPrintStatus(order);
+                            // row.DefaultCellStyle.BackColor = Color.FromArgb(255, 140, 0);
+                            // LoadGridData();
+                            //if (cell.RowIndex < dgFrontBumpers.Rows.Count)
+                            //{
+                            //    var nextRow = dgFrontBumpers.Rows[cell.RowIndex +1];
+                            //    nextRow.Selected =true;
+                            //}
+                            // MessageBox.Show("Barcode printed successfully");
+                            // MessageBox.Show(row.Cells["OrderID"].Value.ToString());
+                        }
+                    }
+
+
+                    //MessageBox.Show(cell.Value.ToString());
+                    //MessageBox.Show(cell.RowIndex.ToString());
+
+                }
+            }
+            catch (Exception ex)
+            {
+                LogException(ex, true);
             }
         }
 
         private void dgFrontBumpers_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            if (e.RowIndex >= 0)
+            try
             {
-                  frnRowIndex = e.RowIndex + 1;
-                  var rejectColumn = this.dgFrontBumpers.Columns["Reject"];
-                  if (rejectColumn != null)
-                  {
-                      var rejectIndex = rejectColumn.Index;
+                if (e.RowIndex >= 0)
+                {
+                    frnRowIndex = e.RowIndex + 1;
+                    var rejectColumn = this.dgFrontBumpers.Columns["Reject"];
+                    if (rejectColumn != null)
+                    {
+                        var rejectIndex = rejectColumn.Index;
 
-                      //        print.DefaultCellStyle.Font = 
-                      if (e.ColumnIndex == rejectIndex)
-                      {
-
-
-                      }
-                      else
-                      {
-
-                          var row = dgFrontBumpers.Rows[e.RowIndex]; //dgFrontBumpers.se
-                          //green
-                          //  row.DefaultCellStyle.BackColor = Color.FromArgb(127, 186, 0);
-                          dgFrontBumpers.ClearSelection();
-                          //dgBackBumpers.ClearSelection();
-
-                         var cell = row.Cells["OrderStatusID"];
-                         var statusId = (long)cell.Value;
-                        // dgFrontBumpers.Rows[e.RowIndex].Selected = true;
-                         //dgFrontBumpers.FirstDisplayedScrollingRowIndex = e.RowIndex;
-                         if (statusId == (long)OrderStatus.New || statusId == (long)OrderStatus.Rejected)
-                         {
-                             // MessageBox.Show(row.Cells["OrderID"].Value.ToString());
+                        //        print.DefaultCellStyle.Font = 
+                        if (e.ColumnIndex == rejectIndex)
+                        {
 
 
-                             //  var row = dgBackBumpers.Rows[e.RowIndex]; //dgFrontBumpers.se
+                        }
+                        else
+                        {
 
-                             //  row.DefaultCellStyle.BackColor = Color.FromArgb(127, 186, 0);
-                             var order = new PrintProduct();
-                             order.OrderID = Convert.ToInt64(row.Cells["OrderID"].Value.ToString());
-                             order.BarCode = row.Cells["BarCode"].Value.ToString();
-                             order.CustomerCode = row.Cells["CustomerCode"].Value.ToString();
-                             order.EmissionNorms = row.Cells["EmissionNorms"].Value.ToString();
-                             order.Color = row.Cells["Color"].Value.ToString();
-                             order.MajorVariant = row.Cells["MajorVariant"].Value.ToString();
-                             order.Type = "Front";
+                            var row = dgFrontBumpers.Rows[e.RowIndex]; //dgFrontBumpers.se
+                            //green
+                            //  row.DefaultCellStyle.BackColor = Color.FromArgb(127, 186, 0);
+                            dgFrontBumpers.ClearSelection();
+                            //dgBackBumpers.ClearSelection();
+
+                            var cell = row.Cells["OrderStatusID"];
+                            var statusId = (long)cell.Value;
+                            // dgFrontBumpers.Rows[e.RowIndex].Selected = true;
+                            //dgFrontBumpers.FirstDisplayedScrollingRowIndex = e.RowIndex;
+                            if (statusId == (long)OrderStatus.New || statusId == (long)OrderStatus.Rejected || statusId == (long)OrderStatus.Skip)
+                            {
+                                // MessageBox.Show(row.Cells["OrderID"].Value.ToString());
 
 
-                             //set print status
-                             SetPrintStatus(order);
-                         }
-                      }
-                  }
+                                //  var row = dgBackBumpers.Rows[e.RowIndex]; //dgFrontBumpers.se
+
+                                //  row.DefaultCellStyle.BackColor = Color.FromArgb(127, 186, 0);
+                                var order = new PrintProduct();
+                                order.OrderID = Convert.ToInt64(row.Cells["OrderID"].Value.ToString());
+                                order.BarCode = row.Cells["BarCode"].Value.ToString();
+                                order.CustomerCode = row.Cells["CustomerCode"].Value.ToString();
+                                order.EmissionNorms = row.Cells["EmissionNorms"].Value.ToString();
+                                order.Color = row.Cells["Color"].Value.ToString();
+                                order.MajorVariant = row.Cells["MajorVariant"].Value.ToString();
+                                order.Type = "Front";
+
+
+                                //set print status
+                                SetPrintStatus(order);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LogException(ex, true);
             }
         }
 
         private void dgBackBumpers_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Down || e.KeyCode == Keys.Up || e.KeyCode == Keys.Left || e.KeyCode == Keys.Right) {
-                e.Handled = true;
-            }
-
-            if (e.KeyCode == Keys.Enter)
+            try
             {
-                var cell = dgBackBumpers.SelectedCells[0];
-                //dgFrontBumpers.se
-
-
-
-                if (cell != null && cell.RowIndex >= 0)
+                if (e.KeyCode == Keys.Down || e.KeyCode == Keys.Up || e.KeyCode == Keys.Left || e.KeyCode == Keys.Right)
                 {
-//                    dgFrontBumpers.ClearSelection();
-                    dgBackBumpers.ClearSelection();
-
-                  //  RearRowIndex = cell.RowIndex +1;
-                    var row = dgBackBumpers.Rows[cell.RowIndex];
-                   // dgBackBumpers.Rows[cell.RowIndex].Selected = true;
                     e.Handled = true;
-                     var cell1 = row.Cells["OrderStatusID"];
-                         var statusId = (long)cell1.Value;
-                     //    row.Selected = true;
-                         //dgFrontBumpers.FirstDisplayedScrollingRowIndex = cell.RowIndex;
-
-                         if (statusId == (long)OrderStatus.New || statusId == (long)OrderStatus.Rejected)
-                         {
-
-                             //  var row = dgBackBumpers.Rows[e.RowIndex]; //dgFrontBumpers.se
-
-                             //  row.DefaultCellStyle.BackColor = Color.FromArgb(127, 186, 0);
-                             //  row.DefaultCellStyle.BackColor = Color.FromArgb(127, 186, 0);
-                             var order = new PrintProduct();
-                             order.OrderID = Convert.ToInt64(row.Cells["OrderID"].Value.ToString());
-                             order.BarCode = row.Cells["BarCode"].Value.ToString();
-                             order.CustomerCode = row.Cells["CustomerCode"].Value.ToString();
-                             order.EmissionNorms = row.Cells["EmissionNorms"].Value.ToString();
-                             order.Color = row.Cells["Color"].Value.ToString();
-                             order.MajorVariant = row.Cells["MajorVariant"].Value.ToString();
-                             order.Type = "Rear";
-
-                             //set print status
-                             SetPrintStatus(order);
-                         }
-                   // row.DefaultCellStyle.BackColor = Color.FromArgb(255, 140, 0);
-                    // LoadGridData();
-                    //if (cell.RowIndex < dgBackBumpers.Rows.Count)
-                    //{
-                    //    var nextRow = dgBackBumpers.Rows[cell.RowIndex + 1];
-                    //    nextRow.Selected = true;
-                    //}
-                    // MessageBox.Show("Barcode printed successfully");
-                    // MessageBox.Show(row.Cells["OrderID"].Value.ToString());
                 }
 
+                if (e.KeyCode == Keys.Enter)
+                {
+                    var cell = dgBackBumpers.SelectedCells[0];
+                    //dgFrontBumpers.se
 
-                //MessageBox.Show(cell.Value.ToString());
-                //MessageBox.Show(cell.RowIndex.ToString());
 
+
+                    if (cell != null && cell.RowIndex >= 0)
+                    {
+                        //                    dgFrontBumpers.ClearSelection();
+                        dgBackBumpers.ClearSelection();
+
+                        //  RearRowIndex = cell.RowIndex +1;
+                        var row = dgBackBumpers.Rows[cell.RowIndex];
+                        // dgBackBumpers.Rows[cell.RowIndex].Selected = true;
+                        e.Handled = true;
+                        var cell1 = row.Cells["OrderStatusID"];
+                        var statusId = (long)cell1.Value;
+                        //    row.Selected = true;
+                        //dgFrontBumpers.FirstDisplayedScrollingRowIndex = cell.RowIndex;
+
+                        if (statusId == (long)OrderStatus.New || statusId == (long)OrderStatus.Rejected || statusId == (long)OrderStatus.Skip)
+                        {
+
+                            //  var row = dgBackBumpers.Rows[e.RowIndex]; //dgFrontBumpers.se
+
+                            //  row.DefaultCellStyle.BackColor = Color.FromArgb(127, 186, 0);
+                            //  row.DefaultCellStyle.BackColor = Color.FromArgb(127, 186, 0);
+                            var order = new PrintProduct();
+                            order.OrderID = Convert.ToInt64(row.Cells["OrderID"].Value.ToString());
+                            order.BarCode = row.Cells["BarCode"].Value.ToString();
+                            order.CustomerCode = row.Cells["CustomerCode"].Value.ToString();
+                            order.EmissionNorms = row.Cells["EmissionNorms"].Value.ToString();
+                            order.Color = row.Cells["Color"].Value.ToString();
+                            order.MajorVariant = row.Cells["MajorVariant"].Value.ToString();
+                            order.Type = "Rear";
+
+                            //set print status
+                            SetPrintStatus(order);
+                        }
+                        // row.DefaultCellStyle.BackColor = Color.FromArgb(255, 140, 0);
+                        // LoadGridData();
+                        //if (cell.RowIndex < dgBackBumpers.Rows.Count)
+                        //{
+                        //    var nextRow = dgBackBumpers.Rows[cell.RowIndex + 1];
+                        //    nextRow.Selected = true;
+                        //}
+                        // MessageBox.Show("Barcode printed successfully");
+                        // MessageBox.Show(row.Cells["OrderID"].Value.ToString());
+                    }
+
+
+                    //MessageBox.Show(cell.Value.ToString());
+                    //MessageBox.Show(cell.RowIndex.ToString());
+
+                }
+            }
+            catch (Exception ex)
+            {
+                LogException(ex, true);
             }
         }
 
         private void dgBackBumpers_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-
-
-            if (e.RowIndex >= 0)
+            try
             {
 
-             
-                RearRowIndex = e.RowIndex + 1;
-                var rejectColumn = this.dgBackBumpers.Columns["Reject"];
-                 if (rejectColumn != null)
-                 {
-                     var rejectIndex = rejectColumn.Index;
-
-                     //        print.DefaultCellStyle.Font = 
-                     if (e.ColumnIndex == rejectIndex)
-                     {
+                if (e.RowIndex >= 0)
+                {
 
 
-                     }
-                     else
-                     {
+                    RearRowIndex = e.RowIndex + 1;
+                    var rejectColumn = this.dgBackBumpers.Columns["Reject"];
+                    if (rejectColumn != null)
+                    {
+                        var rejectIndex = rejectColumn.Index;
 
-                         //var connectionString = e.RowIndex +1 ;
-                         var row = dgBackBumpers.Rows[e.RowIndex]; //dgFrontBumpers.se
-                        
+                        //        print.DefaultCellStyle.Font = 
+                        if (e.ColumnIndex == rejectIndex)
+                        {
 
-                         //green
-                         //  row.DefaultCellStyle.BackColor = Color.FromArgb(127, 186, 0);
 
-                        // dgFrontBumpers.ClearSelection();
-                         dgBackBumpers.ClearSelection();
+                        }
+                        else
+                        {
 
-                         var cell = row.Cells["OrderStatusID"];
-                         var statusId = (long)cell.Value;
-                        // dgBackBumpers.Rows[e.RowIndex].Selected = true;
-                         //dgBackBumpers.FirstDisplayedScrollingRowIndex = e.RowIndex;
-                         if (statusId == (long)OrderStatus.New || statusId == (long)OrderStatus.Rejected)
-                         {
-                             //  var row = dgBackBumpers.Rows[e.RowIndex]; //dgFrontBumpers.se
+                            //var connectionString = e.RowIndex +1 ;
+                            var row = dgBackBumpers.Rows[e.RowIndex]; //dgFrontBumpers.se
 
-                             //  row.DefaultCellStyle.BackColor = Color.FromArgb(127, 186, 0);
-                             //  row.DefaultCellStyle.BackColor = Color.FromArgb(127, 186, 0);
-                             var order = new PrintProduct();
-                             order.OrderID = Convert.ToInt64(row.Cells["OrderID"].Value.ToString());
-                             order.BarCode = row.Cells["BarCode"].Value.ToString();
-                             order.CustomerCode = row.Cells["CustomerCode"].Value.ToString();
-                             order.EmissionNorms = row.Cells["EmissionNorms"].Value.ToString();
-                             order.Color = row.Cells["Color"].Value.ToString();
-                             order.MajorVariant = row.Cells["MajorVariant"].Value.ToString();
-                             order.Type = "Rear";
 
-                             //set print status
-                             SetPrintStatus(order);
-                         }
-                     }
+                            //green
+                            //  row.DefaultCellStyle.BackColor = Color.FromArgb(127, 186, 0);
 
-                 }
+                            // dgFrontBumpers.ClearSelection();
+                            dgBackBumpers.ClearSelection();
+
+                            var cell = row.Cells["OrderStatusID"];
+                            var statusId = (long)cell.Value;
+                            // dgBackBumpers.Rows[e.RowIndex].Selected = true;
+                            //dgBackBumpers.FirstDisplayedScrollingRowIndex = e.RowIndex;
+                            if (statusId == (long)OrderStatus.New || statusId == (long)OrderStatus.Rejected || statusId == (long)OrderStatus.Skip)
+                            {
+                                //  var row = dgBackBumpers.Rows[e.RowIndex]; //dgFrontBumpers.se
+
+                                //  row.DefaultCellStyle.BackColor = Color.FromArgb(127, 186, 0);
+                                //  row.DefaultCellStyle.BackColor = Color.FromArgb(127, 186, 0);
+                                var order = new PrintProduct();
+                                order.OrderID = Convert.ToInt64(row.Cells["OrderID"].Value.ToString());
+                                order.BarCode = row.Cells["BarCode"].Value.ToString();
+                                order.CustomerCode = row.Cells["CustomerCode"].Value.ToString();
+                                order.EmissionNorms = row.Cells["EmissionNorms"].Value.ToString();
+                                order.Color = row.Cells["Color"].Value.ToString();
+                                order.MajorVariant = row.Cells["MajorVariant"].Value.ToString();
+                                order.Type = "Rear";
+
+                                //set print status
+                                SetPrintStatus(order);
+                            }
+                        }
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LogException(ex, true);
             }
         }
 
         private void frmDashboard_KeyDown(object sender, KeyEventArgs e)
         {
+
             if (e.KeyCode == Keys.Escape)
             {
                 this.WindowState = FormWindowState.Minimized;
@@ -811,54 +891,63 @@ namespace BarCodePrinting
 
         private void tmrBlinkRecord_Tick(object sender, EventArgs e)
         {
-            if (dgFrontBumpers.SelectedRows.Count > 0 && dgFrontBumpers.SelectedRows[0] != null)
+            try
             {
-                var row = dgFrontBumpers.SelectedRows[0];
-
-                var statusCell = row.Cells["OrderStatusID"];
-                var rejectColumn = this.dgFrontBumpers.Columns["Reject"];
-                int rejectCellIndex = 0, statusId = 0;
-                if (rejectColumn != null)
+                if (dgFrontBumpers.SelectedRows.Count > 0 && dgFrontBumpers.SelectedRows[0] != null)
                 {
-                    rejectCellIndex = rejectColumn.Index;
-                }
-                if (statusCell != null)
-                {
-                    statusId = Convert.ToInt32(statusCell.Value);
-                }
+                    var row = dgFrontBumpers.SelectedRows[0];
 
-                SetBlinkColor(row, rejectCellIndex, statusId);
+                    var statusCell = row.Cells["OrderStatusID"];
+                    var rejectColumn = this.dgFrontBumpers.Columns["Reject"];
+                    int rejectCellIndex = 0, statusId = 0;
+                    if (rejectColumn != null)
+                    {
+                        rejectCellIndex = rejectColumn.Index;
+                    }
+                    if (statusCell != null)
+                    {
+                        statusId = Convert.ToInt32(statusCell.Value);
+                    }
+
+                    SetBlinkColor(row, rejectCellIndex, statusId);
+                }
+                if (dgBackBumpers.SelectedRows.Count > 0 && dgBackBumpers.SelectedRows[0] != null)
+                {
+                    var row = dgBackBumpers.SelectedRows[0];
+
+                    var statusCell = row.Cells["OrderStatusID"];
+                    var rejectColumn = this.dgBackBumpers.Columns["Reject"];
+                    int rejectCellIndex = 0, statusId = 0;
+                    if (rejectColumn != null)
+                    {
+                        rejectCellIndex = rejectColumn.Index;
+                    }
+                    if (statusCell != null)
+                    {
+                        statusId = Convert.ToInt32(statusCell.Value);
+                    }
+
+                    SetBlinkColor(row, rejectCellIndex, statusId);
+                }
             }
-            if (dgBackBumpers.SelectedRows.Count > 0 && dgBackBumpers.SelectedRows[0] != null)
+            catch (Exception ex)
             {
-                var row = dgBackBumpers.SelectedRows[0];
-
-                var statusCell = row.Cells["OrderStatusID"];
-                var rejectColumn = this.dgBackBumpers.Columns["Reject"];
-                int rejectCellIndex = 0, statusId = 0;
-                if (rejectColumn != null)
-                {
-                    rejectCellIndex = rejectColumn.Index;
-                }
-                if (statusCell != null)
-                {
-                    statusId = Convert.ToInt32(statusCell.Value);
-                }
-
-                SetBlinkColor(row, rejectCellIndex, statusId);
+                LogException(ex, false);
             }
         }
 
         private void SetBlinkColor(DataGridViewRow row, int rejectCellIndex, int statusId)
         {
-            if (statusId != (int)OrderStatus.Rejected)
+            if (statusId != (int)OrderStatus.Rejected || statusId == (long)OrderStatus.Skip)
             {
                 if (row.DefaultCellStyle.SelectionBackColor.ToArgb() == selectionBlue.ToArgb()) // Color..Highlight)
                 {
-                    if (row.DefaultCellStyle.BackColor.ToArgb() == 0) {
+                    if (row.DefaultCellStyle.BackColor.ToArgb() == 0)
+                    {
                         row.DefaultCellStyle.SelectionBackColor = Color.White;
-                    }else
-                    row.DefaultCellStyle.SelectionBackColor = row.DefaultCellStyle.BackColor;
+                    }
+                    else
+                        row.DefaultCellStyle.SelectionBackColor = row.DefaultCellStyle.BackColor;
 
                     row.DefaultCellStyle.SelectionForeColor = Color.Black;
                 }
@@ -879,7 +968,20 @@ namespace BarCodePrinting
 
         private void tmrReloadGrids_Tick(object sender, EventArgs e)
         {
-            LoadGridData();
+            try
+            {
+                var dt = new CommonRepository().Get("Select [RefreshNeeded] from [dbo].[tbl_Screens] where ScreenID =3", CommandType.Text);
+                if (dt != null && dt.Rows.Count > 0)
+                {
+                    var status = (bool)dt.Rows[0][0];
+                    if (status)
+                        LoadGridData();
+                }
+            }
+            catch (Exception ex)
+            {
+                LogException(ex, false);
+            }
         }
 
         private void dgFrontBumpers_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
@@ -889,19 +991,42 @@ namespace BarCodePrinting
 
         private void tmrSelectRow_Tick(object sender, EventArgs e)
         {
-            RowSelect();
+            try
+            {
+                RowSelect();
+            }
+            catch (Exception ex)
+            {
+                LogException(ex, false);
+            }
         }
 
         private void frmDashboard_FormClosed(object sender, FormClosedEventArgs e)
         {
-
-            int openForms = Application.OpenForms.Count;
-            //if
-            for (int i = 0; i < openForms; i++)
+            try
             {
+                int openForms = Application.OpenForms.Count;
+                //if
+                for (int i = 0; i < openForms; i++)
+                {
 
-                Application.OpenForms[i].Close();
+                    Application.OpenForms[i].Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                LogException(ex, false);
             }
         }
+
+        public void LogException(Exception ex, bool showMessage = true)
+        {
+
+            ExceptionLogger.LogException(ex, "Admin Dashboard");
+
+            if (showMessage)
+                MessageBox.Show("Error occured during execution, please contact administrator for details");
+        }
+
     }
 }

@@ -10,7 +10,8 @@ namespace BarCodePrinting.Entities
         New = 1,
         BCPrinted,
         Approved,
-        Rejected
+        Rejected,
+        Skip
     }
 
     public enum Screens

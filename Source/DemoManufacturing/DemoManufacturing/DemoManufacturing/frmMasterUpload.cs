@@ -12,6 +12,7 @@ using System.Text;
 using System.Windows.Forms;
 using BarCodePrinting.DataAccess;
 using BarCodePrinting.Entities;
+using BarCodePrinting.Helpers;
 
 namespace BarCodePrinting
 {
@@ -27,27 +28,32 @@ namespace BarCodePrinting
 
             ReLoadGrid();
 
-           // BindComboBoxes();
+            // BindComboBoxes();
         }
 
         private void ReLoadGrid()
         {
-
-            bSourceFront = new BindingSource();
-            GetData(@"select [ProductID]
+            try
+            {
+                bSourceFront = new BindingSource();
+                GetData(@"select [ProductID]
       ,[Color]
       ,[EmissionNorms]
       ,[MajorVariant]
       ,[Type]
       ,[CustomerCode]
       ,[BarCode] from tbl_Products ", bSourceFront);
-            dataGridView1.DataSource = bSourceFront;
+                dataGridView1.DataSource = bSourceFront;
 
-            dataGridView1.Columns["ProductID"].Visible = false;
+                dataGridView1.Columns["ProductID"].Visible = false;
 
-           
-            BindComboBoxes();
 
+                BindComboBoxes();
+            }
+            catch (Exception ex)
+            {
+                LogException(ex);
+            }
         }
 
         private void BindComboBoxes()
@@ -83,16 +89,17 @@ namespace BarCodePrinting
                 DataTable tblResult = new DataTable();
                 tblResult = FetchFromDb(selectCommand);
 
-               // tblResult.Rows.InsertAt(tblResult.NewRow(), 0);
+                // tblResult.Rows.InsertAt(tblResult.NewRow(), 0);
                 bSource.DataSource = tblResult;
 
                 // Resize the DataGridView columns to fit the newly loaded content.
                 //dataGridView1.AutoResizeColumns(
                 //    DataGridViewAutoSizeColumnsMode.AllCellsExceptHeader);
             }
-            catch (SqlException ex)
+
+            catch (Exception ex)
             {
-                MessageBox.Show("Exception Occured: " + ex.Message + "\n Trace:" + ex.StackTrace);
+                LogException(ex);
             }
         }
 
@@ -110,9 +117,9 @@ namespace BarCodePrinting
                 dataGridView1.AutoResizeColumns(
                     DataGridViewAutoSizeColumnsMode.AllCellsExceptHeader);
             }
-            catch (SqlException ex)
+            catch (Exception ex)
             {
-                MessageBox.Show("Exception Occured: " + ex.Message + "\n Trace:" + ex.StackTrace);
+                LogException(ex);
             }
         }
 
@@ -142,38 +149,45 @@ namespace BarCodePrinting
 
         private void btnMasterUpload_Click(object sender, EventArgs e)
         {
-            string filePath = string.Empty;
-            string fileExt = string.Empty;
-            // OpenFileDialog file = new OpenFileDialog(); //open dialog to choose file  
-            if (fdMasterUpload.ShowDialog() == System.Windows.Forms.DialogResult.OK) //if there is a file choosen by the user  
+            try
             {
-                filePath = fdMasterUpload.FileName; //get the path of the file  
-                fileExt = Path.GetExtension(filePath); //get the file extension  
-                if (fileExt.CompareTo(".xls") == 0 || fileExt.CompareTo(".xlsx") == 0)
+                string filePath = string.Empty;
+                string fileExt = string.Empty;
+                // OpenFileDialog file = new OpenFileDialog(); //open dialog to choose file  
+                if (fdMasterUpload.ShowDialog() == System.Windows.Forms.DialogResult.OK) //if there is a file choosen by the user  
                 {
-                    try
+                    filePath = fdMasterUpload.FileName; //get the path of the file  
+                    fileExt = Path.GetExtension(filePath); //get the file extension  
+                    if (fileExt.CompareTo(".xls") == 0 || fileExt.CompareTo(".xlsx") == 0)
                     {
-                        DataTable dtExcel = new DataTable();
-                        dtExcel = ReadExcel(filePath, fileExt); //read excel file 
+                        try
+                        {
+                            DataTable dtExcel = new DataTable();
+                            dtExcel = ReadExcel(filePath, fileExt); //read excel file 
 
-                        SaveToDb(dtExcel);
-                        // object dataGridView1;
-                        //dataGridView1.Visible = true;
-                        //dataGridView1.DataSource = dtExcel;
+                            SaveToDb(dtExcel);
+                            // object dataGridView1;
+                            //dataGridView1.Visible = true;
+                            //dataGridView1.DataSource = dtExcel;
 
-                        ReLoadGrid();
+                            ReLoadGrid();
 
-                        MessageBox.Show("Master data uploaded successfully");
+                            MessageBox.Show("Master data uploaded successfully");
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message.ToString());
+                        }
                     }
-                    catch (Exception ex)
+                    else
                     {
-                        MessageBox.Show(ex.Message.ToString());
+                        MessageBox.Show("Please choose .xls or .xlsx file only.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Error); //custom messageBox to show error  
                     }
                 }
-                else
-                {
-                    MessageBox.Show("Please choose .xls or .xlsx file only.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Error); //custom messageBox to show error  
-                }
+            }
+            catch (Exception ex)
+            {
+                LogException(ex);
             }
         }
 
@@ -207,41 +221,49 @@ namespace BarCodePrinting
 
         public DataTable ReadExcel(string fileName, string fileExt)
         {
-            //string conn = string.Empty;
-            //DataTable dtexcel = new DataTable();
-            //if (fileExt.CompareTo(".xls") == 0)
-            //    conn = @"provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + fileName + ";Extended Properties='Excel 8.0;HRD=Yes;IMEX=1';"; //for below excel 2007  
-            //else
-            //    conn = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + fileName + ";Extended Properties='Excel 12.0;HDR=NO';"; //for above excel 2007  
-            //using (OleDbConnection con = new OleDbConnection(conn))
-            //{
-            //    try
-            //    {
-            //        OleDbDataAdapter oleAdpt = new OleDbDataAdapter("select * from [Sheet1$]", con); //here we read data from sheet1  
-            //        oleAdpt.Fill(dtexcel); //fill excel data into dataTable  
-            //    }
-            //    catch { }
-            //}
-            //return dtexcel;
-
-            //  var fileName = @"C:\ExcelFile.xlsx";
-            var connectionString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + fileName + ";Extended Properties=\"Excel 12.0;IMEX=1;HDR=NO;TypeGuessRows=0;ImportMixedTypes=Text\""; ;
-            using (var conn = new OleDbConnection(connectionString))
+            try
             {
-                conn.Open();
+                //string conn = string.Empty;
+                //DataTable dtexcel = new DataTable();
+                //if (fileExt.CompareTo(".xls") == 0)
+                //    conn = @"provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + fileName + ";Extended Properties='Excel 8.0;HRD=Yes;IMEX=1';"; //for below excel 2007  
+                //else
+                //    conn = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + fileName + ";Extended Properties='Excel 12.0;HDR=NO';"; //for above excel 2007  
+                //using (OleDbConnection con = new OleDbConnection(conn))
+                //{
+                //    try
+                //    {
+                //        OleDbDataAdapter oleAdpt = new OleDbDataAdapter("select * from [Sheet1$]", con); //here we read data from sheet1  
+                //        oleAdpt.Fill(dtexcel); //fill excel data into dataTable  
+                //    }
+                //    catch { }
+                //}
+                //return dtexcel;
 
-                var sheets = conn.GetOleDbSchemaTable(System.Data.OleDb.OleDbSchemaGuid.Tables, new object[] { null, null, null, "TABLE" });
-                using (var cmd = conn.CreateCommand())
+                //  var fileName = @"C:\ExcelFile.xlsx";
+                var connectionString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + fileName + ";Extended Properties=\"Excel 12.0;IMEX=1;HDR=NO;TypeGuessRows=0;ImportMixedTypes=Text\""; ;
+                using (var conn = new OleDbConnection(connectionString))
                 {
-                    cmd.CommandText = "SELECT * FROM [" + sheets.Rows[0]["TABLE_NAME"].ToString() + "] ";
+                    conn.Open();
 
-                    var adapter = new OleDbDataAdapter(cmd);
-                    var ds = new DataSet();
-                    adapter.Fill(ds);
-                    return ds.Tables[0];
+                    var sheets = conn.GetOleDbSchemaTable(System.Data.OleDb.OleDbSchemaGuid.Tables, new object[] { null, null, null, "TABLE" });
+                    using (var cmd = conn.CreateCommand())
+                    {
+                        cmd.CommandText = "SELECT * FROM [" + sheets.Rows[0]["TABLE_NAME"].ToString() + "] ";
+
+                        var adapter = new OleDbDataAdapter(cmd);
+                        var ds = new DataSet();
+                        adapter.Fill(ds);
+                        return ds.Tables[0];
+                    }
+
+
                 }
-
-
+                
+            }
+            catch (Exception ex)
+            {
+                LogException(ex);
             }
             return null;
         }
@@ -258,52 +280,65 @@ namespace BarCodePrinting
 
         private void lblPrintBarCode_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            PrintProduct product = new PrintProduct();
-            var productId = Convert.ToInt64(lblProductID.Text);
-            if (productId > 0)
+            try
             {
-               // lblProductID.Text = row.Cells["ProductID"].Value.ToString();
-               product.EmissionNorms =  cmbEmission.SelectedValue.ToString() ;//= row.Cells["EmissionNorms"].Value;
-               product.Color =  cmbColor1.SelectedValue.ToString(); //= row.Cells["Color"].Value;
-               product.MajorVariant = cmbMajorVariant1.SelectedValue.ToString();// = row.Cells["MajorVariant"].Value;
-               product.Type = cmbType.SelectedValue.ToString(); //= row.Cells["Type"].Value;
-               product.CustomerCode = txtCustCode1.Text; //= row.Cells["CustomerCode"].Value.ToString();
-              product.BarCode =  txtBarCode1.Text ;//= row.Cells["BarCode"].Value.ToString();
+                PrintProduct product = new PrintProduct();
+                var productId = Convert.ToInt64(lblProductID.Text);
+                if (productId > 0)
+                {
+                    // lblProductID.Text = row.Cells["ProductID"].Value.ToString();
+                    product.EmissionNorms = cmbEmission.SelectedValue.ToString();//= row.Cells["EmissionNorms"].Value;
+                    product.Color = cmbColor1.SelectedValue.ToString(); //= row.Cells["Color"].Value;
+                    product.MajorVariant = cmbMajorVariant1.SelectedValue.ToString();// = row.Cells["MajorVariant"].Value;
+                    product.Type = cmbType.SelectedValue.ToString(); //= row.Cells["Type"].Value;
+                    product.CustomerCode = txtCustCode1.Text; //= row.Cells["CustomerCode"].Value.ToString();
+                    product.BarCode = txtBarCode1.Text;//= row.Cells["BarCode"].Value.ToString();
 
-              PrintBarcode(product);
+                    PrintBarcode(product);
+                }
+                //else { 
+                ////do 
+
+                //}
             }
-            //else { 
-            ////do 
-            
-            //}
-            
+            catch (Exception ex)
+            {
+                LogException(ex);
+            }
         }
 
 
         public void PrintBarcode(PrintProduct order)
         {
-           
+
 
             frmBarcodePrinting barcodePrint = new frmBarcodePrinting(order, null);
-           // barcodePrint.ShowDialog();
+            // barcodePrint.ShowDialog();
         }
 
 
         private void dataGridView1_RowEnter(object sender, DataGridViewCellEventArgs e)
         {
-            var rowIndex = e.RowIndex;
-            var row = dataGridView1.Rows[rowIndex];
-
-            var barcode = row.Cells["BarCode"].Value.ToString();
-            if (!string.IsNullOrEmpty(barcode))
+            try
             {
-                lblProductID.Text = row.Cells["ProductID"].Value.ToString();
-                cmbEmission.SelectedValue = row.Cells["EmissionNorms"].Value;
-                cmbColor1.SelectedValue = row.Cells["Color"].Value;
-                cmbMajorVariant1.SelectedValue = row.Cells["MajorVariant"].Value;
-                cmbType.SelectedValue = row.Cells["Type"].Value;
-                txtCustCode1.Text = row.Cells["CustomerCode"].Value.ToString();
-                txtBarCode1.Text = row.Cells["BarCode"].Value.ToString();
+                var rowIndex = e.RowIndex;
+                var row = dataGridView1.Rows[rowIndex];
+
+                var barcode = row.Cells["BarCode"].Value.ToString();
+                if (!string.IsNullOrEmpty(barcode))
+                {
+                    lblProductID.Text = row.Cells["ProductID"].Value.ToString();
+                    cmbEmission.SelectedValue = row.Cells["EmissionNorms"].Value;
+                    cmbColor1.SelectedValue = row.Cells["Color"].Value;
+                    cmbMajorVariant1.SelectedValue = row.Cells["MajorVariant"].Value;
+                    cmbType.SelectedValue = row.Cells["Type"].Value;
+                    txtCustCode1.Text = row.Cells["CustomerCode"].Value.ToString();
+                    txtBarCode1.Text = row.Cells["BarCode"].Value.ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                LogException(ex);
             }
         }
 
@@ -323,47 +358,53 @@ namespace BarCodePrinting
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-
-            // Specify a connection string. Replace the given value with a 
-            // valid connection string for a Northwind SQL Server sample
-            // database accessible to your system.
-            //var connectionString = ConfigurationManager.ConnectionStrings["DBConnectionString"].ConnectionString;
-
-
-            using (SqlConnection connection = new SqlConnection(ConnectionStringHelper.GetConnectionString()))
+            try
             {
-                using (SqlCommand command = new SqlCommand("[dbo].[usp_SaveProduct]", connection))
+                // Specify a connection string. Replace the given value with a 
+                // valid connection string for a Northwind SQL Server sample
+                // database accessible to your system.
+                //var connectionString = ConfigurationManager.ConnectionStrings["DBConnectionString"].ConnectionString;
+
+
+                using (SqlConnection connection = new SqlConnection(ConnectionStringHelper.GetConnectionString()))
                 {
-                    command.CommandType = CommandType.StoredProcedure;
+                    using (SqlCommand command = new SqlCommand("[dbo].[usp_SaveProduct]", connection))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
 
 
 
-                    command.Parameters.Add(new SqlParameter("@ProductID", SqlDbType.BigInt) { Value = Convert.ToInt64(lblProductID.Text) });
-                    command.Parameters.Add(new SqlParameter("@Color", SqlDbType.NVarChar, 50) { Value = cmbColor1.SelectedValue });
-                    command.Parameters.Add(new SqlParameter("@EmissionNorms", SqlDbType.NVarChar, 100) { Value = cmbEmission.SelectedValue });
-                    command.Parameters.Add(new SqlParameter("@MajorVariant", SqlDbType.NVarChar, 500) { Value = cmbMajorVariant1.SelectedValue });
-                    command.Parameters.Add(new SqlParameter("@Type", SqlDbType.NVarChar, 20) { Value = cmbType.SelectedValue });
-                    command.Parameters.Add(new SqlParameter("@CustomerCode", SqlDbType.NVarChar, 150) { Value = txtCustCode1.Text });
-                    command.Parameters.Add(new SqlParameter("@BarCode", SqlDbType.NVarChar, 1000) { Value = txtBarCode1.Text });
-                    LoggedInUser. SetUserParameters(command);
+                        command.Parameters.Add(new SqlParameter("@ProductID", SqlDbType.BigInt) { Value = Convert.ToInt64(lblProductID.Text) });
+                        command.Parameters.Add(new SqlParameter("@Color", SqlDbType.NVarChar, 50) { Value = cmbColor1.SelectedValue });
+                        command.Parameters.Add(new SqlParameter("@EmissionNorms", SqlDbType.NVarChar, 100) { Value = cmbEmission.SelectedValue });
+                        command.Parameters.Add(new SqlParameter("@MajorVariant", SqlDbType.NVarChar, 500) { Value = cmbMajorVariant1.SelectedValue });
+                        command.Parameters.Add(new SqlParameter("@Type", SqlDbType.NVarChar, 20) { Value = cmbType.SelectedValue });
+                        command.Parameters.Add(new SqlParameter("@CustomerCode", SqlDbType.NVarChar, 150) { Value = txtCustCode1.Text });
+                        command.Parameters.Add(new SqlParameter("@BarCode", SqlDbType.NVarChar, 1000) { Value = txtBarCode1.Text });
+                        LoggedInUser.SetUserParameters(command);
 
-                    connection.Open();
-                    int result = command.ExecuteNonQuery();
+                        connection.Open();
+                        int result = command.ExecuteNonQuery();
 
-                    // Check Error
-                    if (result < 0)
-                        Console.WriteLine("Error inserting data into Database!");
+                        // Check Error
+                        if (result < 0)
+                            Console.WriteLine("Error inserting data into Database!");
+                    }
                 }
+
+                ReLoadGrid();
+
+                MessageBox.Show("Master record saved successfully");
             }
-
-            ReLoadGrid();
-
-            MessageBox.Show("Master record saved successfully");
+            catch (Exception ex)
+            {
+                LogException(ex);
+            }
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            ResetEdit();       
+            ResetEdit();
         }
 
         private void ResetEdit()
@@ -376,33 +417,39 @@ namespace BarCodePrinting
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
-            string colorSearch = txtColor.Text;
-            string variant = txtMajorVariant.Text;
-            string emissionNorms = txtEmissionNorms.Text;
-
-//            
-
-//                @Color nvarchar(100) = ''
-//,@MajorVariant nvarchar(500) = ''
-//,@Emission nvarchar(100) = ''
-
-            if (!string.IsNullOrEmpty(colorSearch) || !string.IsNullOrEmpty(variant) || !string.IsNullOrEmpty(emissionNorms))
+            try
             {
-                bSourceFront = new BindingSource();
-                var parameters = new List<SqlParameter>();
-                parameters.Add(new SqlParameter("@Color", SqlDbType.NVarChar, 100) { Value = colorSearch });
-                parameters.Add(new SqlParameter("@MajorVariant", SqlDbType.NVarChar, 500) { Value = variant });
-                parameters.Add(new SqlParameter("@Emission", SqlDbType.NVarChar, 100) { Value = emissionNorms });
+                string colorSearch = txtColor.Text;
+                string variant = txtMajorVariant.Text;
+                string emissionNorms = txtEmissionNorms.Text;
 
-                GetSearchData("[dbo].[usp_SearchProduct]", bSourceFront, parameters);
+                //            
 
-                     dataGridView1.DataSource = bSourceFront;
+                //                @Color nvarchar(100) = ''
+                //,@MajorVariant nvarchar(500) = ''
+                //,@Emission nvarchar(100) = ''
 
-                     dataGridView1.Columns["ProductID"].Visible = false;
+                if (!string.IsNullOrEmpty(colorSearch) || !string.IsNullOrEmpty(variant) || !string.IsNullOrEmpty(emissionNorms))
+                {
+                    bSourceFront = new BindingSource();
+                    var parameters = new List<SqlParameter>();
+                    parameters.Add(new SqlParameter("@Color", SqlDbType.NVarChar, 100) { Value = colorSearch });
+                    parameters.Add(new SqlParameter("@MajorVariant", SqlDbType.NVarChar, 500) { Value = variant });
+                    parameters.Add(new SqlParameter("@Emission", SqlDbType.NVarChar, 100) { Value = emissionNorms });
+
+                    GetSearchData("[dbo].[usp_SearchProduct]", bSourceFront, parameters);
+
+                    dataGridView1.DataSource = bSourceFront;
+
+                    dataGridView1.Columns["ProductID"].Visible = false;
+                }
+                else
+                    MessageBox.Show("Please enter Color, Emission Norms or Major Variant to search.");
             }
-            else
-                MessageBox.Show("Please enter Color, Emission Norms or Major Variant to search.");
-
+            catch (Exception ex)
+            {
+                LogException(ex);
+            }
         }
 
         private void txtColor_TextChanged(object sender, EventArgs e)
@@ -414,6 +461,15 @@ namespace BarCodePrinting
         {
             txtEmissionNorms.Text = txtColor.Text = txtMajorVariant.Text = "";
             ReLoadGrid();
+        }
+
+        public void LogException(Exception ex, bool showMessage = true)
+        {
+
+            ExceptionLogger.LogException(ex, "Master Upload");
+
+            if (showMessage)
+                MessageBox.Show("Error occured during execution, please contact administrator for details");
         }
     }
 }

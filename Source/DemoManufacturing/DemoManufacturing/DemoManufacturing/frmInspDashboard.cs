@@ -10,6 +10,7 @@ using System.Text;
 using System.Windows.Forms;
 using BarCodePrinting.DataAccess;
 using BarCodePrinting.Entities;
+using BarCodePrinting.Helpers;
 
 namespace BarCodePrinting
 {
@@ -66,7 +67,7 @@ namespace BarCodePrinting
 
         public void LoadGridData()
         {
-
+            try{
             tmrBlinkRecord.Stop();
             dgFrontBumpers.DataSource = null;
             dgBackBumpers.DataSource = null;
@@ -125,8 +126,10 @@ namespace BarCodePrinting
                 var printedCount = row["Printed"].ToString();
                 var approvedCount = row["Approved"].ToString();
                 var rejectedCount = row["Rejected"].ToString();
+                var skippedCount = row["Skipped"].ToString();
 
-                lblFrontStats.Text = "New(" + newCount.ToString() + "), In Process(" + printedCount + "), Tested Ok(" + approvedCount + "), Rejected(" + rejectedCount + ")";
+
+                lblFrontStats.Text = "New(" + newCount.ToString() + "), In Process(" + printedCount + "), Tested Ok(" + approvedCount + "), Rejected(" + rejectedCount + "), Skipped(" + skippedCount + ")";
                 //lblRearStats.Text = "Rear Bumpers" + "(" + dgBackBumpers.Rows.Count + ")";
             }
 
@@ -142,8 +145,9 @@ namespace BarCodePrinting
                 var printedCount = row["Printed"].ToString();
                 var approvedCount = row["Approved"].ToString();
                 var rejectedCount = row["Rejected"].ToString();
+                var skippedCount = row["Skipped"].ToString();
 
-                lblRearStats.Text = "New(" + newCount.ToString() + "), In Process(" + printedCount + "), Tested Ok(" + approvedCount + "), Rejected(" + rejectedCount + ")";
+                lblRearStats.Text = "New(" + newCount.ToString() + "), In Process(" + printedCount + "), Tested Ok(" + approvedCount + "), Rejected(" + rejectedCount + "), Skipped(" + skippedCount + ")";
                 // lblRearStats.Text = "Rear Bumpers" + "(" + dgBackBumpers.Rows.Count + ")";
             }
 
@@ -161,7 +165,11 @@ namespace BarCodePrinting
             //    nextRow.Selected = true;
             //}
             tmrBlinkRecord.Start();
-            
+            new ScreensRepository().UpdateScreenReload(4, false);
+            }
+            catch (Exception ex) {
+                LogException(ex);
+            }
         }
 
         private static DataGridViewLinkColumn GetPrintButton()
@@ -188,25 +196,7 @@ namespace BarCodePrinting
         {
             try
             {
-                DataTable tblResult = new DataTable();
-                // Specify a connection string. Replace the given value with a 
-                // valid connection string for a Northwind SQL Server sample
-                // database accessible to your system.
-                //var connectionString = ConfigurationManager.ConnectionStrings["DBConnectionString"].ConnectionString;
-
-                // Create a new data adapter based on the specified query.
-                dataAdapter = new SqlDataAdapter(selectCommand, ConnectionStringHelper.GetConnectionString());
-                
-                // Create a command builder to generate SQL update, insert, and
-                // delete commands based on selectCommand. These are used to
-                // update the database.
-                SqlCommandBuilder commandBuilder = new SqlCommandBuilder(dataAdapter);
-
-                // Populate a new data table and bind it to the BindingSource.
-                DataTable table = new DataTable();
-                table.Locale = System.Globalization.CultureInfo.InvariantCulture;
-                dataAdapter.Fill(table);
-                //foreach()
+                DataTable table = GetDataTable(selectCommand);
 
 
 
@@ -222,14 +212,44 @@ namespace BarCodePrinting
             }
         }
 
+        private DataTable GetDataTable(string selectCommand)
+        {
+            DataTable tblResult = new DataTable();
+            // Specify a connection string. Replace the given value with a 
+            // valid connection string for a Northwind SQL Server sample
+            // database accessible to your system.
+            //var connectionString = ConfigurationManager.ConnectionStrings["DBConnectionString"].ConnectionString;
+
+            // Create a new data adapter based on the specified query.
+            dataAdapter = new SqlDataAdapter(selectCommand, ConnectionStringHelper.GetConnectionString());
+
+            // Create a command builder to generate SQL update, insert, and
+            // delete commands based on selectCommand. These are used to
+            // update the database.
+            SqlCommandBuilder commandBuilder = new SqlCommandBuilder(dataAdapter);
+
+            // Populate a new data table and bind it to the BindingSource.
+            DataTable table = new DataTable();
+            table.Locale = System.Globalization.CultureInfo.InvariantCulture;
+            dataAdapter.Fill(table);
+            //foreach()
+            return table;
+        }
+
         private void btnExit_Click(object sender, EventArgs e)
         {
+            try{
             this.Close();
             
             int openForms = Application.OpenForms.Count;
             for (int i = 0; i < openForms; i++)
             {
                 Application.OpenForms[i].Close();
+            }
+            }
+            catch (Exception ex)
+            {
+                LogException(ex);
             }
         }
 
@@ -241,12 +261,18 @@ namespace BarCodePrinting
 
         private void btnExit_Click_1(object sender, EventArgs e)
         {
+            try{
             this.Close();
             
             int openForms = Application.OpenForms.Count;
             for (int i = 0; i < openForms; i++)
             {
                 Application.OpenForms[i].Close();
+            }
+            }
+            catch (Exception ex)
+            {
+                LogException(ex);
             }
         }
 
@@ -477,96 +503,108 @@ namespace BarCodePrinting
 
         private void dgFrontBumpers_KeyDown(object sender, KeyEventArgs e)
         {
-
-
-            //if (e.RowIndex >= 0)
-            //{
-            //    frnRowIndex = e.RowIndex + 1;
-
-            //    var row = dgFrontBumpers.Rows[e.RowIndex]; //dgFrontBumpers.se
-            //    //green
-            //    //  row.DefaultCellStyle.BackColor = Color.FromArgb(127, 186, 0);
-
-            //    row.Selected = true;
-            //    // MessageBox.Show(row.Cells["OrderID"].Value.ToString());
-            //    SetStatus(Convert.ToInt64(row.Cells["OrderID"].Value.ToString()), "123");
-            //    row.DefaultCellStyle.BackColor = Color.FromArgb(255, 140, 0);
-            //    // LoadGridData();
-            //    //if (e.RowIndex < dgFrontBumpers.Rows.Count)
-            //    //{
-            //    //    var nextRow = dgFrontBumpers.Rows[e.RowIndex + 1];
-            //    //    nextRow.Selected = true;
-            //    //}
-
-            //}
-
-            if (e.KeyCode == Keys.Enter)
+            try
             {
-                var cell = dgFrontBumpers.SelectedCells[0];
-                //dgFrontBumpers.se
-                var rowIndex = cell != null ? cell.RowIndex : -1; // dgFrontBumpers.SelectedRows[0].Index;
 
+                //if (e.RowIndex >= 0)
+                //{
+                //    frnRowIndex = e.RowIndex + 1;
 
-                if (rowIndex >= 0)
+                //    var row = dgFrontBumpers.Rows[e.RowIndex]; //dgFrontBumpers.se
+                //    //green
+                //    //  row.DefaultCellStyle.BackColor = Color.FromArgb(127, 186, 0);
+
+                //    row.Selected = true;
+                //    // MessageBox.Show(row.Cells["OrderID"].Value.ToString());
+                //    SetStatus(Convert.ToInt64(row.Cells["OrderID"].Value.ToString()), "123");
+                //    row.DefaultCellStyle.BackColor = Color.FromArgb(255, 140, 0);
+                //    // LoadGridData();
+                //    //if (e.RowIndex < dgFrontBumpers.Rows.Count)
+                //    //{
+                //    //    var nextRow = dgFrontBumpers.Rows[e.RowIndex + 1];
+                //    //    nextRow.Selected = true;
+                //    //}
+
+                //}
+
+                if (e.KeyCode == Keys.Enter)
                 {
-                    frnRowIndex = rowIndex + 1;
+                    var cell = dgFrontBumpers.SelectedCells[0];
+                    //dgFrontBumpers.se
+                    var rowIndex = cell != null ? cell.RowIndex : -1; // dgFrontBumpers.SelectedRows[0].Index;
 
-                    var row = dgFrontBumpers.Rows[rowIndex];
-                    row.Selected = true;
-                    e.Handled = true;
-                  //  var row = dgBackBumpers.Rows[e.RowIndex]; //dgFrontBumpers.se
 
-                    //  row.DefaultCellStyle.BackColor = Color.FromArgb(127, 186, 0);
+                    if (rowIndex >= 0)
+                    {
+                        frnRowIndex = rowIndex + 1;
 
-                    //set print status
-                    SetStatus(Convert.ToInt64(row.Cells["OrderID"].Value.ToString()), "123");
-                   // row.DefaultCellStyle.BackColor = Color.FromArgb(255, 140, 0);
-                   // LoadGridData();
-                    //if (cell.RowIndex < dgFrontBumpers.Rows.Count)
-                    //{
-                    //    var nextRow = dgFrontBumpers.Rows[rowIndex];
-                    //    nextRow.Selected = true;
-                    //}
-                   // MessageBox.Show("Barcode printed successfully");
-                    // MessageBox.Show(row.Cells["OrderID"].Value.ToString());
+                        var row = dgFrontBumpers.Rows[rowIndex];
+                        row.Selected = true;
+                        e.Handled = true;
+                        //  var row = dgBackBumpers.Rows[e.RowIndex]; //dgFrontBumpers.se
+
+                        //  row.DefaultCellStyle.BackColor = Color.FromArgb(127, 186, 0);
+
+                        //set print status
+                        SetStatus(Convert.ToInt64(row.Cells["OrderID"].Value.ToString()), "123");
+                        // row.DefaultCellStyle.BackColor = Color.FromArgb(255, 140, 0);
+                        // LoadGridData();
+                        //if (cell.RowIndex < dgFrontBumpers.Rows.Count)
+                        //{
+                        //    var nextRow = dgFrontBumpers.Rows[rowIndex];
+                        //    nextRow.Selected = true;
+                        //}
+                        // MessageBox.Show("Barcode printed successfully");
+                        // MessageBox.Show(row.Cells["OrderID"].Value.ToString());
+                    }
+
+
+                    //MessageBox.Show(cell.Value.ToString());
+                    //MessageBox.Show(cell.RowIndex.ToString());
+
                 }
-
-               
-                //MessageBox.Show(cell.Value.ToString());
-                //MessageBox.Show(cell.RowIndex.ToString());
-
             }
-           
+            catch (Exception ex)
+            {
+                LogException(ex);
+            }
             //e.h
         }
 
         private void dgFrontBumpers_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            if (e.RowIndex >= 0)
+            try
             {
-                frnRowIndex = e.RowIndex + 1;
+                if (e.RowIndex >= 0)
+                {
+                    frnRowIndex = e.RowIndex + 1;
 
-                var row = dgFrontBumpers.Rows[e.RowIndex]; //dgFrontBumpers.se
-                //green
-                //  row.DefaultCellStyle.BackColor = Color.FromArgb(127, 186, 0);
+                    var row = dgFrontBumpers.Rows[e.RowIndex]; //dgFrontBumpers.se
+                    //green
+                    //  row.DefaultCellStyle.BackColor = Color.FromArgb(127, 186, 0);
 
-                row.Selected = true;
-                // MessageBox.Show(row.Cells["OrderID"].Value.ToString());
-                SetStatus(Convert.ToInt64(row.Cells["OrderID"].Value.ToString()), "123");
-               // row.DefaultCellStyle.BackColor = Color.FromArgb(255, 140, 0);
-                // LoadGridData();
-                //if (e.RowIndex < dgFrontBumpers.Rows.Count)
-                //{
-                //    var nextRow = dgFrontBumpers.Rows[e.RowIndex + 1];
-                //    nextRow.Selected = true;
-                //}
+                    row.Selected = true;
+                    // MessageBox.Show(row.Cells["OrderID"].Value.ToString());
+                    SetStatus(Convert.ToInt64(row.Cells["OrderID"].Value.ToString()), "123");
+                    // row.DefaultCellStyle.BackColor = Color.FromArgb(255, 140, 0);
+                    // LoadGridData();
+                    //if (e.RowIndex < dgFrontBumpers.Rows.Count)
+                    //{
+                    //    var nextRow = dgFrontBumpers.Rows[e.RowIndex + 1];
+                    //    nextRow.Selected = true;
+                    //}
 
+                }
+            }
+            catch (Exception ex)
+            {
+                LogException(ex);
             }
         }
 
         private void dgBackBumpers_KeyDown(object sender, KeyEventArgs e)
         {
-
+            try{
             if (e.KeyCode == Keys.Enter)
             {
                 var cell = dgBackBumpers.SelectedCells[0];
@@ -603,29 +641,41 @@ namespace BarCodePrinting
                 //MessageBox.Show(cell.RowIndex.ToString());
 
             }
+            }
+            catch (Exception ex)
+            {
+                LogException(ex);
+            }
         }
 
         private void dgBackBumpers_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            if (e.RowIndex >= 0)
+            try
             {
-                RearRowIndex = e.RowIndex + 1;
+                if (e.RowIndex >= 0)
+                {
+                    RearRowIndex = e.RowIndex + 1;
 
-                var row = dgBackBumpers.Rows[e.RowIndex]; //dgFrontBumpers.se
-                //green
-                //  row.DefaultCellStyle.BackColor = Color.FromArgb(127, 186, 0);
+                    var row = dgBackBumpers.Rows[e.RowIndex]; //dgFrontBumpers.se
+                    //green
+                    //  row.DefaultCellStyle.BackColor = Color.FromArgb(127, 186, 0);
 
-                row.Selected = true;
-                // MessageBox.Show(row.Cells["OrderID"].Value.ToString());
-                SetStatus(Convert.ToInt64(row.Cells["OrderID"].Value.ToString()), "123");
-               // row.DefaultCellStyle.BackColor = Color.FromArgb(255, 140, 0);
-                // LoadGridData();
-                //if (e.RowIndex < dgBackBumpers.Rows.Count)
-                //{
-                //    var nextRow = dgBackBumpers.Rows[e.RowIndex + 1];
-                //    nextRow.Selected = true;
-                //}
+                    row.Selected = true;
+                    // MessageBox.Show(row.Cells["OrderID"].Value.ToString());
+                    SetStatus(Convert.ToInt64(row.Cells["OrderID"].Value.ToString()), "123");
+                    // row.DefaultCellStyle.BackColor = Color.FromArgb(255, 140, 0);
+                    // LoadGridData();
+                    //if (e.RowIndex < dgBackBumpers.Rows.Count)
+                    //{
+                    //    var nextRow = dgBackBumpers.Rows[e.RowIndex + 1];
+                    //    nextRow.Selected = true;
+                    //}
 
+                }
+            }
+            catch (Exception ex)
+            {
+                LogException(ex);
             }
         }
 
@@ -645,48 +695,86 @@ namespace BarCodePrinting
 
         private void tmrRefresh_Tick(object sender, EventArgs e)
         {
-            LoadGridData();
+            try
+            {
+                var dt = GetDataTable("Select [RefreshNeeded] from [dbo].[tbl_Screens] where ScreenID =4");
+                if (dt != null && dt.Rows.Count > 0)
+                {
+                    var status = (bool)dt.Rows[0][0];
+                    if (status) LoadGridData();
+                }
+            }
+            catch (Exception ex)
+            {
+                LogException(ex, false);
+            }
         }
 
         private void tmrBlinkRecord_Tick(object sender, EventArgs e)
         {
-            if (dgFrontBumpers.SelectedRows.Count > 0 && dgFrontBumpers.SelectedRows[0] != null)
+            try
             {
-                var row = dgFrontBumpers.SelectedRows[0];
+                
 
-                //var statusCell = row.Cells["OrderStatusID"];
-                //var rejectColumn = this.dgFrontBumpers.Columns["Reject"];
-                //int rejectCellIndex = 0, statusId = 0;
-                //if (rejectColumn != null)
-                //{
-                //    rejectCellIndex = rejectColumn.Index;
-                //}
-                //if (statusCell != null)
-                //{
-                //    statusId = Convert.ToInt32(statusCell.Value);
-                //}
+                if (dgFrontBumpers.SelectedRows.Count <= 0 && dgFrontBumpers.Rows.Count > 0)
+                {
+                    dgFrontBumpers.Rows[0].Selected = true;
+                    // row = dgFrontBumpers.Rows[0];
 
-                SetBlinkColor(row);
+                }
+                if (dgBackBumpers.SelectedRows.Count <= 0 && dgBackBumpers.Rows.Count > 0)
+                {
+                    dgBackBumpers.Rows[0].Selected = true;
+                    // row = dgFrontBumpers.Rows[0];
+
+                }
+                if (dgFrontBumpers.SelectedRows.Count > 0 && dgFrontBumpers.SelectedRows[0] != null)
+                {
+                    var row = dgFrontBumpers.SelectedRows[0];
+
+                    //var statusCell = row.Cells["OrderStatusID"];
+                    //var rejectColumn = this.dgFrontBumpers.Columns["Reject"];
+                    //int rejectCellIndex = 0, statusId = 0;
+                    //if (rejectColumn != null)
+                    //{
+                    //    rejectCellIndex = rejectColumn.Index;
+                    //}
+                    //if (statusCell != null)
+                    //{
+                    //    statusId = Convert.ToInt32(statusCell.Value);
+                    //}
+
+                    SetBlinkColor(row);
+                }
+                if (dgBackBumpers.SelectedRows.Count > 0 && dgBackBumpers.SelectedRows[0] != null)
+                {
+                    var row = dgBackBumpers.SelectedRows[0];
+
+                    if (row == null)
+                    {
+                        dgBackBumpers.Rows[0].Selected = true;
+                        row = dgBackBumpers.Rows[0];
+                    }
+
+                    //var statusCell = row.Cells["OrderStatusID"];
+                    //var rejectColumn = this.dgBackBumpers.Columns["Reject"];
+                    //int rejectCellIndex = 0, statusId = 0;
+                    //if (rejectColumn != null)
+                    //{
+                    //    rejectCellIndex = rejectColumn.Index;
+                    //}
+                    //if (statusCell != null)
+                    //{
+                    //    statusId = Convert.ToInt32(statusCell.Value);
+                    //}
+
+                    SetBlinkColor(row);
+                }
             }
-            if (dgBackBumpers.SelectedRows.Count > 0 && dgBackBumpers.SelectedRows[0] != null)
+            catch (Exception ex)
             {
-                var row = dgBackBumpers.SelectedRows[0];
-
-                //var statusCell = row.Cells["OrderStatusID"];
-                //var rejectColumn = this.dgBackBumpers.Columns["Reject"];
-                //int rejectCellIndex = 0, statusId = 0;
-                //if (rejectColumn != null)
-                //{
-                //    rejectCellIndex = rejectColumn.Index;
-                //}
-                //if (statusCell != null)
-                //{
-                //    statusId = Convert.ToInt32(statusCell.Value);
-                //}
-
-               SetBlinkColor(row);
+                LogException(ex, false);
             }
-
         }
         private void SetBlinkColor(DataGridViewRow row)
         {
@@ -717,16 +805,28 @@ namespace BarCodePrinting
 
         private void frmInspDashboard_FormClosed(object sender, FormClosedEventArgs e)
         {
-
-            int openForms = Application.OpenForms.Count;
-            //if
-            for (int i = 0; i < openForms; i++)
+            try
             {
+                int openForms = Application.OpenForms.Count;
+                //if
+                for (int i = 0; i < openForms; i++)
+                {
 
-                Application.OpenForms[i].Close();
+                    Application.OpenForms[i].Close();
+                }
             }
+            catch (Exception ex) {
+                LogException(ex,false);
+            }
+
         }
 
-        
+        public void LogException(Exception ex,bool showMessage = true) {
+            
+            ExceptionLogger.LogException(ex, "Quality Dashboard");
+
+            if (showMessage)
+                MessageBox.Show("Error occured during execution, please contact administrator");
+        }
     }
 }

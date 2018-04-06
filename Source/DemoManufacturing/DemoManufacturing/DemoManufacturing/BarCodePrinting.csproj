@@ -88,6 +88,7 @@
   <ItemGroup>
     <Compile Include="DataAccess\CommonRepository.cs" />
     <Compile Include="DataAccess\ConnectionStringHelper.cs" />
+    <Compile Include="DataAccess\ScreensRepository.cs" />
     <Compile Include="Entities\PrintProduct.cs" />
     <Compile Include="frmApproveRejectOrder.cs">
       <SubType>Form</SubType>
@@ -145,6 +146,7 @@
     <Compile Include="frmMasterUpload.Designer.cs">
       <DependentUpon>frmMasterUpload.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\ExceptionLogger.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="frmApproveRejectOrder.resx">

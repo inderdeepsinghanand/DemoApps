@@ -11,6 +11,7 @@ using System.Drawing.Imaging;
 using BarCodePrinting.Entities;
 using BarCodePrinting.DataAccess;
 using System.Drawing.Printing;
+using BarCodePrinting.Helpers;
 
 namespace BarCodePrinting
 {
@@ -22,15 +23,22 @@ namespace BarCodePrinting
         frmDashboard parentForm = null;
         public frmBarcodePrinting(PrintProduct _product,frmDashboard parent)
         {
-            InitializeComponent();
-            //if(barCode.
-          //  string barCode = txtCode.Text;
-            product = _product;
-            _orderId = product.OrderID;
-            parentForm = parent;
-            DrawBarcode();
-            InitiatePrint();
-            this.Hide();
+            try
+            {
+                InitializeComponent();
+                //if(barCode.
+                //  string barCode = txtCode.Text;
+                product = _product;
+                _orderId = product.OrderID;
+                parentForm = parent;
+                DrawBarcode();
+                InitiatePrint();
+                this.Hide();
+            }
+            catch (Exception ex)
+            {
+                LogException(ex);
+            }
         }
 
         //public frmBarcodePrinting(PrintProduct _product, frmMasterUpload parent)
@@ -176,9 +184,10 @@ namespace BarCodePrinting
                 new CustomerOrderRepository().ChangePrintStatus(_orderId);
 
                 if (parentForm != null) { parentForm.LoadGridData(); }
+                new ScreensRepository().UpdateScreenReload(4, true);
             }
             //var barcode = "select * from tbl"
-
+                
             //frmBarcodePrinting barcodePrint = new frmBarcodePrinting(Barcode);
             //barcodePrint.ShowDialog();
             this.Close();
@@ -189,5 +198,13 @@ namespace BarCodePrinting
             this.Close();
         }
 
+        public void LogException(Exception ex, bool showMessage = true)
+        {
+
+            ExceptionLogger.LogException(ex, "Print Order");
+
+            if (showMessage)
+                MessageBox.Show("Error occured during execution, please contact administrator for details");
+        }
     }
 }

@@ -12,6 +12,7 @@ using System.Text;
 using System.Windows.Forms;
 using BarCodePrinting.DataAccess;
 using BarCodePrinting.Entities;
+using BarCodePrinting.Helpers;
 
 namespace BarCodePrinting
 {
@@ -32,19 +33,25 @@ namespace BarCodePrinting
 
         private void RefreshPage()
         {
+            try
+            {
+                GetData("select OrderID,Color,EmissionNorms, MajorVariant from [tbl_CustomerOrdersMisMatch] ", bSourceFront);
+                dataGridView1.DataSource = bSourceFront;
 
-            GetData("select OrderID,Color,EmissionNorms, MajorVariant from [tbl_CustomerOrdersMisMatch] ", bSourceFront);
-            dataGridView1.DataSource = bSourceFront;
+                dataGridView1.Columns["OrderID"].Visible = false;
 
-            dataGridView1.Columns["OrderID"].Visible = false;
+                BindCombo("Select distinct Color as [Key] from tbl_Products", cmbColor);
 
-            BindCombo("Select distinct Color as [Key] from tbl_Products", cmbColor);
+                BindCombo("Select distinct [EmissionNorms] as [Key] from tbl_Products", cmbEmissionNorms);
 
-            BindCombo("Select distinct [EmissionNorms] as [Key] from tbl_Products", cmbEmissionNorms);
+                BindCombo("Select distinct [MajorVariant] as [Key] from tbl_Products", cmbMajorVariant);
 
-            BindCombo("Select distinct [MajorVariant] as [Key] from tbl_Products", cmbMajorVariant);
-
-            BindCombo("Select distinct [Type] as [Key] from tbl_Products", cmbBumperType);
+                BindCombo("Select distinct [Type] as [Key] from tbl_Products", cmbBumperType);
+            }
+            catch (Exception ex)
+            {
+                LogException(ex);
+            }
         }
 
         public void BindCombo(string selectCommand, ComboBox cmb)
@@ -76,9 +83,9 @@ namespace BarCodePrinting
                 //dataGridView1.AutoResizeColumns(
                 //    DataGridViewAutoSizeColumnsMode.AllCellsExceptHeader);
             }
-            catch (SqlException ex)
+            catch (Exception ex)
             {
-                MessageBox.Show("Exception Occured: " + ex.Message + "\n Trace:" + ex.StackTrace);
+                LogException(ex);
             }
         }
 
@@ -108,38 +115,47 @@ namespace BarCodePrinting
 
         private void btnMasterUpload_Click(object sender, EventArgs e)
         {
-            string filePath = string.Empty;
-            string fileExt = string.Empty;
-            // OpenFileDialog file = new OpenFileDialog(); //open dialog to choose file  
-            if (fdMasterUpload.ShowDialog() == System.Windows.Forms.DialogResult.OK) //if there is a file choosen by the user  
+            try
             {
-                filePath = fdMasterUpload.FileName; //get the path of the file  
-                fileExt = Path.GetExtension(filePath); //get the file extension  
-                if (fileExt.CompareTo(".xls") == 0 || fileExt.CompareTo(".xlsx") == 0)
+                string filePath = string.Empty;
+                string fileExt = string.Empty;
+                // OpenFileDialog file = new OpenFileDialog(); //open dialog to choose file  
+                if (fdMasterUpload.ShowDialog() == System.Windows.Forms.DialogResult.OK) //if there is a file choosen by the user  
                 {
-                    try
+                    filePath = fdMasterUpload.FileName; //get the path of the file  
+                    fileExt = Path.GetExtension(filePath); //get the file extension  
+                    if (fileExt.CompareTo(".xls") == 0 || fileExt.CompareTo(".xlsx") == 0)
                     {
-                        DataTable dtExcel = new DataTable();
-                        dtExcel = ReadExcel(filePath, fileExt); //read excel file 
+                        try
+                        {
+                            DataTable dtExcel = new DataTable();
+                            dtExcel = ReadExcel(filePath, fileExt); //read excel file 
 
-                        SaveToDb(dtExcel);
-                        // object dataGridView1;
-                        //dataGridView1.Visible = true;
-                        //dataGridView1.DataSource = dtExcel;
+                            SaveToDb(dtExcel);
+                            // object dataGridView1;
+                            //dataGridView1.Visible = true;
+                            //dataGridView1.DataSource = dtExcel;
 
-                        GetData("select * from [tbl_CustomerOrdersMisMatch]", bSourceFront);
-                        dataGridView1.DataSource = bSourceFront;
+                            GetData("select * from [tbl_CustomerOrdersMisMatch]", bSourceFront);
+                            dataGridView1.DataSource = bSourceFront;
 
+                            MessageBox.Show("Orders uploaded successfully, Invalid orders displayed below in grid.");
+
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message.ToString());
+                        }
                     }
-                    catch (Exception ex)
+                    else
                     {
-                        MessageBox.Show(ex.Message.ToString());
+                        MessageBox.Show("Please choose .xls or .xlsx file only.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Error); //custom messageBox to show error  
                     }
                 }
-                else
-                {
-                    MessageBox.Show("Please choose .xls or .xlsx file only.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Error); //custom messageBox to show error  
-                }
+            }
+            catch (Exception ex)
+            {
+                LogException(ex);
             }
         }
 
@@ -173,6 +189,7 @@ namespace BarCodePrinting
 
         public DataTable ReadExcel(string fileName, string fileExt)
         {
+            try{
             //string conn = string.Empty;
             //DataTable dtexcel = new DataTable();
             //if (fileExt.CompareTo(".xls") == 0)
@@ -209,6 +226,11 @@ namespace BarCodePrinting
 
 
             }
+             }
+            catch (Exception ex)
+            {
+                LogException(ex);
+            }
             return null;
         }
 
@@ -229,6 +251,7 @@ namespace BarCodePrinting
 
         private void dataGridView1_RowEnter(object sender, DataGridViewCellEventArgs e)
         {
+            try{
             var rowIndex = e.RowIndex;
             var row = dataGridView1.Rows[rowIndex];
 
@@ -242,6 +265,11 @@ namespace BarCodePrinting
                 cmbBumperType.SelectedValue = row.Cells["Type"].Value;
                // txtCustomerCode.Text = row.Cells["CustomerCode"].Value.ToString();
                // txtBarCode.Text = row.Cells["BarCode"].Value.ToString();
+            }
+            }
+            catch (Exception ex)
+            {
+                LogException(ex);
             }
         }
 
@@ -259,20 +287,26 @@ namespace BarCodePrinting
         private void btnSave_Click(object sender, EventArgs e)
         {
 
-           
+            try
+            {
 
-            //IList<CustomerOrder> orders
+                //IList<CustomerOrder> orders
 
-            CustomerOrder order = new CustomerOrder();
-            order.OrderID = Convert.ToInt64(lblProductID.Text);
-            order.MajorVariant = cmbMajorVariant.SelectedValue != null?cmbMajorVariant.SelectedValue.ToString():"" ;
-            order.EmissionNorms = cmbEmissionNorms.SelectedValue != null ? cmbEmissionNorms.SelectedValue.ToString() : "";
-            order.BumperType = cmbBumperType.SelectedValue != null ? cmbBumperType.SelectedValue.ToString() : "";
-            order.Color = cmbColor.SelectedValue != null ? cmbColor.SelectedValue.ToString() : "";
-            order.CustomerCode = txtCustomerCode.Text;
+                CustomerOrder order = new CustomerOrder();
+                order.OrderID = Convert.ToInt64(lblProductID.Text);
+                order.MajorVariant = cmbMajorVariant.SelectedValue != null ? cmbMajorVariant.SelectedValue.ToString() : "";
+                order.EmissionNorms = cmbEmissionNorms.SelectedValue != null ? cmbEmissionNorms.SelectedValue.ToString() : "";
+                order.BumperType = cmbBumperType.SelectedValue != null ? cmbBumperType.SelectedValue.ToString() : "";
+                order.Color = cmbColor.SelectedValue != null ? cmbColor.SelectedValue.ToString() : "";
+                order.CustomerCode = txtCustomerCode.Text;
 
-            new CustomerOrderRepository().UpdateMisMatchOrder( order );
-            RefreshPage();
+                new CustomerOrderRepository().UpdateMisMatchOrder(order);
+                RefreshPage();
+            }
+            catch (Exception ex)
+            {
+                LogException(ex);
+            }
         }
 
         private void frmOrderUpload_FormClosed(object sender, FormClosedEventArgs e)
@@ -280,5 +314,13 @@ namespace BarCodePrinting
             masterForm.LoadGridData();
         }
 
+        public void LogException(Exception ex, bool showMessage = true)
+        {
+
+            ExceptionLogger.LogException(ex, "Order Upload");
+
+            if (showMessage)
+                MessageBox.Show("Error occured during execution, please contact administrator for details");
+        }
     }
 }
