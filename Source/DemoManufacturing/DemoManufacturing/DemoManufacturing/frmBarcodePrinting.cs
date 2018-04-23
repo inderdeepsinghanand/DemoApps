@@ -66,12 +66,12 @@ namespace BarCodePrinting
 
             using (Graphics graphics = Graphics.FromImage(bitMap))
             {
-                Font oFont = new Font("IDAutomationHC39M", 10.25f);
+                Font oFont = new Font("IDAutomationHC39M", 10.5f);
                 PointF point = new PointF(2f, 2f);
                 SolidBrush blackBrush = new SolidBrush(Color.Black);
                 SolidBrush whiteBrush = new SolidBrush(Color.White);
                 // graphics.DrawString("Hello asadsads s dasdada da dasdsaa", oFont, blackBrush, 0,0);
-                graphics.FillRectangle(whiteBrush, 10, 10, bitMap.Width, bitMap.Height);
+                graphics.FillRectangle(whiteBrush, 0, 0, bitMap.Width, bitMap.Height);
                 graphics.DrawString("*" + product.BarCode + "*", oFont, blackBrush, point);
                 // int y = bitMap.Height + Convert.ToInt32(graphics.MeasureString("*" + barCode + "*", oFont).Height) + 2;
 
