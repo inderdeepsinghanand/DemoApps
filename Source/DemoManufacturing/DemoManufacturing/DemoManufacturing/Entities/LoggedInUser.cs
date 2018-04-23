@@ -17,8 +17,8 @@ namespace BarCodePrinting.Entities
 
         public static void SetUserParameters(IDbCommand command) {
             if (command != null) {
-                command.Parameters.Add(new SqlParameter("@UserId", SqlDbType.BigInt) { Value = 1 /*LoggedInUser.UserID*/ });
-                command.Parameters.Add(new SqlParameter("@Name", SqlDbType.NVarChar, 150) { Value = "Admin"/*LoggedInUser.Name*/ });
+                command.Parameters.Add(new SqlParameter("@UserId", SqlDbType.BigInt) { Value = LoggedInUser.UserID });
+                command.Parameters.Add(new SqlParameter("@Name", SqlDbType.NVarChar, 150) { Value = LoggedInUser.Name });
             }
         
         }

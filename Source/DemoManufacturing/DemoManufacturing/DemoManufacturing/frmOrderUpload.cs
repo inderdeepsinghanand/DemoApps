@@ -35,7 +35,10 @@ namespace BarCodePrinting
         {
             try
             {
-                GetData("select OrderID,Color,EmissionNorms, MajorVariant from [tbl_CustomerOrdersMisMatch] ", bSourceFront);
+                if(dataGridView1.Rows.Count > 0)
+                    dataGridView1.Rows[0].Selected = true;
+
+                GetData("select OrderID,Color,EmissionNorms, MajorVariant,Type , CustomerCode from [tbl_CustomerOrdersMisMatch] ", bSourceFront);
                 dataGridView1.DataSource = bSourceFront;
 
                 dataGridView1.Columns["OrderID"].Visible = false;
@@ -136,7 +139,7 @@ namespace BarCodePrinting
                             //dataGridView1.Visible = true;
                             //dataGridView1.DataSource = dtExcel;
 
-                            GetData("select * from [tbl_CustomerOrdersMisMatch]", bSourceFront);
+                            GetData("select OrderID,Color,EmissionNorms, MajorVariant,Type , CustomerCode from [tbl_CustomerOrdersMisMatch] ", bSourceFront);
                             dataGridView1.DataSource = bSourceFront;
 
                             MessageBox.Show("Orders uploaded successfully, Invalid orders displayed below in grid.");
@@ -251,26 +254,29 @@ namespace BarCodePrinting
 
         private void dataGridView1_RowEnter(object sender, DataGridViewCellEventArgs e)
         {
-            try{
-            var rowIndex = e.RowIndex;
-            var row = dataGridView1.Rows[rowIndex];
-
-            var orderID = row.Cells["OrderID"].Value.ToString();
-            if (!string.IsNullOrEmpty(orderID))
-            {
-                lblProductID.Text = row.Cells["OrderID"].Value.ToString();
-                cmbEmissionNorms.SelectedValue = row.Cells["EmissionNorms"].Value;
-                cmbColor.SelectedValue = row.Cells["Color"].Value;
-                cmbMajorVariant.SelectedValue = row.Cells["MajorVariant"].Value;
-                cmbBumperType.SelectedValue = row.Cells["Type"].Value;
-               // txtCustomerCode.Text = row.Cells["CustomerCode"].Value.ToString();
-               // txtBarCode.Text = row.Cells["BarCode"].Value.ToString();
-            }
-            }
-            catch (Exception ex)
-            {
-                LogException(ex);
-            }
+            //try{
+            //var rowIndex = e.RowIndex;
+            //var row = dataGridView1.Rows[rowIndex];
+            //if (row != null)
+            //{
+            //    //if(
+            //    var orderID = dataGridView1.Columns.Contains("OrderID") ? row.Cells["OrderID"].Value.ToString() : "";
+            //    if (!string.IsNullOrEmpty(orderID))
+            //    {
+            //        lblProductID.Text = dataGridView1.Columns.Contains("OrderID") ? row.Cells["OrderID"].Value.ToString() : "";
+            //        cmbEmissionNorms.SelectedValue = dataGridView1.Columns.Contains("EmissionNorms") ? row.Cells["EmissionNorms"].Value : "";
+            //        cmbColor.SelectedValue = dataGridView1.Columns.Contains("Color") ? row.Cells["Color"].Value : "";
+            //        cmbMajorVariant.SelectedValue = dataGridView1.Columns.Contains("MajorVariant") ? row.Cells["MajorVariant"].Value : "";
+            //        cmbBumperType.SelectedValue = dataGridView1.Columns.Contains("Type") ? row.Cells["Type"].Value : "";
+            //        // txtCustomerCode.Text = row.Cells["CustomerCode"].Value.ToString();
+            //        // txtBarCode.Text = row.Cells["BarCode"].Value.ToString();
+            //    }
+            //}
+            //}
+            //catch (Exception ex)
+            //{
+            //    LogException(ex);
+            //}
         }
 
         private void lblProductID_TextChanged(object sender, EventArgs e)
@@ -321,6 +327,46 @@ namespace BarCodePrinting
 
             if (showMessage)
                 MessageBox.Show("Error occured during execution, please contact administrator for details");
+        }
+
+        private void dataGridView1_RowStateChanged(object sender, DataGridViewRowStateChangedEventArgs e)
+        {
+            try
+            {
+                if (e.StateChanged == DataGridViewElementStates.Selected)
+                {
+                    //var rowIndex = e.RowIndex;
+                    var row = e.Row;
+                    if (row != null)
+                    {
+                        //if(
+                        var orderIdCell = row.Cells["OrderID"];
+                        var ENCell = row.Cells["EmissionNorms"];
+                        var colorCell = row.Cells["Color"];
+                        var MVCell = row.Cells["MajorVariant"];
+                        var typeCell = row.Cells["Type"];
+                        if (orderIdCell != null && ENCell != null && colorCell != null && MVCell != null &&
+                            orderIdCell.Value != null && ENCell.Value != null && colorCell.Value != null && MVCell.Value != null)
+                        {
+                            var orderID = dataGridView1.Columns.Contains("OrderID") ? row.Cells["OrderID"].Value.ToString() : "";
+                            if (!string.IsNullOrEmpty(orderID))
+                            {
+                                lblProductID.Text = dataGridView1.Columns.Contains("OrderID") ? row.Cells["OrderID"].Value.ToString() : "";
+                                cmbEmissionNorms.SelectedValue = dataGridView1.Columns.Contains("EmissionNorms") ? row.Cells["EmissionNorms"].Value : "";
+                                cmbColor.SelectedValue = dataGridView1.Columns.Contains("Color") ? row.Cells["Color"].Value : "";
+                                cmbMajorVariant.SelectedValue = dataGridView1.Columns.Contains("MajorVariant") ? row.Cells["MajorVariant"].Value : "";
+                                cmbBumperType.SelectedValue = dataGridView1.Columns.Contains("Type") ? row.Cells["Type"].Value : "";
+                                // txtCustomerCode.Text = row.Cells["CustomerCode"].Value.ToString();
+                                // txtBarCode.Text = row.Cells["BarCode"].Value.ToString();
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LogException(ex);
+            }
         }
     }
 }

@@ -108,7 +108,7 @@ namespace BarCodePrinting
 
             dgBackBumpers.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgFrontBumpers.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-
+            dgFrontBumpers.Focus();
            
 
 
@@ -527,7 +527,7 @@ namespace BarCodePrinting
 
                 //}
 
-                if (e.KeyCode == Keys.Enter)
+                if (e.KeyCode == Keys.Enter && dgFrontBumpers.SelectedCells.Count > 0)
                 {
                     var cell = dgFrontBumpers.SelectedCells[0];
                     //dgFrontBumpers.se
@@ -605,7 +605,7 @@ namespace BarCodePrinting
         private void dgBackBumpers_KeyDown(object sender, KeyEventArgs e)
         {
             try{
-            if (e.KeyCode == Keys.Enter)
+                if (e.KeyCode == Keys.Enter && dgBackBumpers.SelectedCells.Count > 0)
             {
                 var cell = dgBackBumpers.SelectedCells[0];
                 //dgFrontBumpers.se

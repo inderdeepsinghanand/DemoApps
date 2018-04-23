@@ -26,6 +26,7 @@ namespace BarCodePrinting
         {
             //masterForm = dash;
             InitializeComponent();
+            txtUsername.Focus();
             //RefreshPage();
 
         }
@@ -42,7 +43,7 @@ namespace BarCodePrinting
         {
             var userName = txtUsername.Text;
             var password = txtPassword.Text;
-            string query = "Select tr.*,u.FirstName + u.LastName as Name  from [tbl_UserRights] tr inner join dbo.tbl_Users u on u.UserID = tr.UserID where u.Username = '{0}' AND u.[Password] = '{1}' ";
+            string query = "Select tr.*,ISNULL(u.FirstName,'') + ISNULL(u.LastName,'') as Name  from [tbl_UserRights] tr inner join dbo.tbl_Users u on u.UserID = tr.UserID where u.Username = '{0}' AND u.[Password] = '{1}' ";
 
             var table = GetData(string.Format(query, userName, password));
 

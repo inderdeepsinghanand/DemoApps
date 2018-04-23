@@ -136,6 +136,7 @@
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(186, 119);
             this.btnExit.TabIndex = 15;
+            this.btnExit.TabStop = false;
             this.btnExit.Text = "Exit";
             this.btnExit.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.btnExit.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
@@ -152,6 +153,7 @@
             this.btnOrderProcessing.Name = "btnOrderProcessing";
             this.btnOrderProcessing.Size = new System.Drawing.Size(186, 123);
             this.btnOrderProcessing.TabIndex = 14;
+            this.btnOrderProcessing.TabStop = false;
             this.btnOrderProcessing.Text = "Process Order";
             this.btnOrderProcessing.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.btnOrderProcessing.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
@@ -168,6 +170,7 @@
             this.btnUploadOrder.Name = "btnUploadOrder";
             this.btnUploadOrder.Size = new System.Drawing.Size(186, 119);
             this.btnUploadOrder.TabIndex = 13;
+            this.btnUploadOrder.TabStop = false;
             this.btnUploadOrder.Text = "Upload Order";
             this.btnUploadOrder.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.btnUploadOrder.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
@@ -185,6 +188,7 @@
             this.btnMasterUpload.Name = "btnMasterUpload";
             this.btnMasterUpload.Size = new System.Drawing.Size(186, 119);
             this.btnMasterUpload.TabIndex = 12;
+            this.btnMasterUpload.TabStop = false;
             this.btnMasterUpload.Text = "Master Info";
             this.btnMasterUpload.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.btnMasterUpload.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
@@ -257,6 +261,7 @@
             this.dgFrontBumpers.RowTemplate.Height = 50;
             this.dgFrontBumpers.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.dgFrontBumpers.Size = new System.Drawing.Size(319, 549);
+            this.dgFrontBumpers.StandardTab = true;
             this.dgFrontBumpers.TabIndex = 3;
             this.dgFrontBumpers.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgFrontBumpers_CellContentClick);
             this.dgFrontBumpers.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgFrontBumpers_CellFormatting);
@@ -337,6 +342,7 @@
             this.dgBackBumpers.RowTemplate.Height = 50;
             this.dgBackBumpers.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.dgBackBumpers.Size = new System.Drawing.Size(319, 549);
+            this.dgBackBumpers.StandardTab = true;
             this.dgBackBumpers.TabIndex = 2;
             this.dgBackBumpers.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgBackBumpers_CellContentClick);
             this.dgBackBumpers.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgBackBumpers_CellFormatting);
