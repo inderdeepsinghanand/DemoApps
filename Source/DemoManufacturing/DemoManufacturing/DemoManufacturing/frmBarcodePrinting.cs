@@ -66,8 +66,8 @@ namespace BarCodePrinting
 
             using (Graphics graphics = Graphics.FromImage(bitMap))
             {
-                Font oFont = new Font("IDAutomationHC39M", 10.5f);
-                PointF point = new PointF(2f, 2f);
+                Font oFont = new Font("IDAutomationHC39M", 14.5f);
+                PointF point = new PointF(0f, 0f);
                 SolidBrush blackBrush = new SolidBrush(Color.Black);
                 SolidBrush whiteBrush = new SolidBrush(Color.White);
                 // graphics.DrawString("Hello asadsads s dasdada da dasdsaa", oFont, blackBrush, 0,0);
@@ -80,7 +80,7 @@ namespace BarCodePrinting
             }
             using (MemoryStream ms = new MemoryStream())
             {
-                bitMap.Save(ms, ImageFormat.Png);
+                bitMap.Save(ms, ImageFormat.Jpeg);
                 pictureBox1.Image = bitMap;
                 pictureBox1.Height = bitMap.Height;
                 pictureBox1.Width = bitMap.Width;
@@ -136,18 +136,18 @@ namespace BarCodePrinting
             //Bitmap img = new Bitmap(width, height);
 
             //this.DrawToBitmap(img, bounds);
-            Point p = new Point(5, 10);
+            Point p = new Point(1, 2);
             e.Graphics.DrawImage(pictureBox1.Image, p);
-            var barcodeDetails = "Emission Norms:" + product.EmissionNorms + ", Color:" + product.Color + ", Type:" + product.Type +  ", Customer Code:" + product.CustomerCode ;
+            var barcodeDetails = "E.Norms:" + product.EmissionNorms + ", Col:" + product.Color + ", Type:" + product.Type +  ", Cust. Code:" + product.CustomerCode ;
 
-            if (barcodeDetails.Length < 50)
-                e.Graphics.DrawString(barcodeDetails, new Font(FontFamily.GenericSansSerif, 7), Brushes.Black, new PointF(10f, 64f));
-            else
-            {
-                e.Graphics.DrawString("Emission Norms:" + product.EmissionNorms + ", Color:" + product.Color + "", new Font(FontFamily.GenericSansSerif, 7), Brushes.Black, new PointF(10f, 64f));
-                  e.Graphics.DrawString("Type:" + product.Type +  ", Customer Code:" + product.CustomerCode, new Font(FontFamily.GenericSansSerif, 7), Brushes.Black, new PointF(10f,74f));
+           // if (barcodeDetails.Length < 50)
+                e.Graphics.DrawString(barcodeDetails, new Font(FontFamily.GenericSansSerif, 6), Brushes.Black, new PointF(10f, 77f));
+            //else
+            //{
+            //    e.Graphics.DrawString("Emission Norms:" + product.EmissionNorms + ", Color:" + product.Color + "", new Font(FontFamily.GenericSansSerif, 5), Brushes.Black, new PointF(10f, 64f));
+            //      e.Graphics.DrawString("Type:" + product.Type +  ", Customer Code:" + product.CustomerCode, new Font(FontFamily.GenericSansSerif, 5), Brushes.Black, new PointF(10f,74f));
 
-            }
+            //}
 
             //e.Graphics.DrawString("Hello World!\n", new Font("Arial", 1), Brushes.Black, new PointF(0F, pictureBox1.Image.Height));
            // e.Graphics.DrawString("Hello World 123455", new Font("Arial", 16), Brushes.Black, new PointF(100.0F, 210.0F));

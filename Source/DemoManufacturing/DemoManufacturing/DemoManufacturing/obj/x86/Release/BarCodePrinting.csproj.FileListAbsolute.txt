@@ -14,4 +14,3 @@ C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufact
 C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\obj\x86\Release\BarCodePrinting.csproj.GenerateResource.Cache
 C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\obj\x86\Release\BarCodePrinting.exe
 C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\obj\x86\Release\BarCodePrinting.pdb
-C:\Users\bandeep\Documents\GitHub\DemoApps\Source\DemoManufacturing\DemoManufacturing\DemoManufacturing\obj\x86\Release\BarCodePrinting.csprojResolveAssemblyReference.cache

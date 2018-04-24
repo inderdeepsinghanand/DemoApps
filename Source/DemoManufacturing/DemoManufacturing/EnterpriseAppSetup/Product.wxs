@@ -14,7 +14,7 @@
 	<Fragment>
 		<Directory Id="TARGETDIR" Name="SourceDir">
 			<Directory Id="ProgramFilesFolder">
-				<Directory Id="INSTALLFOLDER" Name="Bar Code printing Application" />
+				<Directory Id="INSTALLFOLDER" Name="BarCodePrintingApplication" />
 			</Directory>
     
   <!-- <Directory Id="ProgramMenuFolder">
